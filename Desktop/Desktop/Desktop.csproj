@@ -60,6 +60,12 @@
     <Compile Include="UserControls\IconUC.Designer.cs">
       <DependentUpon>IconUC.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\MainBtnsUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\MainBtnsUC.Designer.cs">
+      <DependentUpon>MainBtnsUC.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -75,6 +81,9 @@
     </Compile>
     <EmbeddedResource Include="UserControls\IconUC.resx">
       <DependentUpon>IconUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\MainBtnsUC.resx">
+      <DependentUpon>MainBtnsUC.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
