@@ -16,5 +16,15 @@ namespace Desktop
         {
             InitializeComponent();
         }
+
+        private void pictureBox8_MouseLeave(object sender, EventArgs e)
+        {
+            pictureBox8.Image = Desktop.Properties.Resources.consultaBtn as Image;
+        }
+
+        private void pictureBox8_MouseEnter(object sender, EventArgs e)
+        {
+            pictureBox8.Image = Desktop.Properties.Resources.consultaBtn2 as Image;
+        }
     }
 }
