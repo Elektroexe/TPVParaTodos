@@ -28,32 +28,49 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pbIconHelp = new System.Windows.Forms.PictureBox();
+            this.pbIconNotifications = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pbIconHelp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbIconNotifications)).BeginInit();
             this.SuspendLayout();
             // 
-            // pictureBox1
+            // pbIconHelp
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(36, 36);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.pbIconHelp.Image = global::Desktop.Properties.Resources.help;
+            this.pbIconHelp.Location = new System.Drawing.Point(15, 15);
+            this.pbIconHelp.Name = "pbIconHelp";
+            this.pbIconHelp.Size = new System.Drawing.Size(40, 40);
+            this.pbIconHelp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbIconHelp.TabIndex = 0;
+            this.pbIconHelp.TabStop = false;
+            // 
+            // pbIconNotifications
+            // 
+            this.pbIconNotifications.Image = global::Desktop.Properties.Resources.bell;
+            this.pbIconNotifications.Location = new System.Drawing.Point(15, 675);
+            this.pbIconNotifications.Name = "pbIconNotifications";
+            this.pbIconNotifications.Size = new System.Drawing.Size(40, 40);
+            this.pbIconNotifications.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbIconNotifications.TabIndex = 1;
+            this.pbIconNotifications.TabStop = false;
             // 
             // IconUC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.pbIconNotifications);
+            this.Controls.Add(this.pbIconHelp);
             this.Name = "IconUC";
-            this.Size = new System.Drawing.Size(36, 36);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.Size = new System.Drawing.Size(1366, 730);
+            ((System.ComponentModel.ISupportInitialize)(this.pbIconHelp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbIconNotifications)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pbIconHelp;
+        private System.Windows.Forms.PictureBox pbIconNotifications;
     }
 }
