@@ -38,9 +38,9 @@ namespace Desktop.Views
             Form containerForm = new Form();
             containerForm.ShowInTaskbar = false;
             containerForm.StartPosition = FormStartPosition.CenterParent;
-            containerForm.Height = Height/2;
+            containerForm.Height = Height;
             containerForm.Width = Width/2;
-            containerForm.Location = PointToScreen(Point.Empty);
+            containerForm.Location = PointToScreen(new Point(Width/2, 0));
             containerForm.StartPosition = FormStartPosition.Manual;
             containerForm.Controls.Add(uControl);
             containerForm.FormBorderStyle = FormBorderStyle.None;
