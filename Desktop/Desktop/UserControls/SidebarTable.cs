@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Desktop.UserControls
 {
-    public partial class MainBtnsUC : UserControl
+    public partial class SidebarTable : UserControl
     {
-        public MainBtnsUC()
+        public SidebarTable()
         {
             InitializeComponent();
         }

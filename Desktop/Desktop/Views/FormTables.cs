@@ -16,5 +16,16 @@ namespace Desktop
         {
             InitializeComponent();
         }
+
+        private void FormTables_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            UserControls.SidebarTable sidebarTable = new UserControls.SidebarTable();
+            Views.FormOpacity formOpac = new Views.FormOpacity(this, sidebarTable);
+        }
     }
 }

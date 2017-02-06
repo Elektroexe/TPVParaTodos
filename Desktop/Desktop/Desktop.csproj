@@ -46,16 +46,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="UserControls\SidebarTable.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\SidebarTable.Designer.cs">
+      <DependentUpon>SidebarTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="Views\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormTables.cs">
+    <Compile Include="Views\FormOpacity.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormTables.Designer.cs">
+    <Compile Include="Views\FormOpacity.Designer.cs">
+      <DependentUpon>FormOpacity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormTables.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormTables.Designer.cs">
       <DependentUpon>FormTables.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -71,16 +83,16 @@
     <Compile Include="UserControls\IconUC.Designer.cs">
       <DependentUpon>IconUC.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\MainBtnsUC.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\MainBtnsUC.Designer.cs">
-      <DependentUpon>MainBtnsUC.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="UserControls\SidebarTable.resx">
+      <DependentUpon>SidebarTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormTables.resx">
+    <EmbeddedResource Include="Views\FormOpacity.resx">
+      <DependentUpon>FormOpacity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormTables.resx">
       <DependentUpon>FormTables.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -99,9 +111,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\IconUC.resx">
       <DependentUpon>IconUC.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\MainBtnsUC.resx">
-      <DependentUpon>MainBtnsUC.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
