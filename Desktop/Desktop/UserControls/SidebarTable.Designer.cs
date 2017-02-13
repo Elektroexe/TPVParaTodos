@@ -1,4 +1,7 @@
-﻿namespace Desktop.UserControls
+﻿using MetroFramework.Controls;
+using System.Windows.Forms;
+
+namespace Desktop.UserControls
 {
     partial class SidebarTable
     {
@@ -28,18 +31,26 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.mainPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
+            // 
+            // mainPanel
+            // 
+            this.mainPanel.Location = new System.Drawing.Point(3, 17);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(99, 100);
+            this.mainPanel.TabIndex = 0;
             // 
             // SidebarTable
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.mainPanel);
             this.Name = "SidebarTable";
-            this.Size = new System.Drawing.Size(350, 730);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private Panel mainPanel;
     }
 }

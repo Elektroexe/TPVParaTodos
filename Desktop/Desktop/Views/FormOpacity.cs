@@ -28,40 +28,33 @@ namespace Desktop.Views
             ClientSize = formParent.ClientSize;
             Dock = DockStyle.Fill;
 
-            timerOpacity = new Timer();
-            timerOpacity.Interval = 10;
-            timerOpacity.Enabled = true;
-            timerOpacity.Tick += TimerOpacity_Tick;
+            //timerOpacity = new Timer();
+            //timerOpacity.Interval = 10;
+            //timerOpacity.Enabled = true;
+            //timerOpacity.Tick += TimerOpacity_Tick;
             
             Show();
 
-            Form containerForm = new Form();
-            containerForm.ShowInTaskbar = false;
-            containerForm.StartPosition = FormStartPosition.CenterParent;
-            containerForm.Height = Height;
-            containerForm.Width = Width/2;
-            containerForm.Location = PointToScreen(new Point(Width/2, 0));
-            containerForm.StartPosition = FormStartPosition.Manual;
-            containerForm.Controls.Add(uControl);
-            containerForm.FormBorderStyle = FormBorderStyle.None;
-            containerForm.Show();
+            //Form containerForm = new Form();
+            //containerForm.ShowInTaskbar = false;
+            //containerForm.StartPosition = FormStartPosition.CenterParent;
+            //containerForm.Height = Height;
+            //containerForm.Width = Width / 2;
+            //containerForm.Location = PointToScreen(new Point(Width / 2, 0));
+            //containerForm.StartPosition = FormStartPosition.Manual;
+            //containerForm.Controls.Add(uControl);
+            //containerForm.FormBorderStyle = FormBorderStyle.None;
+            //containerForm.Show();
         }
 
         private void FormOpacity_Load(object sender, EventArgs e)
         {
-            timerOpacity.Start();
+            //timerOpacity.Start();
         }
 
         private void TimerOpacity_Tick(object sender, EventArgs e)
         {
-            if (Opacity < 0.6)
-            {
-                Opacity += 0.01;
-            }
-            else
-            {
-                timerOpacity.Stop();
-            }
+
         }
         
     }

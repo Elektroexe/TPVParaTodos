@@ -1,4 +1,6 @@
-﻿namespace Desktop
+﻿using MetroFramework.Controls;
+
+namespace Desktop
 {
     partial class FormTables
     {
@@ -28,7 +30,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.button1 = new MetroButton();
+
             this.SuspendLayout();
             // 
             // button1
@@ -38,8 +41,8 @@
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
             this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+
             // 
             // FormTables
             // 
@@ -56,6 +59,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private MetroButton button1;
+
     }
 }
