@@ -30,35 +30,38 @@ namespace Desktop.Views
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new MetroFramework.Controls.MetroButton();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // pictureBox1
             // 
-            this.button1.Location = new System.Drawing.Point(107, 122);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.pictureBox1.Image = global::Desktop.Properties.Resources.mesa_icon;
+            this.pictureBox1.Location = new System.Drawing.Point(41, 87);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(95, 104);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // FormTables
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1350, 691);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.pictureBox1);
             this.Name = "FormTables";
-            this.Text = "FormTables";
+            this.Text = "Mesas";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FormTables_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private MetroButton button1;
-
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

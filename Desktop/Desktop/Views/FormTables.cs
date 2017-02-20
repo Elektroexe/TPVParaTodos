@@ -21,18 +21,13 @@ namespace Desktop.Views
         }
 
         private void FormTables_Load(object sender, EventArgs e)
-        {
+        {           
         }
 
-        private void button1_Click(object sender, EventArgs e)
+
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
             FormOpacity f1 = new FormOpacity(this);
-            //f1.Show();
-
-            //Transition t = new Transition(new TransitionType_Linear(1000));
-            //t.add(f1, "Left", this.Width - f1.Width + 8);
-            //t.run();
-
         }
 
     }

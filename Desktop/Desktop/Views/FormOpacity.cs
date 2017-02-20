@@ -47,8 +47,8 @@ namespace Desktop.Views
             Show();
             formChild.Show();
 
-            Transition t = new Transition(new TransitionType_Linear(1000));
-            t.add(formChild, "Left", this.Width - formChild.Width + 8);
+            Transition t = new Transition(new TransitionType_Linear(400));
+            t.add(formChild, "Left",this.Width - formChild.Width + 8);
             t.run();
 
 
@@ -60,7 +60,7 @@ namespace Desktop.Views
         private void FormOpacity_Load(object sender, EventArgs e)
         {
             timerOpacity = new Timer();
-            timerOpacity.Interval = 10;
+            timerOpacity.Interval = 1;
             timerOpacity.Tick += TimerOpacity_Tick;
             timerOpacity.Start();
         }
@@ -69,7 +69,7 @@ namespace Desktop.Views
         {
             if (Opacity < 0.6)
             {
-                Opacity += 0.01;
+                Opacity += 0.02;
             }
             else
             {
@@ -80,9 +80,48 @@ namespace Desktop.Views
 
         private void CloseForm(object sender, EventArgs e)
         {
-            formParent.Activate();
+            formChild.Activate();
+            timerOpacity.Tick -= TimerOpacity_Tick;
+            timerOpacity.Tick += asd2;
+            timerOpacity.Start();
+
+            this.asd();
+            //this.Close();
+
+
+        }
+
+        // TODO: REFACTORIZAR
+        private void asd()
+        {
+            Transition t = new Transition(new TransitionType_Linear(400));
+            t.add(formChild, "Left", this.Width);
+            t.TransitionCompletedEvent += asd3;
+            t.run();
+        }
+
+        private void asd2(object sender, EventArgs e)
+        {
+            if (Opacity > 0)
+            {
+                Opacity -= 0.02;
+                formChild.Opacity -= 0.03;
+            }
+            else
+            {
+                timerOpacity.Stop();
+            }
+        }
+
+        private void asd3(object sender, EventArgs e)
+        {
             formChild.Close();
             this.Close();
+        }
+
+        private void FormOpacity_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            formParent.Activate();
         }
     }
 }
