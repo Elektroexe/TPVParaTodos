@@ -10,11 +10,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Transitions;
 
-namespace Desktop
+namespace Desktop.Views
 {
     public partial class FormTables : MetroForm
     {
-        private Timer ti;
         private UserControls.SidebarTable rightPanel;
         public FormTables()
         {
@@ -27,37 +26,14 @@ namespace Desktop
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //UserControls.SidebarTable sidebarTable = new UserControls.SidebarTable();
-            //Views.FormOpacity formOpac = new Views.FormOpacity(this, sidebarTable);
-            this.rightPanel = new UserControls.SidebarTable(this);
-            this.rightPanel.Location = new System.Drawing.Point(this.Width, 5);
-            this.rightPanel.Name = "rightPanel";
-            this.rightPanel.TabIndex = 1;
-            this.Controls.Add(this.rightPanel);
+            FormOpacity f1 = new FormOpacity(this);
+            //f1.Show();
 
-            ti = new Timer();
-            ti.Interval = 10;
-            ti.Tick += Timer_tick;
-            ti.Start();
-
-            Transition t = new Transition(new TransitionType_Linear(1000));
-            t.add(this.rightPanel, "Left", this.Width - this.rightPanel.Width);
-            t.run();
+            //Transition t = new Transition(new TransitionType_Linear(1000));
+            //t.add(f1, "Left", this.Width - f1.Width + 8);
+            //t.run();
 
         }
-
-        private void Timer_tick(object sender, EventArgs e)
-        {
-            if (Opacity < 0.6)
-            {
-                Opacity += 0.01;
-            }
-            else
-            {
-                ti.Stop();
-            }
-        }
-
 
     }
 }

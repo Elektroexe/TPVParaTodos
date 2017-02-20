@@ -14,18 +14,18 @@ namespace Desktop.UserControls
 {
     public partial class SidebarTable : MetroUserControl
     {
-        public SidebarTable(MetroForm parent)
+        public SidebarTable() // pasar width y height
         {
             InitializeComponent();
-            this.Parent = parent;
+            //this.Parent = parent;
             initPosition();
         }
 
         private void initPosition()
         {
-            this.Height = Parent.Height -5;
-            this.Width = 300;
-
+            this.Dock = DockStyle.Fill;
+            //this.Height = Parent.Height -5;
+            //this.Width = 300;
             this.mainPanel.BackColor = Color.FromArgb(222, 225, 226);
             this.mainPanel.Dock = DockStyle.Fill;
         }

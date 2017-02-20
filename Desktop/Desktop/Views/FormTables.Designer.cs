@@ -1,6 +1,6 @@
 ﻿using MetroFramework.Controls;
 
-namespace Desktop
+namespace Desktop.Views
 {
     partial class FormTables
     {
@@ -30,8 +30,7 @@ namespace Desktop
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new MetroButton();
-
+            this.button1 = new MetroFramework.Controls.MetroButton();
             this.SuspendLayout();
             // 
             // button1
@@ -42,7 +41,6 @@ namespace Desktop
             this.button1.TabIndex = 0;
             this.button1.Text = "button1";
             this.button1.Click += new System.EventHandler(this.button1_Click);
-
             // 
             // FormTables
             // 
@@ -52,6 +50,7 @@ namespace Desktop
             this.Controls.Add(this.button1);
             this.Name = "FormTables";
             this.Text = "FormTables";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FormTables_Load);
             this.ResumeLayout(false);
 

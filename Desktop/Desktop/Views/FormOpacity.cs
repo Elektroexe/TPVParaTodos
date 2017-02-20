@@ -7,55 +7,82 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Transitions;
 
 namespace Desktop.Views
 {
     public partial class FormOpacity : Form
     {
+        private Form formChild;
+        private Form formParent;
         private Timer timerOpacity;
         
-        public FormOpacity(Form formParent, UserControl uControl)
+        public FormOpacity(Form formParent)
         {
             InitializeComponent();
+
+            this.formParent = formParent;
 
             FormBorderStyle = FormBorderStyle.None;
             ShowInTaskbar = false;
             BackColor = Color.Black;
-            Opacity = 0.05;
+            Opacity = 0.1;
             StartPosition = FormStartPosition.Manual;
             Location = formParent.PointToScreen(Point.Empty);
             Size = formParent.Size;
             ClientSize = formParent.ClientSize;
-            Dock = DockStyle.Fill;
 
-            //timerOpacity = new Timer();
-            //timerOpacity.Interval = 10;
-            //timerOpacity.Enabled = true;
-            //timerOpacity.Tick += TimerOpacity_Tick;
-            
+
+            formChild = new Form();
+            formChild.Height = this.Height - 5;
+            formChild.Width = 300;
+            formChild.StartPosition = FormStartPosition.Manual;
+            formChild.Location = new Point(Width, 5);
+            formChild.FormBorderStyle = FormBorderStyle.None;
+            formChild.ShowInTaskbar = false;
+
+            UserControls.SidebarTable rightPanel = new UserControls.SidebarTable();
+            formChild.Controls.Add(rightPanel);
+
             Show();
+            formChild.Show();
 
-            //Form containerForm = new Form();
-            //containerForm.ShowInTaskbar = false;
-            //containerForm.StartPosition = FormStartPosition.CenterParent;
-            //containerForm.Height = Height;
-            //containerForm.Width = Width / 2;
-            //containerForm.Location = PointToScreen(new Point(Width / 2, 0));
-            //containerForm.StartPosition = FormStartPosition.Manual;
-            //containerForm.Controls.Add(uControl);
-            //containerForm.FormBorderStyle = FormBorderStyle.None;
-            //containerForm.Show();
+            Transition t = new Transition(new TransitionType_Linear(1000));
+            t.add(formChild, "Left", this.Width - formChild.Width + 8);
+            t.run();
+
+
+            //this.Controls.Add(formChild);
+
+            GotFocus += CloseForm;
         }
 
         private void FormOpacity_Load(object sender, EventArgs e)
         {
-            //timerOpacity.Start();
+            timerOpacity = new Timer();
+            timerOpacity.Interval = 10;
+            timerOpacity.Tick += TimerOpacity_Tick;
+            timerOpacity.Start();
         }
 
         private void TimerOpacity_Tick(object sender, EventArgs e)
         {
-
+            if (Opacity < 0.6)
+            {
+                Opacity += 0.01;
+            }
+            else
+            {
+                timerOpacity.Stop();
+            }
         }
-        
+
+
+        private void CloseForm(object sender, EventArgs e)
+        {
+            formParent.Activate();
+            formChild.Close();
+            this.Close();
+        }
     }
 }
