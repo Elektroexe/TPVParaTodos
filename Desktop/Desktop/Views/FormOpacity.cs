@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Desktop.UserControls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,7 +18,7 @@ namespace Desktop.Views
         private Form formParent;
         private Timer timerOpacity;
         
-        public FormOpacity(Form formParent)
+        public FormOpacity(Form formParent, TableUC table)
         {
             InitializeComponent();
 
@@ -35,13 +36,13 @@ namespace Desktop.Views
 
             formChild = new Form();
             formChild.Height = this.Height - 5;
-            formChild.Width = 300;
+            formChild.Width = 308;
             formChild.StartPosition = FormStartPosition.Manual;
             formChild.Location = new Point(Width, 5);
             formChild.FormBorderStyle = FormBorderStyle.None;
             formChild.ShowInTaskbar = false;
 
-            UserControls.SidebarTable rightPanel = new UserControls.SidebarTable();
+            UserControls.SidebarTable rightPanel = new SidebarTable(table);
             formChild.Controls.Add(rightPanel);
 
             Show();

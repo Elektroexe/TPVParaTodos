@@ -68,6 +68,12 @@
     <Compile Include="UserControls\SidebarTable.Designer.cs">
       <DependentUpon>SidebarTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\TableUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\TableUC.Designer.cs">
+      <DependentUpon>TableUC.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,6 +107,9 @@
     </Compile>
     <EmbeddedResource Include="UserControls\SidebarTable.resx">
       <DependentUpon>SidebarTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\TableUC.resx">
+      <DependentUpon>TableUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
