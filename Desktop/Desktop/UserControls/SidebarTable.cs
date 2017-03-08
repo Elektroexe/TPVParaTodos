@@ -38,15 +38,17 @@ namespace Desktop.UserControls
             //this.pictureBox1.Location = new Point(50, 50);
             //this.pictureBox1.Paint += paintPb;
 
+            String[] buttons = new String[] { "Añadir comanda", "Ver comanda", "Modificar comanda", "Cerrar comanda" };
+
             int ant = 300;
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
             {
 
                 MetroButton btn = new MetroButton();
                 btn.Location = new Point(15, ant);
                 btn.Size = new Size(270, 45);
                 btn.Name = "btn" + i;
-                btn.Text = "Button " + (i+1);
+                btn.Text = buttons[i];
                 this.mainPanel.Controls.Add(btn);
                 ant += 60;
             }
