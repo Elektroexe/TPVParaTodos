@@ -1,0 +1,566 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TPVParaTodosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Drink">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="commentary" Type="nchar" MaxLength="300" />
+          <Property Name="capacity" Type="int" />
+          <Property Name="typeBottle" Type="nchar" MaxLength="20" />
+          <Property Name="soda" Type="bit" />
+          <Property Name="alcohol" Type="bit" />
+        </EntityType>
+        <EntityType Name="Food">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="partOfMenu" Type="nchar" MaxLength="20" />
+          <Property Name="familyDish" Type="nchar" MaxLength="20" />
+          <Property Name="commentary" Type="nchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="peopleNumber" Type="smallint" Nullable="false" />
+          <Property Name="description" Type="nchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Menu_has_Drink">
+          <Key>
+            <PropertyRef Name="drink_id" />
+            <PropertyRef Name="menu_id" />
+          </Key>
+          <Property Name="drink_id" Type="int" Nullable="false" />
+          <Property Name="menu_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Menu_has_Food">
+          <Key>
+            <PropertyRef Name="food_id" />
+            <PropertyRef Name="menu_id" />
+          </Key>
+          <Property Name="food_id" Type="int" Nullable="false" />
+          <Property Name="menu_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="table_id" Type="int" Nullable="false" />
+          <Property Name="total" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="employee_id" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order_has_Drink">
+          <Key>
+            <PropertyRef Name="drink_id" />
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="drink_id" Type="int" Nullable="false" />
+          <Property Name="order_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order_has_Food">
+          <Key>
+            <PropertyRef Name="food_id" />
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="food_id" Type="int" Nullable="false" />
+          <Property Name="order_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order_has_Menu">
+          <Key>
+            <PropertyRef Name="menu_id" />
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="menu_id" Type="int" Nullable="false" />
+          <Property Name="order_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="maxPeople" Type="int" />
+          <Property Name="location" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_dbo_Menu_has_Drink_dbo_Drink_drink_id">
+          <End Role="Drink" Type="Self.Drink" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Menu_has_Drink" Type="Self.Menu_has_Drink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drink">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Menu_has_Drink">
+              <PropertyRef Name="drink_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Menu_has_Drink_dbo_Menu_menu_id">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Menu_has_Drink" Type="Self.Menu_has_Drink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Menu_has_Drink">
+              <PropertyRef Name="menu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Menu_has_Food_dbo_Food_food_id">
+          <End Role="Food" Type="Self.Food" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Menu_has_Food" Type="Self.Menu_has_Food" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Menu_has_Food">
+              <PropertyRef Name="food_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Menu_has_Food_dbo_Menu_menu_id">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Menu_has_Food" Type="Self.Menu_has_Food" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Menu_has_Food">
+              <PropertyRef Name="menu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Order_dbo_Table_table_id">
+          <End Role="Table" Type="Self.Table" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="table_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Order_has_Drink_dbo_Drink_drink_id">
+          <End Role="Drink" Type="Self.Drink" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order_has_Drink" Type="Self.Order_has_Drink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drink">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Order_has_Drink">
+              <PropertyRef Name="drink_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Order_has_Drink_dbo_Order_order_id">
+          <End Role="Order" Type="Self.Order" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order_has_Drink" Type="Self.Order_has_Drink" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Order_has_Drink">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Order_has_Food_dbo_Food_food_id">
+          <End Role="Food" Type="Self.Food" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order_has_Food" Type="Self.Order_has_Food" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Order_has_Food">
+              <PropertyRef Name="food_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Order_has_Food_dbo_Order_order_id">
+          <End Role="Order" Type="Self.Order" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order_has_Food" Type="Self.Order_has_Food" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Order_has_Food">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Order_has_Menu_dbo_Menu_menu_id">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order_has_Menu" Type="Self.Order_has_Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Order_has_Menu">
+              <PropertyRef Name="menu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Order_has_Menu_dbo_Order_order_id">
+          <End Role="Order" Type="Self.Order" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order_has_Menu" Type="Self.Order_has_Menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Order_has_Menu">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TPVParaTodosModelStoreContainer">
+          <EntitySet Name="Drink" EntityType="Self.Drink" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Food" EntityType="Self.Food" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menu_has_Drink" EntityType="Self.Menu_has_Drink" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menu_has_Food" EntityType="Self.Menu_has_Food" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_has_Drink" EntityType="Self.Order_has_Drink" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_has_Food" EntityType="Self.Order_has_Food" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_has_Menu" EntityType="Self.Order_has_Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Menu_has_Drink_dbo_Drink_drink_id" Association="Self.FK_dbo_Menu_has_Drink_dbo_Drink_drink_id">
+            <End Role="Drink" EntitySet="Drink" />
+            <End Role="Menu_has_Drink" EntitySet="Menu_has_Drink" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Menu_has_Drink_dbo_Menu_menu_id" Association="Self.FK_dbo_Menu_has_Drink_dbo_Menu_menu_id">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="Menu_has_Drink" EntitySet="Menu_has_Drink" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Menu_has_Food_dbo_Food_food_id" Association="Self.FK_dbo_Menu_has_Food_dbo_Food_food_id">
+            <End Role="Food" EntitySet="Food" />
+            <End Role="Menu_has_Food" EntitySet="Menu_has_Food" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Menu_has_Food_dbo_Menu_menu_id" Association="Self.FK_dbo_Menu_has_Food_dbo_Menu_menu_id">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="Menu_has_Food" EntitySet="Menu_has_Food" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Order_dbo_Table_table_id" Association="Self.FK_dbo_Order_dbo_Table_table_id">
+            <End Role="Table" EntitySet="Table" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Order_has_Drink_dbo_Drink_drink_id" Association="Self.FK_dbo_Order_has_Drink_dbo_Drink_drink_id">
+            <End Role="Drink" EntitySet="Drink" />
+            <End Role="Order_has_Drink" EntitySet="Order_has_Drink" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Order_has_Drink_dbo_Order_order_id" Association="Self.FK_dbo_Order_has_Drink_dbo_Order_order_id">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Order_has_Drink" EntitySet="Order_has_Drink" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Order_has_Food_dbo_Food_food_id" Association="Self.FK_dbo_Order_has_Food_dbo_Food_food_id">
+            <End Role="Food" EntitySet="Food" />
+            <End Role="Order_has_Food" EntitySet="Order_has_Food" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Order_has_Food_dbo_Order_order_id" Association="Self.FK_dbo_Order_has_Food_dbo_Order_order_id">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Order_has_Food" EntitySet="Order_has_Food" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Order_has_Menu_dbo_Menu_menu_id" Association="Self.FK_dbo_Order_has_Menu_dbo_Menu_menu_id">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="Order_has_Menu" EntitySet="Order_has_Menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Order_has_Menu_dbo_Order_order_id" Association="Self.FK_dbo_Order_has_Menu_dbo_Order_order_id">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Order_has_Menu" EntitySet="Order_has_Menu" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TPVParaTodosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Drink">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="commentary" Type="String" MaxLength="300" FixedLength="true" Unicode="true" />
+          <Property Name="capacity" Type="Int32" />
+          <Property Name="typeBottle" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="soda" Type="Boolean" />
+          <Property Name="alcohol" Type="Boolean" />
+          <NavigationProperty Name="Menus" Relationship="Self.Menu_has_Drink" FromRole="Drink" ToRole="Menu" />
+          <NavigationProperty Name="Orders" Relationship="Self.Order_has_Drink" FromRole="Drink" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Food">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="partOfMenu" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="familyDish" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="commentary" Type="String" MaxLength="300" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Menus" Relationship="Self.Menu_has_Food" FromRole="Food" ToRole="Menu" />
+          <NavigationProperty Name="Orders" Relationship="Self.Order_has_Food" FromRole="Food" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="peopleNumber" Type="Int16" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="300" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Drinks" Relationship="Self.Menu_has_Drink" FromRole="Menu" ToRole="Drink" />
+          <NavigationProperty Name="Foods" Relationship="Self.Menu_has_Food" FromRole="Menu" ToRole="Food" />
+          <NavigationProperty Name="Orders" Relationship="Self.Order_has_Menu" FromRole="Menu" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="table_id" Type="Int32" Nullable="false" />
+          <Property Name="total" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="employee_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Table" Relationship="Self.FK_dbo_Order_dbo_Table_table_id" FromRole="Order" ToRole="Table" />
+          <NavigationProperty Name="Drinks" Relationship="Self.Order_has_Drink" FromRole="Order" ToRole="Drink" />
+          <NavigationProperty Name="Foods" Relationship="Self.Order_has_Food" FromRole="Order" ToRole="Food" />
+          <NavigationProperty Name="Menus" Relationship="Self.Order_has_Menu" FromRole="Order" ToRole="Menu" />
+        </EntityType>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="maxPeople" Type="Int32" />
+          <Property Name="location" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_dbo_Order_dbo_Table_table_id" FromRole="Table" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_dbo_Order_dbo_Table_table_id">
+          <End Role="Table" Type="Self.Table" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="table_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Menu_has_Drink">
+          <End Role="Drink" Type="Self.Drink" Multiplicity="*" />
+          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+        </Association>
+        <Association Name="Menu_has_Food">
+          <End Role="Food" Type="Self.Food" Multiplicity="*" />
+          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+        </Association>
+        <Association Name="Order_has_Drink">
+          <End Role="Drink" Type="Self.Drink" Multiplicity="*" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+        </Association>
+        <Association Name="Order_has_Food">
+          <End Role="Food" Type="Self.Food" Multiplicity="*" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+        </Association>
+        <Association Name="Order_has_Menu">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="TPVParaTodosEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Drinks" EntityType="Self.Drink" />
+          <EntitySet Name="Foods" EntityType="Self.Food" />
+          <EntitySet Name="Menus" EntityType="Self.Menu" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Tables" EntityType="Self.Table" />
+          <AssociationSet Name="FK_dbo_Order_dbo_Table_table_id" Association="Self.FK_dbo_Order_dbo_Table_table_id">
+            <End Role="Table" EntitySet="Tables" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="Menu_has_Drink" Association="Self.Menu_has_Drink">
+            <End Role="Drink" EntitySet="Drinks" />
+            <End Role="Menu" EntitySet="Menus" />
+          </AssociationSet>
+          <AssociationSet Name="Menu_has_Food" Association="Self.Menu_has_Food">
+            <End Role="Food" EntitySet="Foods" />
+            <End Role="Menu" EntitySet="Menus" />
+          </AssociationSet>
+          <AssociationSet Name="Order_has_Drink" Association="Self.Order_has_Drink">
+            <End Role="Drink" EntitySet="Drinks" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="Order_has_Food" Association="Self.Order_has_Food">
+            <End Role="Food" EntitySet="Foods" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="Order_has_Menu" Association="Self.Order_has_Menu">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TPVParaTodosModelStoreContainer" CdmEntityContainer="TPVParaTodosEntities">
+          <EntitySetMapping Name="Drinks">
+            <EntityTypeMapping TypeName="TPVParaTodosModel.Drink">
+              <MappingFragment StoreEntitySet="Drink">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="commentary" ColumnName="commentary" />
+                <ScalarProperty Name="capacity" ColumnName="capacity" />
+                <ScalarProperty Name="typeBottle" ColumnName="typeBottle" />
+                <ScalarProperty Name="soda" ColumnName="soda" />
+                <ScalarProperty Name="alcohol" ColumnName="alcohol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Foods">
+            <EntityTypeMapping TypeName="TPVParaTodosModel.Food">
+              <MappingFragment StoreEntitySet="Food">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="partOfMenu" ColumnName="partOfMenu" />
+                <ScalarProperty Name="familyDish" ColumnName="familyDish" />
+                <ScalarProperty Name="commentary" ColumnName="commentary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menus">
+            <EntityTypeMapping TypeName="TPVParaTodosModel.Menu">
+              <MappingFragment StoreEntitySet="Menu">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="peopleNumber" ColumnName="peopleNumber" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="TPVParaTodosModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="table_id" ColumnName="table_id" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tables">
+            <EntityTypeMapping TypeName="TPVParaTodosModel.Table">
+              <MappingFragment StoreEntitySet="Table">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="maxPeople" ColumnName="maxPeople" />
+                <ScalarProperty Name="location" ColumnName="location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Menu_has_Drink" TypeName="TPVParaTodosModel.Menu_has_Drink" StoreEntitySet="Menu_has_Drink">
+            <EndProperty Name="Drink">
+              <ScalarProperty Name="id" ColumnName="drink_id" />
+            </EndProperty>
+            <EndProperty Name="Menu">
+              <ScalarProperty Name="id" ColumnName="menu_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Menu_has_Food" TypeName="TPVParaTodosModel.Menu_has_Food" StoreEntitySet="Menu_has_Food">
+            <EndProperty Name="Food">
+              <ScalarProperty Name="id" ColumnName="food_id" />
+            </EndProperty>
+            <EndProperty Name="Menu">
+              <ScalarProperty Name="id" ColumnName="menu_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Order_has_Drink" TypeName="TPVParaTodosModel.Order_has_Drink" StoreEntitySet="Order_has_Drink">
+            <EndProperty Name="Drink">
+              <ScalarProperty Name="id" ColumnName="drink_id" />
+            </EndProperty>
+            <EndProperty Name="Order">
+              <ScalarProperty Name="id" ColumnName="order_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Order_has_Food" TypeName="TPVParaTodosModel.Order_has_Food" StoreEntitySet="Order_has_Food">
+            <EndProperty Name="Food">
+              <ScalarProperty Name="id" ColumnName="food_id" />
+            </EndProperty>
+            <EndProperty Name="Order">
+              <ScalarProperty Name="id" ColumnName="order_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Order_has_Menu" TypeName="TPVParaTodosModel.Order_has_Menu" StoreEntitySet="Order_has_Menu">
+            <EndProperty Name="Menu">
+              <ScalarProperty Name="id" ColumnName="menu_id" />
+            </EndProperty>
+            <EndProperty Name="Order">
+              <ScalarProperty Name="id" ColumnName="order_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

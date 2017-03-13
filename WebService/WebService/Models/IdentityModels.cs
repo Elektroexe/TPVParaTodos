@@ -21,7 +21,7 @@ namespace WebService.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("TPVConnection", throwIfV1Schema: false)
+            : base("TPVParaTodosEntities", throwIfV1Schema: false)
         {
         }
 
