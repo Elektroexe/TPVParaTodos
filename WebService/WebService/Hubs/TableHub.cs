@@ -10,9 +10,15 @@ namespace WebService.Hubs
 {
     public class TableHub : Hub
     {
-        public void GetAllTables()
+        public void GetAll()
         {
-            Clients.Caller.RefreshTables(Tables.GetTables());
+            Clients.Caller.Refresh(Newtonsoft.Json.JsonConvert.SerializeObject(Tables.GetTables()));
+        }
+
+        public void ChangeStatus(int tableId, bool empty)
+        {
+            Tables.ChangeStatusTable(tableId, empty);
+            Clients.All.Refresh(Newtonsoft.Json.JsonConvert.SerializeObject(Tables.GetTables()));
         }
 
         public override Task OnConnected()
@@ -21,7 +27,7 @@ namespace WebService.Hubs
         }
     }
 
-     static class Tables
+    public static class Tables
     {
         private static List<RestaurantTable> ListTables;
 
@@ -35,12 +41,18 @@ namespace WebService.Hubs
                     Empty = true,
                     id = a.id,
                     location = a.location,
-                    maxPeople = a.maxPeople,
-                    Orders = a.Orders
+                    maxPeople = a.maxPeople
                 }).ToList();
             }
             return ListTables;
         }
+
+        public static void ChangeStatusTable(int tableId, bool tableStatus)
+        {
+            int asda = ListTables.Count;
+            ListTables[tableId].Empty = tableStatus;
+        }
+
     }
 
     public class RestaurantTable
@@ -48,7 +60,7 @@ namespace WebService.Hubs
         public int id { get; set; }
         public Nullable<int> maxPeople { get; set; }
         public string location { get; set; }
-        public virtual ICollection<Order> Orders { get; set; }
+        //public virtual ICollection<Order> Orders { get; set; }
         public bool Empty { get; set; }
     }
 }
