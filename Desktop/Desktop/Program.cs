@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Desktop.Views;
+using Desktop.View;
+using Desktop.Controller.TablesController; // BORRAR
 
 namespace Desktop
 {
@@ -15,9 +16,9 @@ namespace Desktop
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormTables());
+            TablesController t = new TablesController();
+            t.start();
+            //TablesController t = new TablesController();
         }
     }
 }

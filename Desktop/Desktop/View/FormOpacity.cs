@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Transitions;
 
-namespace Desktop.Views
+namespace Desktop.View
 {
     public partial class FormOpacity : Form
     {

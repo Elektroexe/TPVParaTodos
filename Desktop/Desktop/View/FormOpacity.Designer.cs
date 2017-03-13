@@ -1,8 +1,6 @@
-﻿using MetroFramework.Controls;
-
-namespace Desktop.Views
+﻿namespace Desktop.View
 {
-    partial class FormTables
+    partial class FormOpacity
     {
         /// <summary>
         /// Required designer variable.
@@ -32,15 +30,15 @@ namespace Desktop.Views
         {
             this.SuspendLayout();
             // 
-            // FormTables
+            // FormOpacity
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1350, 691);
-            this.Name = "FormTables";
-            this.Resizable = false;
-            this.Text = "Mesas";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "FormOpacity";
+            this.Text = "FormOpacity";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormOpacity_FormClosed);
+            this.Load += new System.EventHandler(this.FormOpacity_Load);
             this.ResumeLayout(false);
 
         }

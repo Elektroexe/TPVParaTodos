@@ -45,6 +45,14 @@
       <HintPath>..\packages\MetroFramework.Fonts.1.2.0.3\lib\net40\MetroFramework.Fonts.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.2.1\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -62,6 +70,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\TablesController.cs" />
+    <Compile Include="Model\TableDTO.cs" />
     <Compile Include="UserControls\SidebarTable.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -74,22 +84,22 @@
     <Compile Include="UserControls\TableUC.Designer.cs">
       <DependentUpon>TableUC.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Form1.cs">
+    <Compile Include="View\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Form1.Designer.cs">
+    <Compile Include="View\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\FormOpacity.cs">
+    <Compile Include="View\FormOpacity.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\FormOpacity.Designer.cs">
+    <Compile Include="View\FormOpacity.Designer.cs">
       <DependentUpon>FormOpacity.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\FormTables.cs">
+    <Compile Include="View\FormTables.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\FormTables.Designer.cs">
+    <Compile Include="View\FormTables.Designer.cs">
       <DependentUpon>FormTables.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -111,13 +121,13 @@
     <EmbeddedResource Include="UserControls\TableUC.resx">
       <DependentUpon>TableUC.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Form1.resx">
+    <EmbeddedResource Include="View\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\FormOpacity.resx">
+    <EmbeddedResource Include="View\FormOpacity.resx">
       <DependentUpon>FormOpacity.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\FormTables.resx">
+    <EmbeddedResource Include="View\FormTables.resx">
       <DependentUpon>FormTables.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -191,6 +201,7 @@
     <Content Include="MetroFramework.txt" />
     <None Include="Resources\mesa_icon.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
