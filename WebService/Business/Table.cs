@@ -9,9 +9,10 @@
 
 namespace Business
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Table
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,10 +21,12 @@ namespace Business
             this.Orders = new HashSet<Order>();
         }
     
-        public int id { get; set; }
-        public Nullable<int> maxPeople { get; set; }
-        public string location { get; set; }
-    
+        public int Id { get; set; }
+        public Nullable<int> MaxPeople { get; set; }
+        public string Location { get; set; }
+        public Nullable<bool> Empty { get; set; }
+        
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
     }

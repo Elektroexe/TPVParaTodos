@@ -13,9 +13,9 @@ namespace Business
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class TPVParaTodosEntities : DbContext
+    public partial class Entities : DbContext
     {
-        public TPVParaTodosEntities()
+        public Entities()
             : base("name=TPVParaTodosEntities")
         {
         }

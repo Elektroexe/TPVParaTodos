@@ -95,7 +95,7 @@ namespace Desktop.Controller.TablesController
 
         private async void test2()
         {
-            await HubProxy.Invoke("changestatus", new Random().Next(4), false);
+            await HubProxy.Invoke("changestatus", 11, false);
         }
         public void start()
         {

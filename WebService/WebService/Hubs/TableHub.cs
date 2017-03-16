@@ -10,15 +10,22 @@ namespace WebService.Hubs
 {
     public class TableHub : Hub
     {
+        private Entities db = new Entities();
         public void GetAll()
         {
-            Clients.Caller.Refresh(Newtonsoft.Json.JsonConvert.SerializeObject(Tables.GetTables()));
+            Clients.Caller.Refresh(Newtonsoft.Json.JsonConvert.SerializeObject(db.Tables.ToList()));
         }
 
-        public void ChangeStatus(int tableId, bool empty)
+        public void ChangeStatus(int tableId)
         {
-            Tables.ChangeStatusTable(tableId, empty);
-            Clients.All.Refresh(Newtonsoft.Json.JsonConvert.SerializeObject(Tables.GetTables()));
+            Table table = db.Tables.FirstOrDefault(a => a.Id == tableId);
+            if (table != null)
+            {
+                table.Empty = !table.Empty;
+                db.Entry(table).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+            Clients.All.Refresh(Newtonsoft.Json.JsonConvert.SerializeObject(db.Tables.ToList()));
         }
 
         public override Task OnConnected()
@@ -27,40 +34,4 @@ namespace WebService.Hubs
         }
     }
 
-    public static class Tables
-    {
-        private static List<RestaurantTable> ListTables;
-
-        public static List<RestaurantTable> GetTables()
-        {
-            if (ListTables == null)
-            {
-                TPVParaTodosEntities db = new TPVParaTodosEntities();
-                ListTables = db.Tables.Select(a => new RestaurantTable
-                {
-                    Empty = true,
-                    id = a.id,
-                    location = a.location,
-                    maxPeople = a.maxPeople
-                }).ToList();
-            }
-            return ListTables;
-        }
-
-        public static void ChangeStatusTable(int tableId, bool tableStatus)
-        {
-            int asda = ListTables.Count;
-            ListTables[tableId].Empty = tableStatus;
-        }
-
-    }
-
-    public class RestaurantTable
-    {
-        public int id { get; set; }
-        public Nullable<int> maxPeople { get; set; }
-        public string location { get; set; }
-        //public virtual ICollection<Order> Orders { get; set; }
-        public bool Empty { get; set; }
-    }
 }

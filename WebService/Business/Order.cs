@@ -22,11 +22,11 @@ namespace Business
             this.Menus = new HashSet<Menu>();
         }
     
-        public int id { get; set; }
-        public int table_id { get; set; }
-        public Nullable<decimal> total { get; set; }
-        public System.DateTime date { get; set; }
-        public string employee_id { get; set; }
+        public int Id { get; set; }
+        public int Table_Id { get; set; }
+        public Nullable<decimal> Total { get; set; }
+        public System.DateTime Date { get; set; }
+        public string Employee_Id { get; set; }
     
         public virtual Table Table { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

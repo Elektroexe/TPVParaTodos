@@ -21,12 +21,12 @@ namespace Business
             this.Orders = new HashSet<Order>();
         }
     
-        public int id { get; set; }
-        public string name { get; set; }
-        public decimal price { get; set; }
-        public string partOfMenu { get; set; }
-        public string familyDish { get; set; }
-        public string commentary { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public string PartOfMenu { get; set; }
+        public string FamilyDish { get; set; }
+        public string Commentary { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Menu> Menus { get; set; }

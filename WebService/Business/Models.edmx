@@ -7,95 +7,96 @@
       <Schema Namespace="TPVParaTodosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Drink">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nchar" MaxLength="30" Nullable="false" />
-          <Property Name="price" Type="decimal" Precision="6" Scale="2" Nullable="false" />
-          <Property Name="commentary" Type="nchar" MaxLength="300" />
-          <Property Name="capacity" Type="int" />
-          <Property Name="typeBottle" Type="nchar" MaxLength="20" />
-          <Property Name="soda" Type="bit" />
-          <Property Name="alcohol" Type="bit" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="Commentary" Type="nchar" MaxLength="300" />
+          <Property Name="Capacity" Type="int" />
+          <Property Name="TypeBottle" Type="nchar" MaxLength="20" />
+          <Property Name="Soda" Type="bit" />
+          <Property Name="Alcohol" Type="bit" />
         </EntityType>
         <EntityType Name="Food">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nchar" MaxLength="30" Nullable="false" />
-          <Property Name="price" Type="decimal" Precision="6" Scale="2" Nullable="false" />
-          <Property Name="partOfMenu" Type="nchar" MaxLength="20" />
-          <Property Name="familyDish" Type="nchar" MaxLength="20" />
-          <Property Name="commentary" Type="nchar" MaxLength="300" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="PartOfMenu" Type="nchar" MaxLength="20" />
+          <Property Name="FamilyDish" Type="nchar" MaxLength="20" />
+          <Property Name="Commentary" Type="nchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nchar" MaxLength="50" Nullable="false" />
-          <Property Name="price" Type="decimal" Precision="7" Scale="2" Nullable="false" />
-          <Property Name="peopleNumber" Type="smallint" Nullable="false" />
-          <Property Name="description" Type="nchar" MaxLength="300" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="PeopleNumber" Type="smallint" Nullable="false" />
+          <Property Name="Description" Type="nchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="Menu_has_Drink">
           <Key>
-            <PropertyRef Name="drink_id" />
-            <PropertyRef Name="menu_id" />
+            <PropertyRef Name="Drink_id" />
+            <PropertyRef Name="Menu_id" />
           </Key>
-          <Property Name="drink_id" Type="int" Nullable="false" />
-          <Property Name="menu_id" Type="int" Nullable="false" />
+          <Property Name="Drink_id" Type="int" Nullable="false" />
+          <Property Name="Menu_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Menu_has_Food">
           <Key>
-            <PropertyRef Name="food_id" />
-            <PropertyRef Name="menu_id" />
+            <PropertyRef Name="Food_id" />
+            <PropertyRef Name="Menu_id" />
           </Key>
-          <Property Name="food_id" Type="int" Nullable="false" />
-          <Property Name="menu_id" Type="int" Nullable="false" />
+          <Property Name="Food_id" Type="int" Nullable="false" />
+          <Property Name="Menu_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="table_id" Type="int" Nullable="false" />
-          <Property Name="total" Type="decimal" Precision="8" Scale="2" />
-          <Property Name="date" Type="date" Nullable="false" />
-          <Property Name="employee_id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Table_Id" Type="int" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Employee_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="Order_has_Drink">
           <Key>
-            <PropertyRef Name="drink_id" />
-            <PropertyRef Name="order_id" />
+            <PropertyRef Name="Drink_Id" />
+            <PropertyRef Name="Order_Id" />
           </Key>
-          <Property Name="drink_id" Type="int" Nullable="false" />
-          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="Drink_Id" Type="int" Nullable="false" />
+          <Property Name="Order_Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Order_has_Food">
           <Key>
-            <PropertyRef Name="food_id" />
-            <PropertyRef Name="order_id" />
+            <PropertyRef Name="Food_Id" />
+            <PropertyRef Name="Order_Id" />
           </Key>
-          <Property Name="food_id" Type="int" Nullable="false" />
-          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="Food_Id" Type="int" Nullable="false" />
+          <Property Name="Order_Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Order_has_Menu">
           <Key>
-            <PropertyRef Name="menu_id" />
-            <PropertyRef Name="order_id" />
+            <PropertyRef Name="Menu_Id" />
+            <PropertyRef Name="Order_Id" />
           </Key>
-          <Property Name="menu_id" Type="int" Nullable="false" />
-          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="Menu_Id" Type="int" Nullable="false" />
+          <Property Name="Order_Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Table">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="maxPeople" Type="int" />
-          <Property Name="location" Type="nchar" MaxLength="10" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="MaxPeople" Type="int" />
+          <Property Name="Location" Type="nchar" MaxLength="10" />
+          <Property Name="Empty" Type="bit" />
         </EntityType>
         <Association Name="FK_dbo_Menu_has_Drink_dbo_Drink_drink_id">
           <End Role="Drink" Type="Self.Drink" Multiplicity="1">
@@ -104,10 +105,10 @@
           <End Role="Menu_has_Drink" Type="Self.Menu_has_Drink" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Drink">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Menu_has_Drink">
-              <PropertyRef Name="drink_id" />
+              <PropertyRef Name="Drink_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -118,10 +119,10 @@
           <End Role="Menu_has_Drink" Type="Self.Menu_has_Drink" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Menu">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Menu_has_Drink">
-              <PropertyRef Name="menu_id" />
+              <PropertyRef Name="Menu_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -132,10 +133,10 @@
           <End Role="Menu_has_Food" Type="Self.Menu_has_Food" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Food">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Menu_has_Food">
-              <PropertyRef Name="food_id" />
+              <PropertyRef Name="Food_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -146,10 +147,10 @@
           <End Role="Menu_has_Food" Type="Self.Menu_has_Food" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Menu">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Menu_has_Food">
-              <PropertyRef Name="menu_id" />
+              <PropertyRef Name="Menu_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -158,10 +159,10 @@
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Table">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Order">
-              <PropertyRef Name="table_id" />
+              <PropertyRef Name="Table_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -172,10 +173,10 @@
           <End Role="Order_has_Drink" Type="Self.Order_has_Drink" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Drink">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Order_has_Drink">
-              <PropertyRef Name="drink_id" />
+              <PropertyRef Name="Drink_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -186,10 +187,10 @@
           <End Role="Order_has_Drink" Type="Self.Order_has_Drink" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Order">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Order_has_Drink">
-              <PropertyRef Name="order_id" />
+              <PropertyRef Name="Order_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -200,10 +201,10 @@
           <End Role="Order_has_Food" Type="Self.Order_has_Food" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Food">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Order_has_Food">
-              <PropertyRef Name="food_id" />
+              <PropertyRef Name="Food_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -214,10 +215,10 @@
           <End Role="Order_has_Food" Type="Self.Order_has_Food" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Order">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Order_has_Food">
-              <PropertyRef Name="order_id" />
+              <PropertyRef Name="Order_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -228,10 +229,10 @@
           <End Role="Order_has_Menu" Type="Self.Order_has_Menu" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Menu">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Order_has_Menu">
-              <PropertyRef Name="menu_id" />
+              <PropertyRef Name="Menu_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -242,10 +243,10 @@
           <End Role="Order_has_Menu" Type="Self.Order_has_Menu" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Order">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Order_has_Menu">
-              <PropertyRef Name="order_id" />
+              <PropertyRef Name="Order_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -312,54 +313,54 @@
       <Schema Namespace="TPVParaTodosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Drink">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="price" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
-          <Property Name="commentary" Type="String" MaxLength="300" FixedLength="true" Unicode="true" />
-          <Property Name="capacity" Type="Int32" />
-          <Property Name="typeBottle" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="soda" Type="Boolean" />
-          <Property Name="alcohol" Type="Boolean" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="Commentary" Type="String" MaxLength="300" FixedLength="true" Unicode="true" />
+          <Property Name="Capacity" Type="Int32" />
+          <Property Name="TypeBottle" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Soda" Type="Boolean" />
+          <Property Name="Alcohol" Type="Boolean" />
           <NavigationProperty Name="Menus" Relationship="Self.Menu_has_Drink" FromRole="Drink" ToRole="Menu" />
           <NavigationProperty Name="Orders" Relationship="Self.Order_has_Drink" FromRole="Drink" ToRole="Order" />
         </EntityType>
         <EntityType Name="Food">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="price" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
-          <Property Name="partOfMenu" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="familyDish" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="commentary" Type="String" MaxLength="300" FixedLength="true" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="PartOfMenu" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="FamilyDish" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Commentary" Type="String" MaxLength="300" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Menus" Relationship="Self.Menu_has_Food" FromRole="Food" ToRole="Menu" />
           <NavigationProperty Name="Orders" Relationship="Self.Order_has_Food" FromRole="Food" ToRole="Order" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="price" Type="Decimal" Precision="7" Scale="2" Nullable="false" />
-          <Property Name="peopleNumber" Type="Int16" Nullable="false" />
-          <Property Name="description" Type="String" MaxLength="300" FixedLength="true" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="PeopleNumber" Type="Int16" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Drinks" Relationship="Self.Menu_has_Drink" FromRole="Menu" ToRole="Drink" />
           <NavigationProperty Name="Foods" Relationship="Self.Menu_has_Food" FromRole="Menu" ToRole="Food" />
           <NavigationProperty Name="Orders" Relationship="Self.Order_has_Menu" FromRole="Menu" ToRole="Order" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="table_id" Type="Int32" Nullable="false" />
-          <Property Name="total" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="employee_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Table_Id" Type="Int32" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Employee_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Table" Relationship="Self.FK_dbo_Order_dbo_Table_table_id" FromRole="Order" ToRole="Table" />
           <NavigationProperty Name="Drinks" Relationship="Self.Order_has_Drink" FromRole="Order" ToRole="Drink" />
           <NavigationProperty Name="Foods" Relationship="Self.Order_has_Food" FromRole="Order" ToRole="Food" />
@@ -367,11 +368,12 @@
         </EntityType>
         <EntityType Name="Table">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="maxPeople" Type="Int32" />
-          <Property Name="location" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="MaxPeople" Type="Int32" />
+          <Property Name="Location" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Empty" Type="Boolean" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_dbo_Order_dbo_Table_table_id" FromRole="Table" ToRole="Order" />
         </EntityType>
         <Association Name="FK_dbo_Order_dbo_Table_table_id">
@@ -379,10 +381,10 @@
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Table">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Order">
-              <PropertyRef Name="table_id" />
+              <PropertyRef Name="Table_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -406,7 +408,7 @@
           <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="TPVParaTodosEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Drinks" EntityType="Self.Drink" />
           <EntitySet Name="Foods" EntityType="Self.Food" />
           <EntitySet Name="Menus" EntityType="Self.Menu" />
@@ -442,102 +444,103 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TPVParaTodosModelStoreContainer" CdmEntityContainer="TPVParaTodosEntities">
+        <EntityContainerMapping StorageEntityContainer="TPVParaTodosModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="Drinks">
             <EntityTypeMapping TypeName="TPVParaTodosModel.Drink">
               <MappingFragment StoreEntitySet="Drink">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="commentary" ColumnName="commentary" />
-                <ScalarProperty Name="capacity" ColumnName="capacity" />
-                <ScalarProperty Name="typeBottle" ColumnName="typeBottle" />
-                <ScalarProperty Name="soda" ColumnName="soda" />
-                <ScalarProperty Name="alcohol" ColumnName="alcohol" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Commentary" ColumnName="Commentary" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="TypeBottle" ColumnName="TypeBottle" />
+                <ScalarProperty Name="Soda" ColumnName="Soda" />
+                <ScalarProperty Name="Alcohol" ColumnName="Alcohol" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Foods">
             <EntityTypeMapping TypeName="TPVParaTodosModel.Food">
               <MappingFragment StoreEntitySet="Food">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="partOfMenu" ColumnName="partOfMenu" />
-                <ScalarProperty Name="familyDish" ColumnName="familyDish" />
-                <ScalarProperty Name="commentary" ColumnName="commentary" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="PartOfMenu" ColumnName="PartOfMenu" />
+                <ScalarProperty Name="FamilyDish" ColumnName="FamilyDish" />
+                <ScalarProperty Name="Commentary" ColumnName="Commentary" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Menus">
             <EntityTypeMapping TypeName="TPVParaTodosModel.Menu">
               <MappingFragment StoreEntitySet="Menu">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="peopleNumber" ColumnName="peopleNumber" />
-                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="PeopleNumber" ColumnName="PeopleNumber" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="TPVParaTodosModel.Order">
               <MappingFragment StoreEntitySet="Order">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="table_id" ColumnName="table_id" />
-                <ScalarProperty Name="total" ColumnName="total" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Table_Id" ColumnName="Table_Id" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tables">
             <EntityTypeMapping TypeName="TPVParaTodosModel.Table">
               <MappingFragment StoreEntitySet="Table">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="maxPeople" ColumnName="maxPeople" />
-                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MaxPeople" ColumnName="MaxPeople" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Empty" ColumnName="Empty" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <AssociationSetMapping Name="Menu_has_Drink" TypeName="TPVParaTodosModel.Menu_has_Drink" StoreEntitySet="Menu_has_Drink">
             <EndProperty Name="Drink">
-              <ScalarProperty Name="id" ColumnName="drink_id" />
+              <ScalarProperty Name="Id" ColumnName="Drink_id" />
             </EndProperty>
             <EndProperty Name="Menu">
-              <ScalarProperty Name="id" ColumnName="menu_id" />
+              <ScalarProperty Name="Id" ColumnName="Menu_id" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="Menu_has_Food" TypeName="TPVParaTodosModel.Menu_has_Food" StoreEntitySet="Menu_has_Food">
             <EndProperty Name="Food">
-              <ScalarProperty Name="id" ColumnName="food_id" />
+              <ScalarProperty Name="Id" ColumnName="Food_id" />
             </EndProperty>
             <EndProperty Name="Menu">
-              <ScalarProperty Name="id" ColumnName="menu_id" />
+              <ScalarProperty Name="Id" ColumnName="Menu_id" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="Order_has_Drink" TypeName="TPVParaTodosModel.Order_has_Drink" StoreEntitySet="Order_has_Drink">
             <EndProperty Name="Drink">
-              <ScalarProperty Name="id" ColumnName="drink_id" />
+              <ScalarProperty Name="Id" ColumnName="Drink_Id" />
             </EndProperty>
             <EndProperty Name="Order">
-              <ScalarProperty Name="id" ColumnName="order_id" />
+              <ScalarProperty Name="Id" ColumnName="Order_Id" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="Order_has_Food" TypeName="TPVParaTodosModel.Order_has_Food" StoreEntitySet="Order_has_Food">
             <EndProperty Name="Food">
-              <ScalarProperty Name="id" ColumnName="food_id" />
+              <ScalarProperty Name="Id" ColumnName="Food_Id" />
             </EndProperty>
             <EndProperty Name="Order">
-              <ScalarProperty Name="id" ColumnName="order_id" />
+              <ScalarProperty Name="Id" ColumnName="Order_Id" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="Order_has_Menu" TypeName="TPVParaTodosModel.Order_has_Menu" StoreEntitySet="Order_has_Menu">
             <EndProperty Name="Menu">
-              <ScalarProperty Name="id" ColumnName="menu_id" />
+              <ScalarProperty Name="Id" ColumnName="Menu_Id" />
             </EndProperty>
             <EndProperty Name="Order">
-              <ScalarProperty Name="id" ColumnName="order_id" />
+              <ScalarProperty Name="Id" ColumnName="Order_Id" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>
