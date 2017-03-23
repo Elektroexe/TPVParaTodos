@@ -56,61 +56,67 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Drink.cs">
-      <DependentUpon>Models.tt</DependentUpon>
+      <DependentUpon>TPVEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Food.cs">
-      <DependentUpon>Models.tt</DependentUpon>
+      <DependentUpon>TPVEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Menu.cs">
-      <DependentUpon>Models.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Models.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Models.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Models.edmx</DependentUpon>
+      <DependentUpon>TPVEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Order.cs">
-      <DependentUpon>Models.tt</DependentUpon>
+      <DependentUpon>TPVEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Table.cs">
-      <DependentUpon>Models.tt</DependentUpon>
+      <DependentUpon>TPVEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPVEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TPVEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPVEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TPVEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TPVEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TPVEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Waiter.cs">
+      <DependentUpon>TPVEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Zone.cs">
+      <DependentUpon>TPVEntities.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <EntityDeploy Include="Models.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Models.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Models.edmx.diagram">
-      <DependentUpon>Models.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
+    <EntityDeploy Include="TPVEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TPVEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="TPVEntities.edmx.diagram">
+      <DependentUpon>TPVEntities.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Models.Context.tt">
+    <Content Include="TPVEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Models.edmx</DependentUpon>
-      <LastGenOutput>Models.Context.cs</LastGenOutput>
+      <DependentUpon>TPVEntities.edmx</DependentUpon>
+      <LastGenOutput>TPVEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models.tt">
+    <Content Include="TPVEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Models.edmx</DependentUpon>
-      <LastGenOutput>Models.cs</LastGenOutput>
+      <DependentUpon>TPVEntities.edmx</DependentUpon>
+      <LastGenOutput>TPVEntities.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

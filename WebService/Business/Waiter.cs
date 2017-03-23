@@ -12,21 +12,11 @@ namespace Business
     using System;
     using System.Collections.Generic;
     
-    public partial class Table
+    public partial class Waiter
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Table()
-        {
-            this.Orders = new HashSet<Order>();
-        }
+        public string Id { get; set; }
+        public Nullable<int> Zone_Id { get; set; }
     
-        public int Id { get; set; }
-        public int MaxPeople { get; set; }
-        public int Zone_Id { get; set; }
-        public bool Empty { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Orders { get; set; }
         public virtual Zone Zone { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using System.Web;
 using Microsoft.AspNet.SignalR;
 using Business;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace WebService.Hubs
 {
@@ -13,7 +14,7 @@ namespace WebService.Hubs
         private Entities db = new Entities();
         public void GetAll()
         {
-            Clients.Caller.Refresh(Newtonsoft.Json.JsonConvert.SerializeObject(db.Tables.ToList()));
+            Clients.Caller.Refresh(JsonFrom(db.Tables.ToList()));
         }
 
         public void ChangeStatus(int tableId)
@@ -25,12 +26,17 @@ namespace WebService.Hubs
                 db.Entry(table).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
-            Clients.All.Refresh(Newtonsoft.Json.JsonConvert.SerializeObject(db.Tables.ToList()));
+            Clients.All.Refresh(JsonFrom(db.Tables.ToList()));
         }
 
         public override Task OnConnected()
         {
             return base.OnConnected();
+        }
+
+        private string JsonFrom (object data)
+        {
+            return JsonConvert.SerializeObject(data, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, PreserveReferencesHandling = PreserveReferencesHandling.None });
         }
     }
 

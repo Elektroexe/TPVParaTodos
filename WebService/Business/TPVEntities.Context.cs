@@ -30,5 +30,7 @@ namespace Business
         public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Table> Tables { get; set; }
+        public virtual DbSet<Waiter> Waiters { get; set; }
+        public virtual DbSet<Zone> Zones { get; set; }
     }
 }
