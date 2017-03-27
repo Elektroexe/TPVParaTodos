@@ -193,7 +193,7 @@
     <Compile Include="Controllers\ApiControllers\DrinkController.cs" />
     <Compile Include="Controllers\ApiControllers\FoodController.cs" />
     <Compile Include="Controllers\ApiControllers\MenuController.cs" />
-    <Compile Include="Controllers\ApiControllers\OrdersController.cs" />
+    <Compile Include="Controllers\ApiControllers\OrderController.cs" />
     <Compile Include="Controllers\ApiControllers\TableController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
