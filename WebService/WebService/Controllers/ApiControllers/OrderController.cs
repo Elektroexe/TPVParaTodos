@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Business;
+using System.Diagnostics;
 
 namespace WebService.Controllers.ApiControllers
 {
@@ -79,8 +80,36 @@ namespace WebService.Controllers.ApiControllers
                 return BadRequest(ModelState);
             }
 
-            db.Orders.Add(order);
-            db.SaveChanges();
+            Order aux = new Order
+            {
+                Date = DateTime.Now,
+                Total = order.Total,
+                Table = db.Tables.FirstOrDefault(a => a.Id == order.Table_Id)
+            };
+
+            List<Drink> drinks = new List<Drink>();
+            List<Food> foods = new List<Food>();
+            foreach (Drink d in order.Drinks)
+            {
+                drinks.Add(db.Drinks.FirstOrDefault(a => a.Id == d.Id));
+            }
+
+            foreach (Food f in order.Foods)
+            {
+                foods.Add(db.Foods.FirstOrDefault(a => a.Id == f.Id));
+            }
+
+            aux.Drinks = drinks;
+            aux.Foods = foods;
+
+            db.Orders.Add(aux);
+            try
+            {
+                db.SaveChanges();
+            } catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = order.Id }, order);
         }

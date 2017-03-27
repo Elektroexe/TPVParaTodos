@@ -223,6 +223,11 @@
     <Content Include="Resources\DrinkImages\2.png" />
     <Content Include="Resources\FoodImages\1.png" />
     <Content Include="Resources\FoodImages\2.png" />
+    <Content Include="Resources\FoodImages\3.png" />
+    <Content Include="Resources\FoodImages\4.png" />
+    <Content Include="Resources\FoodImages\5.png" />
+    <Content Include="Resources\FoodImages\6.png" />
+    <Content Include="Resources\FoodImages\7.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

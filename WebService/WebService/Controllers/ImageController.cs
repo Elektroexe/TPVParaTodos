@@ -9,12 +9,12 @@ namespace WebService.Controllers
 {
     public class ImageController : Controller
     {
-        public FileResult DrinkImage (int id)
+        public FileResult Drink (int id)
         {
             return File(AppDomain.CurrentDomain.BaseDirectory + "\\Resources\\DrinkImages\\" + id +".png", "image/png");
         }
 
-        public FileResult FoodImage (int id)
+        public FileResult Food (int id)
         {
             return File(AppDomain.CurrentDomain.BaseDirectory + "\\Resources\\FoodImages\\" + id + ".png", "image/png");
         }
