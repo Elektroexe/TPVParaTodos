@@ -8,10 +8,11 @@ namespace Desktop.Model
 {
     public class TableDTO
     {
-        public int id { get; set; }
-        public Nullable<int> maxPeople { get; set; }
-        public string location { get; set; }
-        //public virtual ICollection<Order> Orders { get; set; }
+        public int Id { get; set; }
+        public int MaxPeople { get; set; }
+        public int Zone_id { get; set; }
+        //public Zone Zone { get; set; }
+        public virtual List<OrderDTO> Orders { get; set; }
         public bool Empty { get; set; }
     }
 }

@@ -9,22 +9,38 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Controls;
 using MetroFramework.Forms;
+using Desktop.Model;
+using Desktop.Controller;
 
 namespace Desktop.UserControls
 {
     public partial class SidebarTable : MetroUserControl
     {
         private TableUC table;
+
+
+        public TableUC Table{
+            get
+            {
+                return this.table;
+            }
+            set
+            {
+                this.table = value;
+            }
+        }
         public SidebarTable(TableUC table) // pasar width y height
         {
             InitializeComponent();
-            initPosition();
+            //this.table = table;
             this.table = new TableUC(table.TableNumber, 2);
+            this.table.Table = table.Table;
             this.table.BackColor = SystemColors.Control;
             this.table.BorderColor = table.BorderColor;
             this.table.Location = new Point(0, 0);
             this.table.Size = new Size(table.Size.Width * 2, table.Size.Height * 2);
             this.table.initPosition();
+            initPosition();
 
             this.mainPanel.Controls.Add(this.table);
         }
@@ -49,9 +65,17 @@ namespace Desktop.UserControls
                 btn.Size = new Size(270, 45);
                 btn.Name = "btn" + i;
                 btn.Text = buttons[i];
+                btn.Click += clickButton;
                 this.mainPanel.Controls.Add(btn);
                 ant += 60;
             }
+
+            MetroCheckBox chck = new MetroCheckBox();
+            chck.Location = new Point(15, ant);
+            chck.Text = "Ocupada";
+            chck.Checked = !table.Table.Empty;
+            chck.CheckedChanged += CheckBoxChange;
+            this.mainPanel.Controls.Add(chck);
 
             //Label l = new Label();
             //l.Text = "1";
@@ -60,6 +84,19 @@ namespace Desktop.UserControls
             //l.AutoSize = true;
             //l.Font = new Font("Arial Black", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             //pictureBox1.Controls.Add(l);
+        }
+
+        private void clickButton(object sender, EventArgs e)
+        {
+            AddOrderController a = new AddOrderController(table.TableNumber);
+        }
+
+        private void CheckBoxChange(object sender, EventArgs e)
+        {
+            MetroCheckBox chck = (MetroCheckBox)sender;
+            TableDTO t = table.Table;
+            //t.Empty = !chck.Checked;
+            TablesController.modifyTableStatus(t.Id);
         }
 
         //private void paintPanel(object sender, PaintEventArgs e)

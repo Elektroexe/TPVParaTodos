@@ -18,7 +18,7 @@ namespace Desktop.View
         private Form formParent;
         private Timer timerOpacity;
         
-        public FormOpacity(Form formParent, TableUC table)
+        public FormOpacity(Form formParent, SidebarTable rightPanel)
         {
             InitializeComponent();
 
@@ -33,7 +33,6 @@ namespace Desktop.View
             Size = formParent.Size;
             ClientSize = formParent.ClientSize;
 
-
             formChild = new Form();
             formChild.Height = this.Height - 5;
             formChild.Width = 308;
@@ -42,7 +41,6 @@ namespace Desktop.View
             formChild.FormBorderStyle = FormBorderStyle.None;
             formChild.ShowInTaskbar = false;
 
-            UserControls.SidebarTable rightPanel = new SidebarTable(table);
             formChild.Controls.Add(rightPanel);
 
             Show();
@@ -56,6 +54,7 @@ namespace Desktop.View
             //this.Controls.Add(formChild);
 
             GotFocus += CloseForm;
+
         }
 
         private void FormOpacity_Load(object sender, EventArgs e)
@@ -123,6 +122,16 @@ namespace Desktop.View
         private void FormOpacity_FormClosed(object sender, FormClosedEventArgs e)
         {
             formParent.Activate();
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x80;
+                return cp;
+            }
         }
     }
 }
