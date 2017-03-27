@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Controls;
+using Desktop.Model;
 
 namespace Desktop.UserControls
 {
@@ -16,6 +17,7 @@ namespace Desktop.UserControls
         private int _incrementFactor;
         private int _tableNumber;
         private Color _borderColor;
+        private TableDTO _table;
 
         public int TableNumber
         {
@@ -37,6 +39,30 @@ namespace Desktop.UserControls
             set
             {
                 this._borderColor = value;
+            }
+        }
+
+        public TableDTO Table {
+            get
+            {
+                return this._table;
+            }
+            set
+            {
+                this._table = value;
+                this.BorderColor = (this._table.Empty) ? Color.Green : Color.Red;
+            }
+        }
+
+        public int IncrementFactor
+        {
+            get
+            {
+                return this._incrementFactor;
+            }
+            set
+            {
+                this._incrementFactor = value;
             }
         }
 

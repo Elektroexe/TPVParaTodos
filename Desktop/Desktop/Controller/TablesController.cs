@@ -9,16 +9,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Desktop.View;
 using Desktop.Model;
+using Desktop.UserControls;
+using System.Drawing;
 
-namespace Desktop.Controller.TablesController
+namespace Desktop.Controller
 {
     public class TablesController
     {
-        bool testa = false;
         #region Fields
         #region Private Fields
         #region Web-service fields
-        const string SERVER_URI = "http://172.16.100.19/TPVParaTodos/signalr";    // Connection string
+        const string SERVER_URI = "http://tpvparatodos.azurewebsites.net/signalr";    // Connection string
         #endregion
         #endregion
         #endregion
@@ -33,7 +34,7 @@ namespace Desktop.Controller.TablesController
         private FormTables tablesView { get; }
 
         private HubConnection WebServiceConnection { get; set; }
-        private IHubProxy HubProxy { get; set; }
+        private static IHubProxy HubProxy { get; set; } // QUITAR ESE HORROR DE AHI <-- (static)
         #endregion
 
         #endregion
@@ -55,7 +56,6 @@ namespace Desktop.Controller.TablesController
         private async void initWebSocketListener()
         {
             WebServiceConnection = new HubConnection(SERVER_URI);
-            //WebServiceConnection.Closed += Connection_Closed;
             HubProxy = WebServiceConnection.CreateHubProxy("TableHub");
             HubProxy.On<string>("refresh", list => updateTables(list));
             try
@@ -68,7 +68,7 @@ namespace Desktop.Controller.TablesController
                 //StatusText.Text = "Unable to connect to server: Start server before connecting clients.";
                 return;
             }
-            test();
+            getAllTables();
         }
 
         private void updateTables(string tables)
@@ -76,27 +76,47 @@ namespace Desktop.Controller.TablesController
             List<TableDTO> tablesList = (List<TableDTO>)Newtonsoft.Json.JsonConvert.DeserializeObject(tables, typeof(List<TableDTO>));
             foreach (TableDTO t in tablesList)
             {
-                MessageBox.Show(t.id.ToString() + " " + t.Empty.ToString());
+                syncTables(t);
             }
 
-            if (!testa)
+            tablesView.Invoke(new MethodInvoker(delegate () {
+                tablesView.Refresh();
+            }));
+
+            SidebarTable sidebar = this.tablesView.rightPanel;
+            if (sidebar != null)
             {
-                test2();
-                testa = true;
+                TableUC t = (TableUC)tablesView.Controls["tableUC" + sidebar.Table.Table.Id.ToString()];
+                sidebar.Table.Table = t.Table;
+            }
+
+            if (tablesView.rightPanel != null)
+            {
+                tablesView.rightPanel.Invoke(new MethodInvoker(delegate ()
+                {
+                    tablesView.rightPanel.Refresh();
+                }));
             }
         }
         #endregion
 
-        private async void test()
+        private async void getAllTables()
         {
             await HubProxy.Invoke("getall");
 
         }
 
-        private async void test2()
+        public static async void modifyTableStatus(int id)
         {
-            await HubProxy.Invoke("changestatus", 11, false);
+            await HubProxy.Invoke("changestatus", id);
         }
+
+        private void syncTables(TableDTO table)
+        {
+            TableUC t = (TableUC)tablesView.Controls["tableUC" + table.Id];
+            t.Table = table;
+        }
+
         public void start()
         {
             this.run();

@@ -33,16 +33,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MetroFramework, Version=1.2.0.3, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MetroFramework.RunTime.1.2.0.3\lib\net40-Client\MetroFramework.dll</HintPath>
+    <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MetroFramework.Design, Version=1.2.0.3, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MetroFramework.Design.1.2.0.3\lib\net40\MetroFramework.Design.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="MetroFramework.Design, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Design.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="MetroFramework.Fonts, Version=1.2.0.3, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MetroFramework.Fonts.1.2.0.3\lib\net40\MetroFramework.Fonts.dll</HintPath>
+    <Reference Include="MetroFramework.Fonts, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Fonts.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -70,8 +70,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\AddOrderController.cs" />
     <Compile Include="Controller\TablesController.cs" />
+    <Compile Include="Model\DrinkDTO.cs" />
+    <Compile Include="Model\FoodDTO.cs" />
+    <Compile Include="Model\Meal.cs" />
+    <Compile Include="Model\MenuDTO.cs" />
+    <Compile Include="Model\OrderDTO.cs" />
     <Compile Include="Model\TableDTO.cs" />
+    <Compile Include="UserControls\DrinkMealUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\FoodMealUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\MealUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\MealUC.Designer.cs">
+      <DependentUpon>MealUC.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\SidebarTable.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -89,6 +107,12 @@
     </Compile>
     <Compile Include="View\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormAddOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormAddOrder.Designer.cs">
+      <DependentUpon>FormAddOrder.cs</DependentUpon>
     </Compile>
     <Compile Include="View\FormOpacity.cs">
       <SubType>Form</SubType>
@@ -115,6 +139,9 @@
     <Compile Include="UserControls\IconUC.Designer.cs">
       <DependentUpon>IconUC.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UserControls\MealUC.resx">
+      <DependentUpon>MealUC.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\SidebarTable.resx">
       <DependentUpon>SidebarTable.cs</DependentUpon>
     </EmbeddedResource>
@@ -123,6 +150,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormAddOrder.resx">
+      <DependentUpon>FormAddOrder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\FormOpacity.resx">
       <DependentUpon>FormOpacity.cs</DependentUpon>
@@ -198,10 +228,20 @@
     <None Include="Resources\consultaBtn2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MetroFramework.txt" />
     <None Include="Resources\mesa_icon.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\mesa_icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\burger.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minus_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\plus_icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

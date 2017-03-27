@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Desktop.View;
-using Desktop.Controller.TablesController; // BORRAR
+using Desktop.Controller; // BORRAR
 
 namespace Desktop
 {
