@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Business;
+using System.Drawing;
 
 namespace WebService.Controllers.ApiControllers
 {
@@ -34,7 +35,7 @@ namespace WebService.Controllers.ApiControllers
 
             return Ok(drink);
         }
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
