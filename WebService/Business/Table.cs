@@ -20,11 +20,13 @@ namespace Business
             this.Orders = new HashSet<Order>();
         }
     
-        public int id { get; set; }
-        public Nullable<int> maxPeople { get; set; }
-        public string location { get; set; }
+        public int Id { get; set; }
+        public int MaxPeople { get; set; }
+        public int Zone_Id { get; set; }
+        public bool Empty { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual Zone Zone { get; set; }
     }
 }

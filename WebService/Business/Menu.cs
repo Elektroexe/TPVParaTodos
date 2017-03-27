@@ -22,11 +22,11 @@ namespace Business
             this.Orders = new HashSet<Order>();
         }
     
-        public int id { get; set; }
-        public string name { get; set; }
-        public decimal price { get; set; }
-        public short peopleNumber { get; set; }
-        public string description { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public short PeopleNumber { get; set; }
+        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Drink> Drinks { get; set; }
