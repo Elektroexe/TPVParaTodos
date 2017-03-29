@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Business;
+using WebService.Models.DTO;
 
 namespace WebService.Controllers.ApiControllers
 {
@@ -16,13 +17,13 @@ namespace WebService.Controllers.ApiControllers
     {
         private Entities db = new Entities();
 
-        public List<Food> GetAll()
+        public List<FoodDTO> GetAll()
         {
-            return db.Foods.ToList();
+            return db.Foods.ToList().Select(a => new FoodDTO(a)).ToList();
         }
 
         // GET: api/Food/5
-        [ResponseType(typeof(Food))]
+        [ResponseType(typeof(FoodDTO))]
         public IHttpActionResult GetFood(int id)
         {
             Food food = db.Foods.Find(id);
@@ -31,7 +32,7 @@ namespace WebService.Controllers.ApiControllers
                 return NotFound();
             }
 
-            return Ok(food);
+            return Ok(new FoodDTO(food));
         }
 
         protected override void Dispose(bool disposing)

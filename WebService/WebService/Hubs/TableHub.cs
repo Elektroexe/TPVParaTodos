@@ -6,6 +6,8 @@ using Microsoft.AspNet.SignalR;
 using Business;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Diagnostics;
+using WebService.Models.DTO;
 
 namespace WebService.Hubs
 {
@@ -14,7 +16,15 @@ namespace WebService.Hubs
         private Entities db = new Entities();
         public void GetAll()
         {
-            Clients.Caller.Refresh(JsonFrom(db.Tables.ToList()));
+            try
+            {
+                var aux = JsonFrom(db.Tables.Select(a => new TableDTO { Id = a.Id, Empty = a.Empty, MaxPeople = a.MaxPeople, Zone_Id = a.Zone_Id}).ToList());
+                Clients.Caller.Refresh(aux);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
 
         public void ChangeStatus(int tableId)
@@ -36,7 +46,9 @@ namespace WebService.Hubs
 
         private string JsonFrom (object data)
         {
-            return JsonConvert.SerializeObject(data, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, PreserveReferencesHandling = PreserveReferencesHandling.None });
+            var b = data;
+            var c = JsonConvert.SerializeObject(data, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, PreserveReferencesHandling = PreserveReferencesHandling.None });
+            return c;
         }
     }
 

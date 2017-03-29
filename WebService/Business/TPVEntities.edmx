@@ -9,12 +9,12 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="6" Scale="2" Nullable="false" />
-          <Property Name="Commentary" Type="nchar" MaxLength="300" />
+          <Property Name="Commentary" Type="varchar" MaxLength="300" />
           <Property Name="Capacity" Type="int" />
-          <Property Name="TypeBottle" Type="nchar" MaxLength="20" />
+          <Property Name="TypeBottle" Type="varchar" MaxLength="50" />
           <Property Name="Soda" Type="bit" />
           <Property Name="Alcohol" Type="bit" />
         </EntityType>
@@ -22,22 +22,22 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="30" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="6" Scale="2" Nullable="false" />
-          <Property Name="PartOfMenu" Type="nchar" MaxLength="20" />
-          <Property Name="FamilyDish" Type="nchar" MaxLength="20" />
-          <Property Name="Commentary" Type="nchar" MaxLength="300" />
+          <Property Name="PartOfMenu" Type="varchar" MaxLength="50" />
+          <Property Name="FamilyDish" Type="varchar" MaxLength="50" />
+          <Property Name="Commentary" Type="varchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="Menus">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="7" Scale="2" Nullable="false" />
           <Property Name="PeopleNumber" Type="smallint" Nullable="false" />
-          <Property Name="Description" Type="nchar" MaxLength="300" />
+          <Property Name="Description" Type="varchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="Menus_has_Drinks">
           <Key>
@@ -60,10 +60,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Table_Id" Type="int" Nullable="false" />
+          <Property Name="Table_Id" Type="int" />
           <Property Name="Total" Type="decimal" Precision="8" Scale="2" />
-          <Property Name="Date" Type="date" Nullable="false" />
-          <Property Name="Employee_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Date" Type="date" />
         </EntityType>
         <EntityType Name="Orders_has_Drinks">
           <Key>
@@ -169,7 +168,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_Order_dbo_Table_table_id">
-          <End Role="Tables" Type="Self.Tables" Multiplicity="1" />
+          <End Role="Tables" Type="Self.Tables" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tables">
@@ -363,12 +362,12 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
-          <Property Name="Commentary" Type="String" MaxLength="300" FixedLength="true" Unicode="true" />
+          <Property Name="Commentary" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Capacity" Type="Int32" />
-          <Property Name="TypeBottle" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="TypeBottle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Soda" Type="Boolean" />
           <Property Name="Alcohol" Type="Boolean" />
           <NavigationProperty Name="Menus" Relationship="Self.Menus_has_Drinks" FromRole="Drinks" ToRole="Menus" />
@@ -378,12 +377,12 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
-          <Property Name="PartOfMenu" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="FamilyDish" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="Commentary" Type="String" MaxLength="300" FixedLength="true" Unicode="true" />
+          <Property Name="PartOfMenu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FamilyDish" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Commentary" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Menus" Relationship="Self.Menus_has_Foods" FromRole="Foods" ToRole="Menus" />
           <NavigationProperty Name="Orders" Relationship="Self.Orders_has_Foods" FromRole="Foods" ToRole="Orders" />
         </EntityType>
@@ -392,10 +391,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="7" Scale="2" Nullable="false" />
           <Property Name="PeopleNumber" Type="Int16" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="300" FixedLength="true" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Drinks" Relationship="Self.Menus_has_Drinks" FromRole="Menus" ToRole="Drinks" />
           <NavigationProperty Name="Foods" Relationship="Self.Menus_has_Foods" FromRole="Menus" ToRole="Foods" />
           <NavigationProperty Name="Orders" Relationship="Self.Orders_has_Menus" FromRole="Menus" ToRole="Orders" />
@@ -405,10 +404,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Table_Id" Type="Int32" Nullable="false" />
+          <Property Name="Table_Id" Type="Int32" />
           <Property Name="Total" Type="Decimal" Precision="8" Scale="2" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Employee_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Table" Relationship="Self.FK_dbo_Order_dbo_Table_table_id" FromRole="Orders" ToRole="Tables" />
           <NavigationProperty Name="Drinks" Relationship="Self.Orders_has_Drinks" FromRole="Orders" ToRole="Drinks" />
           <NavigationProperty Name="Foods" Relationship="Self.Orders_has_Foods" FromRole="Orders" ToRole="Foods" />
@@ -443,7 +441,7 @@
           <NavigationProperty Name="Waiters" Relationship="Self.FK_Waiters_Zones" FromRole="Zones" ToRole="Waiters" />
         </EntityType>
         <Association Name="FK_dbo_Order_dbo_Table_table_id">
-          <End Role="Tables" Type="Self.Table" Multiplicity="1" />
+          <End Role="Tables" Type="Self.Table" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tables">
@@ -589,7 +587,6 @@
                 <ScalarProperty Name="Table_Id" ColumnName="Table_Id" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

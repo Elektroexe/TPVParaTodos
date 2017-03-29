@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Business;
 using System.Drawing;
+using WebService.Models.DTO;
 
 namespace WebService.Controllers.ApiControllers
 {
@@ -18,13 +19,13 @@ namespace WebService.Controllers.ApiControllers
         private Entities db = new Entities();
 
         // GET: api/Drink
-        public List<Drink> GetAll()
+        public List<DrinkDTO> GetAll()
         {
-            return db.Drinks.ToList();
+            return db.Drinks.ToList().Select(a => new DrinkDTO(a)).ToList();
         }
 
         // GET: api/Drink/5
-        [ResponseType(typeof(Drink))]
+        [ResponseType(typeof(DrinkDTO))]
         public IHttpActionResult GetDrink(int id)
         {
             Drink drink = db.Drinks.Find(id);
@@ -32,8 +33,7 @@ namespace WebService.Controllers.ApiControllers
             {
                 return NotFound();
             }
-
-            return Ok(drink);
+            return Ok(new DrinkDTO(drink));
         }
         
         protected override void Dispose(bool disposing)

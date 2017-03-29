@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Business;
+using System.Diagnostics;
+using WebService.Models.DTO;
 
 namespace WebService.Controllers.ApiControllers
 {
@@ -17,9 +19,9 @@ namespace WebService.Controllers.ApiControllers
         private Entities db = new Entities();
 
         // GET: api/Order
-        public List<Order> GetAll()
+        public List<OrderDTO> GetAll()
         {
-            return db.Orders.ToList();
+            return db.Orders.ToList().Select(a => new OrderDTO(a)).ToList();
         }
 
         // GET: api/Order/5
@@ -32,44 +34,17 @@ namespace WebService.Controllers.ApiControllers
                 return NotFound();
             }
 
-            return Ok(order);
+            return Ok(new OrderDTO(order));
         }
 
-        // PUT: api/Order/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutOrder(int id, Order order)
+        [Route("api/Order/LastByTable/{id}")]
+        public OrderDTO GetByTable (int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != order.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(order).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            Order aux = db.Tables.FirstOrDefault(a => a.Id == id).Orders.LastOrDefault();
+            return new OrderDTO(aux);
         }
 
+// REFACTOR THIS!!
         // POST: api/Order
         [ResponseType(typeof(Order))]
         public IHttpActionResult PostOrder(Order order)
@@ -79,26 +54,55 @@ namespace WebService.Controllers.ApiControllers
                 return BadRequest(ModelState);
             }
 
-            db.Orders.Add(order);
-            db.SaveChanges();
+            Order aux = new Order
+            {
+                Date = DateTime.Now,
+                Total = order.Total,
+                Table = db.Tables.FirstOrDefault(a => a.Id == order.Table_Id)
+            };
+
+            List<Drink> drinks = new List<Drink>();
+            List<Food> foods = new List<Food>();
+            foreach (Drink d in order.Drinks)
+            {
+                drinks.Add(db.Drinks.FirstOrDefault(a => a.Id == d.Id));
+            }
+
+            foreach (Food f in order.Foods)
+            {
+                foods.Add(db.Foods.FirstOrDefault(a => a.Id == f.Id));
+            }
+
+            aux.Drinks = drinks;
+            aux.Foods = foods;
+
+            aux.Table.Empty = false;
+
+            db.Orders.Add(aux);
+
+            try
+            {
+                db.SaveChanges();
+            } catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = order.Id }, order);
         }
 
-        // DELETE: api/Order/5
-        [ResponseType(typeof(Order))]
-        public IHttpActionResult DeleteOrder(int id)
+        [Route("api/Order/CloseOrder/{id}")]
+        public IHttpActionResult CloseOrder(int id)
         {
-            Order order = db.Orders.Find(id);
-            if (order == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                Table aux = db.Tables.FirstOrDefault(a => a.Id == id);
+                aux.Empty = true;
+                db.Entry(aux).State = EntityState.Modified;
+                db.SaveChanges();
+                return Ok();
             }
-
-            db.Orders.Remove(order);
-            db.SaveChanges();
-
-            return Ok(order);
+            return BadRequest();
         }
 
         protected override void Dispose(bool disposing)
@@ -108,11 +112,6 @@ namespace WebService.Controllers.ApiControllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool OrderExists(int id)
-        {
-            return db.Orders.Count(e => e.Id == id) > 0;
         }
     }
 }
