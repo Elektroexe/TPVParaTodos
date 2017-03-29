@@ -20,6 +20,7 @@ namespace Desktop.Controller
     public class AddOrderController
     {
         private FormAddOrder _addOrderView;
+        private OrderDTO _activeOrder;
 
         public static List<Meal> meals;
 
@@ -28,13 +29,39 @@ namespace Desktop.Controller
 
         public AddOrderController(int tableNumber)
         {
+            initControllerItems(tableNumber, null);
+        }
+
+        public AddOrderController(int tableNumber, OrderDTO activeOrder)
+        {
+            initControllerItems(tableNumber, activeOrder);
+            RefreshData();
+        }
+
+        private void initControllerItems(int tableNumber, OrderDTO activeOrder)
+        {
+            meals = new List<Meal>();
             _addOrderView = new FormAddOrder();
+            if (activeOrder != null)
+            {
+                fillMealsFromOrder(activeOrder);
+                _addOrderView.Text = "Modificar comanda";
+            }
             initMeals();
             _addOrderView.Show();
-            this._tableNumber = tableNumber;
+            _tableNumber = tableNumber;
 
-            meals = new List<Meal>();
+            _activeOrder = activeOrder;
             initListeners();
+        }
+
+        private void fillMealsFromOrder(OrderDTO activeOrder)
+        {
+            meals.AddRange(activeOrder.Foods);
+            meals.AddRange(activeOrder.Drinks);
+
+            //HardCoded
+            meals.ForEach(m => m.Quantity = 1);
         }
 
         private void initListeners()
@@ -63,15 +90,14 @@ namespace Desktop.Controller
             int x = _addOrderView.controlTabPanel.Location.X + space + initialX;
             int y = _addOrderView.controlTabPanel.Location.Y + space;
 
-
-            //TESTS
             List<FoodDTO> foods = this.getFoods();
             List<DrinkDTO> drinks = this.getDrinks();
 
             int compt = 1;
             foreach(DrinkDTO d in drinks)
             {
-                DrinkMealUC uc = new DrinkMealUC(d);
+                DrinkDTO drinkAux = meals.OfType<DrinkDTO>().Where(dr => dr.Id == d.Id).FirstOrDefault() ?? d;
+                DrinkMealUC uc = new DrinkMealUC(drinkAux);
                 uc.Location = new Point(x, y);
                 uc.plusPictureBox.MouseClick += UCClick;
                 uc.minusPictureBox.MouseClick += UCClick;
@@ -92,7 +118,8 @@ namespace Desktop.Controller
 
             foreach (FoodDTO f in foods)
             {
-                FoodMealUC uc = new FoodMealUC(f);
+                FoodDTO foodAux = meals.OfType<FoodDTO>().Where(fo => fo.Id == f.Id).FirstOrDefault() ?? f;
+                FoodMealUC uc = new FoodMealUC(foodAux);
                 uc.Location = new Point(x, y);
                 uc.plusPictureBox.MouseClick += UCClick;
                 uc.minusPictureBox.MouseClick += UCClick;
@@ -183,7 +210,7 @@ namespace Desktop.Controller
             order.Foods = new List<FoodDTO>();
             foreach(FoodDTO f in foodsAux)
             {
-                for(int i = 0; i <f.Quantity -1; i++)
+                for(int i = 0; i < f.Quantity; i++)
                 {
                     order.Foods.Add(f);
                 }
@@ -191,7 +218,7 @@ namespace Desktop.Controller
             }
 
             string URI = "http://tpvparatodos.azurewebsites.net/api/Order";
-            //string URI = "http://172.16.100.19/TPVParaTodos/api/Order";
+            //string URI = "http://172.16.10.20/TPVParaTodos/api/Order";
             HttpWebRequest request = WebRequest.Create(URI) as HttpWebRequest;
             string sb = JsonConvert.SerializeObject(order, new JsonSerializerSettings
             {
@@ -207,10 +234,19 @@ namespace Desktop.Controller
             st.Close();
 
             HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            //499 no encontrado
+            //>500 error del servidor 
+            if (((int)response.StatusCode >= 200) && ((int)response.StatusCode <= 299))
+            {
+                FormPopUp f = new FormPopUp();
+                f.ShowDialog();
+            }
         }
 
         private void SendOrder(object sender, EventArgs e)
         {
+            //CommentaryUC c = new CommentaryUC();
+            //new FormOpacity(_addOrderView, c);
             postOrder();
         }
 

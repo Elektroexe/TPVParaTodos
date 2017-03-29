@@ -130,7 +130,7 @@
         public System.Windows.Forms.PictureBox mealPictureBox;
         public System.Windows.Forms.PictureBox plusPictureBox;
         public System.Windows.Forms.PictureBox minusPictureBox;
-        private MetroFramework.Controls.MetroLabel qtyLabel;
+        protected MetroFramework.Controls.MetroLabel qtyLabel;
         protected MetroFramework.Controls.MetroLabel nameLabel;
         protected MetroFramework.Controls.MetroLabel priceLabel;
     }

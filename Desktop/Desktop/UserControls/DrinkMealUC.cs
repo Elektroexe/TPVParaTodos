@@ -16,6 +16,7 @@ namespace Desktop.UserControls
             this.drink = drink;
             this.nameLabel.Text = drink.Name;
             this.priceLabel.Text = drink.Price.ToString() + " €";
+            this.qtyLabel.Text = drink.Quantity.ToString();
             this.RepositionLabels();
         }
 
@@ -33,6 +34,7 @@ namespace Desktop.UserControls
 
             return drink;
         }
+
 
         public override Meal DelFromOrder()
         {

@@ -20,6 +20,7 @@ namespace Desktop.Controller
         #region Private Fields
         #region Web-service fields
         const string SERVER_URI = "http://tpvparatodos.azurewebsites.net/signalr";    // Connection string
+        //const string SERVER_URI = "http://172.16.10.20/TPVParaTodos/signalr";
         #endregion
         #endregion
         #endregion

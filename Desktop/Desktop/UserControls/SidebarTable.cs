@@ -11,6 +11,8 @@ using MetroFramework.Controls;
 using MetroFramework.Forms;
 using Desktop.Model;
 using Desktop.Controller;
+using System.Net;
+using System.IO;
 
 namespace Desktop.UserControls
 {
@@ -59,13 +61,25 @@ namespace Desktop.UserControls
             int ant = 300;
             for (int i = 0; i < 4; i++)
             {
-
                 MetroButton btn = new MetroButton();
                 btn.Location = new Point(15, ant);
                 btn.Size = new Size(270, 45);
                 btn.Name = "btn" + i;
                 btn.Text = buttons[i];
-                btn.Click += clickButton;
+                if (i == 0)
+                {
+                    btn.Click += addOrderButton;
+                    if (!table.Table.Empty) btn.Enabled = false;
+                }
+                if (i == 2)
+                {
+                    btn.Click += modifyOrderButton;
+                }
+
+                if (i >= 1 && i< 4)
+                {
+                    if (table.Table.Empty) btn.Enabled = false;
+                } 
                 this.mainPanel.Controls.Add(btn);
                 ant += 60;
             }
@@ -86,9 +100,23 @@ namespace Desktop.UserControls
             //pictureBox1.Controls.Add(l);
         }
 
-        private void clickButton(object sender, EventArgs e)
+        private void addOrderButton(object sender, EventArgs e)
         {
             AddOrderController a = new AddOrderController(table.TableNumber);
+        }
+
+        private void modifyOrderButton(object sender, EventArgs e)
+        {
+            string URI = "http://172.16.10.20/TPVParaTodos/api/Order/lastByTable/" + table.Table.Id;
+            HttpWebRequest request = WebRequest.Create(URI) as HttpWebRequest;
+            request.Method = "GET";
+            WebResponse response = request.GetResponse();
+            Stream stream = response.GetResponseStream();
+            StreamReader sr = new StreamReader(stream);
+            string strsb = sr.ReadToEnd();
+
+            OrderDTO order = (OrderDTO)Newtonsoft.Json.JsonConvert.DeserializeObject(strsb, typeof(OrderDTO));
+            AddOrderController a = new AddOrderController(table.TableNumber, order);
         }
 
         private void CheckBoxChange(object sender, EventArgs e)
@@ -97,6 +125,11 @@ namespace Desktop.UserControls
             TableDTO t = table.Table;
             //t.Empty = !chck.Checked;
             TablesController.modifyTableStatus(t.Id);
+        }
+
+        private void createBtn()
+        {
+
         }
 
         //private void paintPanel(object sender, PaintEventArgs e)

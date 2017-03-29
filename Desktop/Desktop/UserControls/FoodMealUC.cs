@@ -15,6 +15,7 @@ namespace Desktop.UserControls
         {
             this.food = food;
             this.nameLabel.Text = food.Name;
+            this.qtyLabel.Text = food.Quantity.ToString(); ;
             this.priceLabel.Text = food.Price.ToString() + " €";
             this.RepositionLabels();
         }

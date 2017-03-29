@@ -78,6 +78,12 @@
     <Compile Include="Model\MenuDTO.cs" />
     <Compile Include="Model\OrderDTO.cs" />
     <Compile Include="Model\TableDTO.cs" />
+    <Compile Include="UserControls\CommentaryUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\CommentaryUC.Designer.cs">
+      <DependentUpon>CommentaryUC.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\DrinkMealUC.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -120,6 +126,12 @@
     <Compile Include="View\FormOpacity.Designer.cs">
       <DependentUpon>FormOpacity.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\FormPopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormPopUp.Designer.cs">
+      <DependentUpon>FormPopUp.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\FormTables.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -139,6 +151,9 @@
     <Compile Include="UserControls\IconUC.Designer.cs">
       <DependentUpon>IconUC.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UserControls\CommentaryUC.resx">
+      <DependentUpon>CommentaryUC.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\MealUC.resx">
       <DependentUpon>MealUC.cs</DependentUpon>
     </EmbeddedResource>
@@ -156,6 +171,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\FormOpacity.resx">
       <DependentUpon>FormOpacity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormPopUp.resx">
+      <DependentUpon>FormPopUp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\FormTables.resx">
       <DependentUpon>FormTables.cs</DependentUpon>
@@ -241,6 +259,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\plus_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\correct_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

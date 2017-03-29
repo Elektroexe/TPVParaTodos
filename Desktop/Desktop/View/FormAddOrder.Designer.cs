@@ -42,6 +42,7 @@ namespace Desktop.View
             this.menusTab = new MetroFramework.Controls.MetroTabPage();
             this.metroGrid1 = new MetroFramework.Controls.MetroGrid();
             this.sendOrderBtn = new MetroFramework.Controls.MetroButton();
+            this.drinksTab = new System.Windows.Forms.TabPage();
             this.mealsTabControl.SuspendLayout();
             this.startersTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.metroGrid1)).BeginInit();
@@ -50,6 +51,7 @@ namespace Desktop.View
             // mealsTabControl
             // 
             this.mealsTabControl.Controls.Add(this.startersTab);
+            this.mealsTabControl.Controls.Add(this.drinksTab);
             this.mealsTabControl.Controls.Add(this.meatsTab);
             this.mealsTabControl.Controls.Add(this.fishTab);
             this.mealsTabControl.Controls.Add(this.dessertsTab);
@@ -147,6 +149,9 @@ namespace Desktop.View
             // 
             // metroGrid1
             // 
+            this.metroGrid1.AllowUserToAddRows = false;
+            this.metroGrid1.AllowUserToDeleteRows = false;
+            this.metroGrid1.AllowUserToResizeColumns = false;
             this.metroGrid1.AllowUserToResizeRows = false;
             this.metroGrid1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.metroGrid1.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -199,6 +204,14 @@ namespace Desktop.View
             this.sendOrderBtn.Text = "Enviar comanda";
             this.sendOrderBtn.UseSelectable = true;
             // 
+            // drinksTab
+            // 
+            this.drinksTab.Location = new System.Drawing.Point(4, 38);
+            this.drinksTab.Name = "drinksTab";
+            this.drinksTab.Size = new System.Drawing.Size(1020, 509);
+            this.drinksTab.TabIndex = 5;
+            this.drinksTab.Text = "Bebidas";
+            // 
             // FormAddOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -228,5 +241,6 @@ namespace Desktop.View
         public MetroGrid metroGrid1;
         public System.Windows.Forms.Panel controlTabPanel;
         public MetroButton sendOrderBtn;
+        private System.Windows.Forms.TabPage drinksTab;
     }
 }

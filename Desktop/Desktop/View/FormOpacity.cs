@@ -57,6 +57,41 @@ namespace Desktop.View
 
         }
 
+        public FormOpacity(Form formParent, CommentaryUC commentary)
+        {
+            InitializeComponent();
+
+            this.formParent = formParent;
+
+            FormBorderStyle = FormBorderStyle.None;
+            ShowInTaskbar = false;
+            BackColor = Color.Black;
+            Opacity = 0.1;
+            StartPosition = FormStartPosition.Manual;
+            Location = formParent.PointToScreen(Point.Empty);
+            Size = formParent.Size;
+            ClientSize = formParent.ClientSize;
+
+            formChild = new Form();
+            formChild.Height = commentary.Height;
+            formChild.Width = commentary.Width;
+            formChild.StartPosition = FormStartPosition.Manual;
+            formChild.Location = new Point(-commentary.Height, this.Height/2 - commentary.Height/2);
+            formChild.FormBorderStyle = FormBorderStyle.None;
+            formChild.ShowInTaskbar = false;
+
+            formChild.Controls.Add(commentary);
+
+            Show();
+            formChild.Show();
+
+            Transition t = new Transition(new TransitionType_Linear(400));
+            t.add(formChild, "Left",this.Width/2 - commentary.Width/2);
+            t.run();
+
+            GotFocus += CloseForm;
+        }
+
         private void FormOpacity_Load(object sender, EventArgs e)
         {
             timerOpacity = new Timer();
@@ -118,6 +153,7 @@ namespace Desktop.View
             formChild.Close();
             this.Close();
         }
+
 
         private void FormOpacity_FormClosed(object sender, FormClosedEventArgs e)
         {
