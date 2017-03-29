@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Business;
+using WebService.Models.DTO;
 
 namespace WebService.Controllers.ApiControllers
 {
@@ -17,13 +18,13 @@ namespace WebService.Controllers.ApiControllers
         private Entities db = new Entities();
 
         // GET: api/Menu
-        public List<Menu> GetAll()
+        public List<MenuDTO> GetAll()
         {
-            return db.Menus.ToList();
+            return db.Menus.ToList().Select(a => new MenuDTO(a)).ToList();
         }
 
         // GET: api/Menu/5
-        [ResponseType(typeof(Menu))]
+        [ResponseType(typeof(MenuDTO))]
         public IHttpActionResult GetMenu(int id)
         {
             Menu menu = db.Menus.Find(id);
@@ -32,7 +33,7 @@ namespace WebService.Controllers.ApiControllers
                 return NotFound();
             }
 
-            return Ok(menu);
+            return Ok(new MenuDTO(menu));
         }
 
         protected override void Dispose(bool disposing)

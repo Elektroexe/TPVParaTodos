@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebService.Models.DTO;
 
 namespace WebService.Controllers.ApiControllers
 {
@@ -12,9 +13,9 @@ namespace WebService.Controllers.ApiControllers
     {
         private Entities db = new Entities();
 
-        public List<Table> GetAll()
+        public List<TableDTO> GetAll()
         {
-            return db.Tables.ToList();
+            return db.Tables.ToList().Select(a => new TableDTO(a)).ToList();
         }
 
         protected override void Dispose(bool disposing)

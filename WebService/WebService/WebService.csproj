@@ -203,6 +203,11 @@
     </Compile>
     <Compile Include="Hubs\TableHub.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DTO\DrinkDTO.cs" />
+    <Compile Include="Models\DTO\FoodDTO.cs" />
+    <Compile Include="Models\DTO\MenuDTO.cs" />
+    <Compile Include="Models\DTO\OrderDTO.cs" />
+    <Compile Include="Models\DTO\TableDTO.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
