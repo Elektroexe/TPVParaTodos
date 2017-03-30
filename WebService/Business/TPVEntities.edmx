@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TPVParaTodosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TPVParaTodosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Drinks">
           <Key>
             <PropertyRef Name="Id" />
@@ -63,6 +63,7 @@
           <Property Name="Table_Id" Type="int" />
           <Property Name="Total" Type="decimal" Precision="8" Scale="2" />
           <Property Name="Date" Type="date" />
+          <Property Name="Commentary" Type="text" />
         </EntityType>
         <EntityType Name="Orders_has_Drinks">
           <Key>
@@ -353,8 +354,7 @@
             <End Role="Waiters" EntitySet="Waiters" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TPVParaTodosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -411,6 +411,7 @@
           <NavigationProperty Name="Drinks" Relationship="Self.Orders_has_Drinks" FromRole="Orders" ToRole="Drinks" />
           <NavigationProperty Name="Foods" Relationship="Self.Orders_has_Foods" FromRole="Orders" ToRole="Foods" />
           <NavigationProperty Name="Menus" Relationship="Self.Orders_has_Menus" FromRole="Orders" ToRole="Menus" />
+          <Property Name="Commentary" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Table">
           <Key>
@@ -583,6 +584,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="TPVParaTodosModel.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Commentary" ColumnName="Commentary" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Table_Id" ColumnName="Table_Id" />
                 <ScalarProperty Name="Total" ColumnName="Total" />

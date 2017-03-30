@@ -26,6 +26,7 @@ namespace Business
         public Nullable<int> Table_Id { get; set; }
         public Nullable<decimal> Total { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
+        public string Commentary { get; set; }
     
         public virtual Table Table { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

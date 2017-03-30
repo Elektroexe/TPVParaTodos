@@ -16,15 +16,7 @@ namespace WebService.Hubs
         private Entities db = new Entities();
         public void GetAll()
         {
-            try
-            {
-                var aux = JsonFrom(db.Tables.Select(a => new TableDTO { Id = a.Id, Empty = a.Empty, MaxPeople = a.MaxPeople, Zone_Id = a.Zone_Id}).ToList());
-                Clients.Caller.Refresh(aux);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
+            Clients.Caller.Refresh(JsonFrom(db.Tables.ToList().Select(a => new TableDTO(a)).ToList()));
         }
 
         public void ChangeStatus(int tableId)
@@ -36,7 +28,7 @@ namespace WebService.Hubs
                 db.Entry(table).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
-            Clients.All.Refresh(JsonFrom(db.Tables.ToList()));
+            Clients.All.Refresh(JsonFrom(db.Tables.ToList().Select(a => new TableDTO(a)).ToList()));
         }
 
         public override Task OnConnected()
@@ -46,9 +38,7 @@ namespace WebService.Hubs
 
         private string JsonFrom (object data)
         {
-            var b = data;
-            var c = JsonConvert.SerializeObject(data, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, PreserveReferencesHandling = PreserveReferencesHandling.None });
-            return c;
+            return JsonConvert.SerializeObject(data, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, PreserveReferencesHandling = PreserveReferencesHandling.None });
         }
     }
 

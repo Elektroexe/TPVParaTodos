@@ -53,13 +53,13 @@ namespace WebService.Controllers.ApiControllers
             {
                 return BadRequest(ModelState);
             }
-
             Order aux = new Order
-            {
-                Date = DateTime.Now,
-                Total = order.Total,
-                Table = db.Tables.FirstOrDefault(a => a.Id == order.Table_Id)
-            };
+                {
+                    Date = DateTime.Now,
+                    Total = order.Total,
+                    Commentary = order.Commentary,
+                    Table = db.Tables.FirstOrDefault(a => a.Id == order.Table_Id)
+                };
 
             List<Drink> drinks = new List<Drink>();
             List<Food> foods = new List<Food>();

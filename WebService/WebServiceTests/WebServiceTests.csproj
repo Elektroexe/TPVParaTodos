@@ -54,12 +54,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WebService\WebService.csproj">
-      <Project>{DF056A85-5B4E-483C-8271-AA93C6FD8110}</Project>
-      <Name>WebService</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Hubs\" />
   </ItemGroup>
   <ItemGroup>
