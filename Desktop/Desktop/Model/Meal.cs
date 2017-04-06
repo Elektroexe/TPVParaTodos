@@ -12,8 +12,13 @@ namespace Desktop.Model
         private int qty;
         public Meal() { }
 
+        [Browsable(false)]
+        public virtual int Id { get; set; }
+
+        [DisplayName("Nombre")]
         public virtual string Name {get; set;}
 
+        [DisplayName("Cantidad")]
         public int Quantity {
             get
             {
@@ -25,7 +30,7 @@ namespace Desktop.Model
                 this.TotalPrice = Price * qty;
             }
         }
-
+        [DisplayName("Total")]
         public double TotalPrice { get; set; }
 
         [Browsable(false)]

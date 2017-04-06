@@ -11,6 +11,16 @@ namespace Desktop.UserControls
     public class FoodMealUC: MealUC
     {
         private FoodDTO food;
+
+        public override void SetDTO(Meal meal)
+        {
+            food = (FoodDTO)meal;
+            this.nameLabel.Text = food.Name;
+            this.qtyLabel.Text = food.Quantity.ToString(); ;
+            this.priceLabel.Text = food.Price.ToString() + " €";
+            this.RepositionLabels();
+        }
+
         public FoodMealUC(FoodDTO food):base()
         {
             this.food = food;
@@ -20,6 +30,9 @@ namespace Desktop.UserControls
             this.RepositionLabels();
         }
 
+        // TEST
+        public FoodMealUC()
+        {}
         public override Meal AddToOrder()
         {
             this.food.Quantity += 1;

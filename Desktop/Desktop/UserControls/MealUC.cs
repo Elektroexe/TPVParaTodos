@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Desktop.Model;
+using MetroFramework.Controls;
 
 namespace Desktop.UserControls
 {
@@ -18,6 +19,7 @@ namespace Desktop.UserControls
         public MealUC()
         {
             InitializeComponent();
+            this.Controls.OfType<MetroLabel>().ToList().ForEach(l => l.MouseClick += MealUC_MouseClick);
         }
 
         private void mealPictureBox_Click(object sender, EventArgs e)
@@ -43,6 +45,8 @@ namespace Desktop.UserControls
         public abstract Meal AddToOrder();
 
         public abstract Meal DelFromOrder();
+
+        public abstract void SetDTO(Meal meal);
 
         protected void RepositionLabels()
         {

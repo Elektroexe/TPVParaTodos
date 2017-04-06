@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Controller\AddOrderController.cs" />
     <Compile Include="Controller\TablesController.cs" />
+    <Compile Include="Controller\WebserviceConnection.cs" />
     <Compile Include="Model\DrinkDTO.cs" />
     <Compile Include="Model\FoodDTO.cs" />
     <Compile Include="Model\Meal.cs" />
@@ -95,6 +96,12 @@
     </Compile>
     <Compile Include="UserControls\MealUC.Designer.cs">
       <DependentUpon>MealUC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\NotificationsUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\NotificationsUC.Designer.cs">
+      <DependentUpon>NotificationsUC.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\SidebarTable.cs">
       <SubType>UserControl</SubType>
@@ -156,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\MealUC.resx">
       <DependentUpon>MealUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\NotificationsUC.resx">
+      <DependentUpon>NotificationsUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\SidebarTable.resx">
       <DependentUpon>SidebarTable.cs</DependentUpon>
@@ -262,6 +272,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\correct_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bocata.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\notificationTest1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

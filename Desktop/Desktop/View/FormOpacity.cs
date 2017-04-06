@@ -23,6 +23,7 @@ namespace Desktop.View
             InitializeComponent();
 
             this.formParent = formParent;
+            this.FormClosed += FormOpacity_FormClosed;
 
             FormBorderStyle = FormBorderStyle.None;
             ShowInTaskbar = false;
@@ -51,8 +52,6 @@ namespace Desktop.View
             t.run();
 
 
-            //this.Controls.Add(formChild);
-
             GotFocus += CloseForm;
 
         }
@@ -79,6 +78,7 @@ namespace Desktop.View
             formChild.Location = new Point(-commentary.Height, this.Height/2 - commentary.Height/2);
             formChild.FormBorderStyle = FormBorderStyle.None;
             formChild.ShowInTaskbar = false;
+            commentary.contBtn.Click += CloseForm;
 
             formChild.Controls.Add(commentary);
 
@@ -121,7 +121,6 @@ namespace Desktop.View
             timerOpacity.Start();
 
             this.asd();
-            //this.Close();
 
 
         }

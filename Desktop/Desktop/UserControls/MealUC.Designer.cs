@@ -1,4 +1,7 @@
-﻿namespace Desktop.UserControls
+﻿using System;
+using System.Runtime.Remoting;
+
+namespace Desktop.UserControls
 {
     partial class MealUC
     {
@@ -130,6 +133,7 @@
         public System.Windows.Forms.PictureBox mealPictureBox;
         public System.Windows.Forms.PictureBox plusPictureBox;
         public System.Windows.Forms.PictureBox minusPictureBox;
+
         protected MetroFramework.Controls.MetroLabel qtyLabel;
         protected MetroFramework.Controls.MetroLabel nameLabel;
         protected MetroFramework.Controls.MetroLabel priceLabel;

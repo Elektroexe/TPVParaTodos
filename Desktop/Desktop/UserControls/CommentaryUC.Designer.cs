@@ -134,8 +134,8 @@
 
         private MetroFramework.Controls.MetroLabel commentaryLabel;
         private MetroFramework.Controls.MetroPanel metroPanel1;
-        private MetroFramework.Controls.MetroTextBox commentaryTextBox;
-        private MetroFramework.Controls.MetroButton contBtn;
-        private MetroFramework.Controls.MetroButton skipBtn;
+        public MetroFramework.Controls.MetroTextBox commentaryTextBox;
+        public MetroFramework.Controls.MetroButton contBtn;
+        public MetroFramework.Controls.MetroButton skipBtn;
     }
 }

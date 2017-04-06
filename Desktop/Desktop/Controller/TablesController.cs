@@ -48,6 +48,7 @@ namespace Desktop.Controller
             tablesView = new FormTables();
 
             this.initWebSocketListener();
+            this.initNotifications();
 
         }
         #endregion
@@ -116,6 +117,14 @@ namespace Desktop.Controller
         {
             TableUC t = (TableUC)tablesView.Controls["tableUC" + table.Id];
             t.Table = table;
+        }
+
+        private void initNotifications()
+        {
+            NotificationsUC n = new NotificationsUC();
+            n.Location = new Point(23, 639);
+
+            tablesView.Controls.Add(n);
         }
 
         public void start()

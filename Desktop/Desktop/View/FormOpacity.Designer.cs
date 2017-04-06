@@ -37,7 +37,6 @@
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Name = "FormOpacity";
             this.Text = "FormOpacity";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormOpacity_FormClosed);
             this.Load += new System.EventHandler(this.FormOpacity_Load);
             this.ResumeLayout(false);
 
