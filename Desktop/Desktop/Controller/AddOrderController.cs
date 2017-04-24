@@ -116,8 +116,8 @@ namespace Desktop.Controller
 
             // Get all meals from the database
             List<Meal> meals = new List<Meal>();
-            meals.AddRange(WebserviceConnection.getMeal<FoodDTO>("food"));
-            meals.AddRange(WebserviceConnection.getMeal<DrinkDTO>("drink"));
+            meals.AddRange(WebserviceConnection.getMeal<FoodDTO>("foods"));
+            meals.AddRange(WebserviceConnection.getMeal<DrinkDTO>("drinks"));
 
             // Create all meal object and place in its container
             this.createAndPlaceMeal(meals, x, y, initialX, horizontalQty);

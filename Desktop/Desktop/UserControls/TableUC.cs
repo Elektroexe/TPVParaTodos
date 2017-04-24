@@ -50,7 +50,8 @@ namespace Desktop.UserControls
             set
             {
                 this._table = value;
-                this.BorderColor = (this._table.Empty) ? Color.Green : Color.Red;
+                //this.BorderColor = (this._table.Empty) ? Color.FromArgb(108,191,109) : Color.FromArgb(219, 100,96);
+                this.BorderColor = (this._table.Empty) ? Color.FromArgb(92, 184, 92) : Color.FromArgb(217, 83, 79);
             }
         }
 
@@ -90,19 +91,21 @@ namespace Desktop.UserControls
             l.Parent = pictureBox1;
             l.Location = new Point(36 * _incrementFactor + 1, 88 * _incrementFactor - 1);
             l.AutoSize = true;
-            l.Font = new Font("Arial Black", 11 * _incrementFactor, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            l.Font = new Font("Roboto", 13 * _incrementFactor, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            l.ForeColor = Color.FromArgb(41, 43, 44);
             pictureBox1.Controls.Add(l);
+
+            //l.Visible = false;
         }
 
         private void paintPanel(object sender, PaintEventArgs e)
         {
             Brush brush = new SolidBrush(_borderColor);
-            Pen pen = new Pen(Color.Black, 5);
 
-            int size = 110 * _incrementFactor;
+            int size = 115 * _incrementFactor;
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            e.Graphics.DrawEllipse(pen, new Rectangle((this.Width - size) / 2, (this.Height - size) / 2 - 7 * _incrementFactor, size, size));
+            //e.Graphics.DrawEllipse(pen, new Rectangle((this.Width - size) / 2, (this.Height - size) / 2 - 7 * _incrementFactor, size, size));
             e.Graphics.FillEllipse(brush, new Rectangle((this.Width - size) / 2, (this.Height - size) / 2 - 7 * _incrementFactor, size, size));
 
 
@@ -111,13 +114,17 @@ namespace Desktop.UserControls
         private void paintPb(object sender, PaintEventArgs e)
         {
             Brush brush = new SolidBrush(Color.White);
-            Pen pen = new Pen(Color.Black, 5);
+            //Pen pen = new Pen(Color.Black, 5);
+            Pen pen = new Pen(Color.FromArgb(41, 43, 44), 3);
 
             int size = 25 * _incrementFactor;
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            e.Graphics.DrawEllipse(pen, new Rectangle(this.pictureBox1.Width / 2 - size/2, this.pictureBox1.Height - 30 * _incrementFactor, size, size));
-            e.Graphics.FillEllipse(brush, new Rectangle(this.pictureBox1.Width / 2 - size/2, this.pictureBox1.Height - 30 * _incrementFactor , size, size));
+            e.Graphics.DrawEllipse(pen, new Rectangle(this.pictureBox1.Width / 2 - size / 2, this.pictureBox1.Height - 30 * _incrementFactor, size, size));
+            e.Graphics.FillEllipse(brush, new Rectangle(this.pictureBox1.Width / 2 - size / 2, this.pictureBox1.Height - 30 * _incrementFactor, size, size));
+
+            //e.Graphics.DrawEllipse(pen, new Rectangle(0, 0, size, size));
+            //e.Graphics.FillEllipse(brush, new Rectangle(0, 0, size, size));
 
         }
     }

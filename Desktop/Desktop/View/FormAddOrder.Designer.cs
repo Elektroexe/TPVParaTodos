@@ -36,13 +36,13 @@ namespace Desktop.View
             this.mealsTabControl = new MetroFramework.Controls.MetroTabControl();
             this.startersTab = new MetroFramework.Controls.MetroTabPage();
             this.controlTabPanel = new System.Windows.Forms.Panel();
+            this.drinksTab = new System.Windows.Forms.TabPage();
             this.meatsTab = new MetroFramework.Controls.MetroTabPage();
             this.fishTab = new MetroFramework.Controls.MetroTabPage();
             this.dessertsTab = new MetroFramework.Controls.MetroTabPage();
             this.menusTab = new MetroFramework.Controls.MetroTabPage();
             this.metroGrid1 = new MetroFramework.Controls.MetroGrid();
             this.sendOrderBtn = new MetroFramework.Controls.MetroButton();
-            this.drinksTab = new System.Windows.Forms.TabPage();
             this.mealsTabControl.SuspendLayout();
             this.startersTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.metroGrid1)).BeginInit();
@@ -60,6 +60,7 @@ namespace Desktop.View
             this.mealsTabControl.Name = "mealsTabControl";
             this.mealsTabControl.SelectedIndex = 0;
             this.mealsTabControl.Size = new System.Drawing.Size(1028, 551);
+            this.mealsTabControl.Style = MetroFramework.MetroColorStyle.Silver;
             this.mealsTabControl.TabIndex = 0;
             this.mealsTabControl.UseSelectable = true;
             // 
@@ -88,6 +89,14 @@ namespace Desktop.View
             this.controlTabPanel.Name = "controlTabPanel";
             this.controlTabPanel.Size = new System.Drawing.Size(1014, 503);
             this.controlTabPanel.TabIndex = 2;
+            // 
+            // drinksTab
+            // 
+            this.drinksTab.Location = new System.Drawing.Point(4, 38);
+            this.drinksTab.Name = "drinksTab";
+            this.drinksTab.Size = new System.Drawing.Size(1020, 509);
+            this.drinksTab.TabIndex = 5;
+            this.drinksTab.Text = "Bebidas";
             // 
             // meatsTab
             // 
@@ -158,7 +167,7 @@ namespace Desktop.View
             this.metroGrid1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.metroGrid1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(139)))), ((int)(((byte)(202)))));
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
@@ -169,8 +178,8 @@ namespace Desktop.View
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(136)))), ((int)(((byte)(136)))));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.metroGrid1.DefaultCellStyle = dataGridViewCellStyle2;
@@ -193,6 +202,7 @@ namespace Desktop.View
             this.metroGrid1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.metroGrid1.Size = new System.Drawing.Size(242, 543);
             this.metroGrid1.TabIndex = 1;
+            this.metroGrid1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             // 
             // sendOrderBtn
             // 
@@ -204,14 +214,6 @@ namespace Desktop.View
             this.sendOrderBtn.Text = "Enviar comanda";
             this.sendOrderBtn.UseSelectable = true;
             // 
-            // drinksTab
-            // 
-            this.drinksTab.Location = new System.Drawing.Point(4, 38);
-            this.drinksTab.Name = "drinksTab";
-            this.drinksTab.Size = new System.Drawing.Size(1020, 509);
-            this.drinksTab.TabIndex = 5;
-            this.drinksTab.Text = "Bebidas";
-            // 
             // FormAddOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -221,6 +223,7 @@ namespace Desktop.View
             this.Controls.Add(this.metroGrid1);
             this.Controls.Add(this.mealsTabControl);
             this.Name = "FormAddOrder";
+            this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Añadir comanda";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.mealsTabControl.ResumeLayout(false);

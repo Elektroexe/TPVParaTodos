@@ -11,16 +11,20 @@ using Desktop.View;
 using Desktop.Model;
 using Desktop.UserControls;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Threading;
 
 namespace Desktop.Controller
 {
     public class TablesController
     {
+        private int compt = 0;
+
         #region Fields
         #region Private Fields
         #region Web-service fields
-        const string SERVER_URI = "http://tpvparatodos.azurewebsites.net/signalr";    // Connection string
-        //const string SERVER_URI = "http://172.16.10.20/TPVParaTodos/signalr";
+        //const string SERVER_URI = "http://tpvpt.azurewebsites.net/signalr";    // Connection string
+        const string SERVER_URI = "http://172.16.100.19/TPVParaTodos/signalr";
         #endregion
         #endregion
         #endregion
@@ -48,7 +52,15 @@ namespace Desktop.Controller
             tablesView = new FormTables();
 
             this.initWebSocketListener();
-            this.initNotifications();
+            //this.initNotifications();
+
+            Notifications.startListeningNotifications();
+
+            //Button btn = new Button();
+            //btn.Location = new Point(1000, 700);
+            //btn.Text = "hola";
+            //btn.Click += (o, e) => { this.initNotifications(); };
+            //tablesView.Controls.Add(btn);
 
         }
         #endregion
@@ -119,13 +131,6 @@ namespace Desktop.Controller
             t.Table = table;
         }
 
-        private void initNotifications()
-        {
-            NotificationsUC n = new NotificationsUC();
-            n.Location = new Point(23, 639);
-
-            tablesView.Controls.Add(n);
-        }
 
         public void start()
         {
@@ -140,7 +145,9 @@ namespace Desktop.Controller
             }
             catch (Exception ex)
             {
+                throw;
             }
         }
+
     }
 }

@@ -16,7 +16,6 @@ namespace Desktop.View
     public partial class FormTables : MetroForm
     {
         public FormOpacity formOpacity;
-
         private const int QTYTABLES = 12;
         private const int TABLESEPARATION = 40;
         private const int TABLES_PER_ROW = 6;
@@ -79,7 +78,6 @@ namespace Desktop.View
             rightPanel = new SidebarTable(table);
             formOpacity = new FormOpacity(this, rightPanel);
         }
-
 
     }
 }

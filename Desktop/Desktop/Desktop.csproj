@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\AddOrderController.cs" />
+    <Compile Include="Controller\Notifications.cs" />
     <Compile Include="Controller\TablesController.cs" />
     <Compile Include="Controller\WebserviceConnection.cs" />
     <Compile Include="Model\DrinkDTO.cs" />
@@ -102,6 +103,12 @@
     </Compile>
     <Compile Include="UserControls\NotificationsUC.Designer.cs">
       <DependentUpon>NotificationsUC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\NotificationsV2UC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\NotificationsV2UC.Designer.cs">
+      <DependentUpon>NotificationsV2UC.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\SidebarTable.cs">
       <SubType>UserControl</SubType>
@@ -166,6 +173,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\NotificationsUC.resx">
       <DependentUpon>NotificationsUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\NotificationsV2UC.resx">
+      <DependentUpon>NotificationsV2UC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\SidebarTable.resx">
       <DependentUpon>SidebarTable.cs</DependentUpon>
@@ -281,6 +291,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\notificationTest1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tick_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

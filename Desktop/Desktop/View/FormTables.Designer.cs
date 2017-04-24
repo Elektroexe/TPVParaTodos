@@ -65,6 +65,7 @@ namespace Desktop.View
             this.Controls.Add(this.pictureBox1);
             this.Name = "FormTables";
             this.Resizable = false;
+            this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Mesas";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

@@ -13,7 +13,9 @@ namespace Desktop.Controller
 {
     public class WebserviceConnection
     {
-        private const string URI = "http://tpvparatodos.azurewebsites.net/";
+        //private const string URI = "http://tpvparatodos.azurewebsites.net/";
+        //private const string URI = "http://tpvpt.azurewebsites.net/";
+        private const string URI = "http://172.16.100.19/TPVParaTodos/";
 
         public static List<T> getMeal<T>(string element)
         {
@@ -25,7 +27,7 @@ namespace Desktop.Controller
             StreamReader sr = new StreamReader(stream);
             string strsb = sr.ReadToEnd();
 
-            return (List<T>)Newtonsoft.Json.JsonConvert.DeserializeObject(strsb, typeof(List<T>));
+            return (List<T>)JsonConvert.DeserializeObject(strsb, typeof(List<T>));
         }
 
         public static Image getImage(int id, String meal)

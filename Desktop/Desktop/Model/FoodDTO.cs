@@ -12,7 +12,6 @@ namespace Desktop.Model
         public override int Id { get; set; }
         public override string Name { get; set; }
         public override double Price { get; set; }
-        public string PartOfMenu { get; set; }
         public string FamilyDish { get; set; }
         public string Commentary { get; set; }
 
