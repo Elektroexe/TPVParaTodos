@@ -176,8 +176,8 @@ namespace Desktop.UserControls
 
             List<Meal> meals = new List<Meal>();
             OrderDTO order = this.getActiveOrder();
-            meals.AddRange(order.Drinks);
-            meals.AddRange(order.Foods);
+            if (order.Drinks != null) meals.AddRange(order.Drinks);
+            if (order.Foods != null) meals.AddRange(order.Foods);
 
             BindingList<Meal> mealDataSource = new BindingList<Meal>(meals);
             metroGrid1.DataSource = mealDataSource;
@@ -227,7 +227,9 @@ namespace Desktop.UserControls
 
         private OrderDTO getActiveOrder()
         {
-            string URI = "http://tpvparatodos.azurewebsites.net/api/Order/lastByTable/" + table.Table.Id;
+            //string URI = "http://tpvparatodos.azurewebsites.net/api/Order/lastByTable/" + table.Table.Id;
+            //string URI = "http://172.16.100.19/TPVParaTodos/api/Orders/Manager/" + table.Table.Id;
+            string URI = "http://172.16.10.20/TPVParaTodos/api/Orders/Manager/" + table.Table.Id;
             HttpWebRequest request = WebRequest.Create(URI) as HttpWebRequest;
             request.Method = "GET";
             WebResponse response = request.GetResponse();

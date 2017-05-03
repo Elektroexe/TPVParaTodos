@@ -28,21 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.messageIconPb = new System.Windows.Forms.PictureBox();
             this.messageTextLabel = new MetroFramework.Controls.MetroLabel();
             this.acceptBtn = new MetroFramework.Controls.MetroButton();
+            this.messageIconPb = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.messageIconPb)).BeginInit();
             this.SuspendLayout();
-            // 
-            // messageIconPb
-            // 
-            this.messageIconPb.Image = global::Desktop.Properties.Resources.correct_icon;
-            this.messageIconPb.Location = new System.Drawing.Point(40, 40);
-            this.messageIconPb.Name = "messageIconPb";
-            this.messageIconPb.Size = new System.Drawing.Size(71, 92);
-            this.messageIconPb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.messageIconPb.TabIndex = 0;
-            this.messageIconPb.TabStop = false;
             // 
             // messageTextLabel
             // 
@@ -63,6 +53,16 @@
             this.acceptBtn.Text = "Aceptar";
             this.acceptBtn.UseSelectable = true;
             this.acceptBtn.Click += new System.EventHandler(this.acceptBtn_Click);
+            // 
+            // messageIconPb
+            // 
+            this.messageIconPb.Image = global::Desktop.Properties.Resources.correct_icon;
+            this.messageIconPb.Location = new System.Drawing.Point(39, 48);
+            this.messageIconPb.Name = "messageIconPb";
+            this.messageIconPb.Size = new System.Drawing.Size(69, 76);
+            this.messageIconPb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.messageIconPb.TabIndex = 0;
+            this.messageIconPb.TabStop = false;
             // 
             // FormPopUp
             // 

@@ -149,7 +149,7 @@ namespace Desktop.Controller
                 // Instanciate and initializate Meal user control with the type specified on the bellow string
                 MealUC mealuc = (MealUC)Activator.CreateInstance(null, "Desktop.UserControls." + meal + "MealUC").Unwrap();
                 mealuc.SetDTO(m);
-                mealuc.mealPictureBox.Image = WebserviceConnection.getImage(m.Id, meal);
+                mealuc.mealPictureBox.Image = WebserviceConnection.getImage(m.Id);
                 mealuc.Location = new Point(t_x, t_y);
                 mealuc.plusPictureBox.MouseClick += UCClick;
                 mealuc.minusPictureBox.MouseClick += UCClick;
@@ -256,7 +256,7 @@ namespace Desktop.Controller
 
         private void SendOrder(object sender, EventArgs e)
         {
-            FormPopUp fPop = new FormPopUp();
+            FormPopUp fPop = new FormPopUp(true, "El pedido se ha añadido correctamente");
 
             CommentaryUC c = new CommentaryUC();
 

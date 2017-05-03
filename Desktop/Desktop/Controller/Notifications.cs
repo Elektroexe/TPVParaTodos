@@ -22,7 +22,7 @@ namespace Desktop.Controller
     }
     public class Notifications
     {
-        const string URI = "http://172.16.100.19/TPVParaTodos/signalr";
+        const string URI = "http://172.16.10.20/TPVParaTodos/signalr";
 
         private static HubConnection WebServiceConnection { get; set; }
         private static IHubProxy HubProxy { get; set; }
@@ -30,7 +30,7 @@ namespace Desktop.Controller
         private const int DEFAULT_TIME = 5;
         public static List<Notification> activeNotifications;
 
-        public  static PictureBox addNotificationToList(NotificationsV2UC notification)
+        public static PictureBox addNotificationToList(NotificationsV2UC notification)
         {
             if (activeNotifications == null)
             {
@@ -57,6 +57,7 @@ namespace Desktop.Controller
 
             fadeIn(n);
 
+
             Timer t = new Timer();
             t.Interval = 1000;
             t.Tick += (s, e) =>
@@ -77,7 +78,10 @@ namespace Desktop.Controller
 
         public static void deleteNotificationFromList(Notification n)
         {
-            fadeOut(n);
+            (n.activeNotification.Parent as Form).Invoke(new MethodInvoker(delegate ()
+            {
+                fadeOut(n);
+            }));
         }
 
         private static void fadeOut(Notification n)
@@ -86,10 +90,7 @@ namespace Desktop.Controller
             t.add(n.activeNotification, "Left", -n.activeNotification.Width);
             t.TransitionCompletedEvent += (s, e) =>
             {
-                (n.activeNotification.Parent as Form).Invoke(new MethodInvoker(delegate ()
-                {
-                    (n.activeNotification.Parent as Form).Controls.Remove(n.activeNotification);
-                }));
+                (n.activeNotification.Parent as Form).Controls.Remove(n.activeNotification);
                 activeNotifications.RemoveAt(0);
             };
             t.run();
@@ -106,7 +107,10 @@ namespace Desktop.Controller
         public static void displaceNotifications()
         {
             PictureBox pAux = activeNotifications.First().activeNotification;
-            pAux.Location = new Point(pAux.Location.X, pAux.Location.Y - pAux.Height - 20);
+            (pAux.Parent as Form).Invoke(new MethodInvoker(delegate ()
+            {
+                pAux.Location = new Point(pAux.Location.X, pAux.Location.Y - pAux.Height - 20);
+            }));
 
             int initialPos = pAux.Location.Y;
 
@@ -114,7 +118,10 @@ namespace Desktop.Controller
             {
                 PictureBox pb = n.activeNotification;
                 initialPos = initialPos + pAux.Height + 20;
-                pb.Location = new Point(pb.Location.X, initialPos);
+                (pb.Parent as Form).Invoke(new MethodInvoker(delegate ()
+                {
+                    pb.Location = new Point(pb.Location.X, initialPos);
+                }));
             }
         }
 
@@ -122,7 +129,7 @@ namespace Desktop.Controller
         {
             WebServiceConnection = new HubConnection(URI);
             HubProxy = WebServiceConnection.CreateHubProxy("notificationHub");
-            HubProxy.On<string,string, int>("notify", (title, subtitle, id) => newNotification(id, title, subtitle));
+            HubProxy.On<string, string, int>("notify", (title, subtitle, id) => newNotification(id, title, subtitle));
             try
             {
                 await WebServiceConnection.Start();
@@ -140,7 +147,8 @@ namespace Desktop.Controller
             Form f = Application.OpenForms.Cast<Form>().Where(x => !x.GetType().Equals(typeof(FormOpacity)) && !x.GetType().Equals(typeof(Form))).Last();
             NotificationsV2UC not = new NotificationsV2UC(title, subtitle);
             PictureBox pb = Notifications.addNotificationToList(not);
-            f.Invoke(new MethodInvoker(delegate () {
+            f.Invoke(new MethodInvoker(delegate ()
+            {
                 pb.Parent = f;
                 f.Controls.Add(pb);
                 pb.BringToFront();

@@ -24,7 +24,8 @@ namespace Desktop.Controller
         #region Private Fields
         #region Web-service fields
         //const string SERVER_URI = "http://tpvpt.azurewebsites.net/signalr";    // Connection string
-        const string SERVER_URI = "http://172.16.100.19/TPVParaTodos/signalr";
+        const string SERVER_URI = "http://172.16.10.20/TPVParaTodos/signalr";
+        //const string SERVER_URI = "http://172.16.100.19/TPVParaTodos/signalr";
         #endregion
         #endregion
         #endregion
@@ -54,13 +55,13 @@ namespace Desktop.Controller
             this.initWebSocketListener();
             //this.initNotifications();
 
-            Notifications.startListeningNotifications();
+            //Notifications.startListeningNotifications();
 
-            //Button btn = new Button();
-            //btn.Location = new Point(1000, 700);
-            //btn.Text = "hola";
-            //btn.Click += (o, e) => { this.initNotifications(); };
-            //tablesView.Controls.Add(btn);
+            Button btn = new Button();
+            btn.Location = new Point(1000, 700);
+            btn.Text = "hola";
+            btn.Click += (o, e) => { new LoginController(); };
+            tablesView.Controls.Add(btn);
 
         }
         #endregion

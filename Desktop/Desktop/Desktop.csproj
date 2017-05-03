@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\AddOrderController.cs" />
+    <Compile Include="Controller\LoginController.cs" />
     <Compile Include="Controller\Notifications.cs" />
     <Compile Include="Controller\TablesController.cs" />
     <Compile Include="Controller\WebserviceConnection.cs" />
@@ -134,6 +135,18 @@
     <Compile Include="View\FormAddOrder.Designer.cs">
       <DependentUpon>FormAddOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\FormCloseOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormCloseOrder.Designer.cs">
+      <DependentUpon>FormCloseOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormLogin.Designer.cs">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\FormOpacity.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -188,6 +201,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\FormAddOrder.resx">
       <DependentUpon>FormAddOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormLogin.resx">
+      <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\FormOpacity.resx">
       <DependentUpon>FormOpacity.cs</DependentUpon>
@@ -294,6 +310,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\tick_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\error_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\error_icon1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
