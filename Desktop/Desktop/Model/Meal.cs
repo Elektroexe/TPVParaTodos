@@ -30,7 +30,7 @@ namespace Desktop.Model
                 this.TotalPrice = Price * qty;
             }
         }
-        [DisplayName("Total")]
+        [DisplayName("Subtotal")]
         public double TotalPrice { get; set; }
 
         [Browsable(false)]

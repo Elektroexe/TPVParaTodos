@@ -193,6 +193,9 @@ namespace Desktop.Controller
             order.Total = 0;
             order.Commentary = comment;
 
+            // TESTING 
+            order.Menus = new List<MenuDTO>();
+
             // Add all meals to order
             this.putMealsInOrder<DrinkDTO>("Drink", ref order);
             this.putMealsInOrder<FoodDTO>("Food", ref order);

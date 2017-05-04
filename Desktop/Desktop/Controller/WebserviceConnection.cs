@@ -15,8 +15,8 @@ namespace Desktop.Controller
     {
         //private const string URI = "http://tpvparatodos.azurewebsites.net/";
         //private const string URI = "http://tpvpt.azurewebsites.net/";
-        private const string URI = "http://172.16.10.20/TPVParaTodos/";
-        //private const string URI = "http://172.16.100.19/TPVParaTodos/";
+        //private const string URI = "http://172.16.10.20/TPVParaTodos/";
+        private const string URI = "http://172.16.100.19/TPVParaTodos/";
 
 
         private const string TOKEN_TYPE = "bearer";

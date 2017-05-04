@@ -14,7 +14,7 @@ namespace Desktop.Model
         public System.DateTime Date { get; set; }
         public string Commentary { get; set; }
         //public string Employee_Id { get; set; }
-        public virtual TableDTO Table { get; set; }
+        //public virtual TableDTO Table { get; set; }
         public virtual List<DrinkDTO> Drinks { get; set; }   
         public virtual List<FoodDTO> Foods { get; set; }       
         public virtual List<MenuDTO> Menus { get; set; }
