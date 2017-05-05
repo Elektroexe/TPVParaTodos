@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 using Transitions;
 
@@ -22,7 +23,8 @@ namespace Desktop.Controller
     }
     public class Notifications
     {
-        const string URI = "http://172.16.10.20/TPVParaTodos/signalr";
+        //const string URI = "http://172.16.10.20/TPVParaTodos/signalr";
+        const string URI = "http://172.16.100.19/TPVParaTodos/signalr";
 
         private static HubConnection WebServiceConnection { get; set; }
         private static IHubProxy HubProxy { get; set; }
@@ -58,20 +60,35 @@ namespace Desktop.Controller
             fadeIn(n);
 
 
-            Timer t = new Timer();
+            System.Timers.Timer t = new System.Timers.Timer();
             t.Interval = 1000;
-            t.Tick += (s, e) =>
+            //t.Tick += (s, e) =>
+            //{
+            //    n.remainingTime--;
+            //    MessageBox.Show("hola" + n.remainingTime);
+            //    if (n.remainingTime <= 0)
+            //    {
+            //        t.Stop();
+            //        t.Dispose();
+            //        deleteNotificationFromList(n);
+            //    }
+            //};
+            t.Elapsed += (s, e) =>
             {
                 n.remainingTime--;
                 if (n.remainingTime <= 0)
                 {
+                    //MessageBox.Show("hola" + n.remainingTime);
                     t.Stop();
                     t.Dispose();
                     deleteNotificationFromList(n);
+                    t.Enabled = false;
                 }
             };
 
-            t.Start();
+            t.Enabled = true;
+
+            //t.Start();
 
             return pb;
         }
@@ -88,12 +105,16 @@ namespace Desktop.Controller
         {
             Transition t = new Transition(new TransitionType_Linear(400));
             t.add(n.activeNotification, "Left", -n.activeNotification.Width);
+
+            t.run();
             t.TransitionCompletedEvent += (s, e) =>
             {
-                (n.activeNotification.Parent as Form).Controls.Remove(n.activeNotification);
-                activeNotifications.RemoveAt(0);
+                (n.activeNotification.Parent as Form).Invoke(new MethodInvoker(delegate ()
+                {
+                    (n.activeNotification.Parent as Form).Controls.Remove(n.activeNotification);
+                    activeNotifications.RemoveAt(0);
+                }));
             };
-            t.run();
         }
 
         private static void fadeIn(Notification n)

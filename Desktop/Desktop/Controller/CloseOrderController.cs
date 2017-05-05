@@ -29,7 +29,7 @@ namespace Desktop.Controller
             initList();
             refreshData();
             initListeners();
-            _closeOrderView.ShowDialog();
+            _closeOrderView.Show();
         }
 
         private void initListeners()

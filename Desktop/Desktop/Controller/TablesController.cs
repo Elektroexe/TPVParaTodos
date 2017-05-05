@@ -55,7 +55,7 @@ namespace Desktop.Controller
             this.initWebSocketListener();
             //this.initNotifications();
 
-            //Notifications.startListeningNotifications();
+            Notifications.startListeningNotifications();
 
             Button btn = new Button();
             btn.Location = new Point(1000, 700);

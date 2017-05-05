@@ -208,6 +208,12 @@ namespace Desktop.Controller
             {
                 fPop.ShowDialog();
             }
+            else
+            {
+                fPop.messageTextLabel.Text = "Error añadiendo el pedido";
+                fPop.messageIconPb.Image = Properties.Resources.error_icon;
+                fPop.ShowDialog();
+            }
         }
 
         /// <summary>
@@ -228,10 +234,7 @@ namespace Desktop.Controller
             // Add meals to order
             foreach (T m in mealsAux)
             {
-                for (int i = 0; i < (m as Meal).Quantity; i++)
-                {
-                    (prop.GetValue(order, null) as List<T>).Add(m);
-                }
+                (prop.GetValue(order, null) as List<T>).Add(m);
                 order.Total += (Decimal)(m as Meal).TotalPrice;
             }
         }

@@ -62,7 +62,13 @@ namespace Desktop.Controller
             st.Write(bt, 0, bt.Length);
             st.Close();
 
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            HttpWebResponse response;
+            try {
+                response = request.GetResponse() as HttpWebResponse;
+            } catch(Exception ex)
+            {
+                return 400;
+            }
             return (int)response.StatusCode;
         }
 
