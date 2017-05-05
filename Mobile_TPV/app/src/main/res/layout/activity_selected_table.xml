@@ -8,59 +8,61 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="tpv_paratodos.mobile_tpv.SelectedTable">
+    android:paddingTop="@dimen/activity_vertical_margin">
 
     <Button
-        android:text="Añadir Comanda"
+        android:id="@+id/btnAddOrder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:id="@+id/btn_AddOrder"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/btnViewOrder"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="11dp"
+        android:text="añadir pedido" />
 
     <Button
-        android:text="ver comanda"
+        android:text="ver pedido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/btn_ViewOrder" />
+        android:id="@+id/btnViewOrder" />
 
     <Button
-        android:text="modificar comanda"
+        android:text="modificar pedido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_ModifyOrder"
-        android:layout_below="@+id/btn_ViewOrder"
+        android:id="@+id/btnModifyOrder"
+        android:layout_below="@+id/btnViewOrder"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp" />
 
     <Button
-        android:text="Cerrar Comanda"
+        android:text="cerrar pedido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:id="@+id/btn_CloseOrder"
-        android:layout_below="@+id/btn_ModifyOrder"
+        android:id="@+id/btnCloseOrder"
+        android:layout_below="@+id/btnModifyOrder"
         android:layout_centerHorizontal="true" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
         app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/imgTable"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="53dp"
-        android:id="@+id/imageView" />
+        android:layout_centerHorizontal="true" />
 
-    <ImageButton
+    <Button
+        android:id="@+id/btExit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_menu_revert"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/iBtn_Back" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btnCloseOrder"
+        android:layout_marginTop="18dp"
+        android:text="volver" />
+
 </RelativeLayout>
