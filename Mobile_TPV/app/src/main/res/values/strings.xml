@@ -3,4 +3,8 @@
     <string name="URL_localGRANDE">http://172.16.100.19/TPVParaTodos/</string>
     <string name="URL_localPEQUENA">http://172.16.10.20/TPVParaTodos/</string>
     <string name="URL">http://tpvpt.azurewebsites.net/</string>
+
+    <string name="title_activity_view_order">ViewOrder</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

@@ -91,6 +91,8 @@ public class Tables extends AppCompatActivity {
                             Log.e("Button Table: ", listTables.get(auxNum).toString());
                             Intent auxIntent = new Intent(Tables.this, SelectedTable.class);
 
+                            auxIntent.putExtra("Table", listTables.get(auxNum));
+
                             Bitmap img = ((BitmapDrawable)btTable.getDrawable()).getBitmap();
 
                             Bundle extras = new Bundle();

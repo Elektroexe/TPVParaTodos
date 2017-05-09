@@ -12,6 +12,7 @@ public class DrinkDTO extends ProductDTO {
     private String TypeBottle;
     private boolean Soda;
     private boolean Alcohol;
+    private int Quantity;
 
     public DrinkDTO(){}
 
@@ -23,6 +24,7 @@ public class DrinkDTO extends ProductDTO {
         this.TypeBottle = typeBottle;
         this.Soda = soda;
         this.Alcohol = alcohol;
+        this.Quantity = 0;
     }
 
     public int getCapacity() {
@@ -55,6 +57,14 @@ public class DrinkDTO extends ProductDTO {
 
     public void setAlcohol(boolean alcohol) {
         this.Alcohol = alcohol;
+    }
+
+    public int getQuantity() {
+        return Quantity;
+    }
+
+    public void setQuantity(int qty) {
+        this.Quantity = qty;
     }
 
     @Override

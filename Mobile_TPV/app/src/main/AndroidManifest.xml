@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
         <activity android:name=".View.Tables">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +19,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".View.SelectedTable" />
-        <activity android:name=".View.AddOrder"></activity>
+        <activity android:name=".View.AddOrder" />
+        <activity
+            android:name=".View.ViewOrder"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_view_order"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

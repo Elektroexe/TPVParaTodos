@@ -23,7 +23,7 @@ import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.joshuaorellana.mobile_tpv.Model.OrderDTO;
-import com.joshuaorellana.mobile_tpv.Model.Products.DrinkDTO;
+import com.joshuaorellana.mobile_tpv.Model.Products.FoodDTO;
 import com.joshuaorellana.mobile_tpv.R;
 import com.squareup.picasso.Picasso;
 
@@ -40,17 +40,18 @@ import okhttp3.Response;
 
 import static com.joshuaorellana.mobile_tpv.View.AddOrder.Order;
 
-
 /**
- * Created by Joshua-OC on 04/05/2017.
+ * Created by Joshua-OC on 08/05/2017.
  */
 
-public class Drink extends Fragment {
+public class Food extends Fragment {
+
+    private String _Title;
 
     private String _URL;
     private View rootView;
 
-    private List<DrinkDTO> listDrinks;
+    private List<FoodDTO> listFoods;
     private TableLayout tableLayout;
 
     private DrawerLayout drawer;
@@ -60,11 +61,15 @@ public class Drink extends Fragment {
     private TextView tvQty;
     private ImageView imgBgHeader, imgProduct;
 
-    public Drink() {}
+    public Food(String title) {
+        this._Title = title;
+    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState, String title) {
+
         super.onCreate(savedInstanceState);
+        this._Title = title;
+
     }
 
     @Override
@@ -93,50 +98,53 @@ public class Drink extends Fragment {
         imgBgHeader = (ImageView) navHeader.findViewById(R.id.img_header_bg);
         imgProduct = (ImageView) navHeader.findViewById(R.id.img_Product);
 
-        listDrinks = new ArrayList<>();
 
-        String url = _URL + "api/Drinks";
+        listFoods = new ArrayList<>();
 
-        new loadDrinks().execute(url);
+        String url = _URL + "api/Foods";
+
+        new loadFoods().execute(url);
 
     }
 
-    private class loadDrinks extends AsyncTask<String, Long, String> {
+    private class loadFoods extends AsyncTask<String, Long, String> {
 
         protected String doInBackground(String... urls) {
 
             try {
                 return HttpRequest.get(urls[0]).accept("application/json").body();
-            } catch (HttpRequest.HttpRequestException exception) {
+            } catch (HttpRequest.HttpRequestException execption) {
                 return null;
             }
+
         }
 
         protected void onPostExecute(String response) {
 
-            Log.e("Response", response);
+            ArrayList<FoodDTO> auxList = getFood(response);
 
-            listDrinks = getDrinks(response);
+            for (FoodDTO auxFood : auxList ) {
+                if (auxFood.getFamilyDish().equals(_Title))
+                    listFoods.add(auxFood);
+            }
 
-            if (!listDrinks.isEmpty()) {
-                createDrinkButtons();
+            if(!listFoods.isEmpty()) {
+                createFoodsButtons();
             }
         }
+
     }
 
-    private ArrayList<DrinkDTO> getDrinks(String json) {
+    private ArrayList<FoodDTO> getFood(String json) {
         Gson gson = new Gson();
-        Type tListType = new TypeToken<ArrayList<DrinkDTO>>() {}.getType();
-        Log.e("getDrinks --> ", "SALE");
+        Type tListType = new TypeToken<ArrayList<FoodDTO>>() {}.getType();
         return gson.fromJson(json, tListType);
-
     }
 
-    private void createDrinkButtons() {
-
+    private void createFoodsButtons() {
         int i = 0;
 
-        while ( i < listDrinks.size()) {
+        while (i < listFoods.size()) {
 
             TableRow tr = new TableRow(getActivity().getApplicationContext());
             tr.setId(i + 25);
@@ -146,32 +154,34 @@ public class Drink extends Fragment {
 
             for (int j = 0; j < 2; j++) {
 
-                if (i < listDrinks.size()) {
+                if (i < listFoods.size()) {
 
-                    final ImageButton btDrink = new ImageButton(getActivity().getApplicationContext());
+                    final ImageButton btMeat = new ImageButton(getActivity().getApplicationContext());
                     final int auxNum = i;
 
-                    String url = _URL + "Image/Product/" + listDrinks.get(i).getId();
+                    String url = _URL + "Image/Product/" + listFoods.get(i).getId();
 
-                    Picasso.with(getActivity().getApplicationContext()).load(url).resize(250, 250).into(btDrink);
-                    btDrink.setScaleType(ImageButton.ScaleType.CENTER_INSIDE);
+                    Picasso.with(getActivity().getApplicationContext()).load(url).resize(250, 250).into(btMeat);
+                    btMeat.setScaleType(ImageButton.ScaleType.CENTER_INSIDE);
 
-                    btDrink.setId(listDrinks.get(i).getId());
+                    btMeat.setId(listFoods.get(i).getId());
 
-                    btDrink.setOnClickListener(new View.OnClickListener() {
+                    btMeat.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
 
-                            setUpNavigationView(listDrinks.get(auxNum));
+                            setUpNavigationView(listFoods.get(auxNum));
 
                             drawer.openDrawer(Gravity.LEFT);
 
-                            loadNavigationHeader(listDrinks.get(auxNum), btDrink.getDrawable());
+                            loadNavigationHeader(listFoods.get(auxNum), btMeat.getDrawable());
+
+
 
                         }
                     });
 
-                    tr.addView(btDrink);
+                    tr.addView(btMeat);
 
                 }
 
@@ -183,10 +193,12 @@ public class Drink extends Fragment {
                     TableLayout.LayoutParams.WRAP_CONTENT));
 
         }
-
     }
 
-    private void setUpNavigationView(final DrinkDTO product) {
+    private void setUpNavigationView(final FoodDTO product) {
+
+        Log.e("Product", product.toString());
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -209,7 +221,7 @@ public class Drink extends Fragment {
 
                     case R.id.nav_accept:
 
-                        Order.addDrink(product);
+                        Order.addFood(product);
 
                         break;
 
@@ -222,14 +234,9 @@ public class Drink extends Fragment {
                     case R.id.nav_sendorder:
 
                         String url = _URL + "api/Orders/Manager";
-
                         new sendOrder().execute(url);
 
-
-
-
-
-
+                        break;
                 }
 
                 if (menuItem.isChecked()) {
@@ -239,8 +246,8 @@ public class Drink extends Fragment {
                 }
                 menuItem.setChecked(true);
 
-                for (int i = 0; i < Order.getListDrinks().size(); i++) {
-                    Log.e("Order listDrinks --> ", String.valueOf(Order.getListDrinks().size()));
+                for(int i = 0; i < Order.getListFoods().size(); i++) {
+                    Log.e("Foods --> ", Order.getListFoods().get(i).toString());
                 }
 
                 return true;
@@ -249,7 +256,7 @@ public class Drink extends Fragment {
         });
     }
 
-    private void loadNavigationHeader(DrinkDTO productName, Drawable img) {
+    private void loadNavigationHeader(FoodDTO productName, Drawable img) {
 
         tvProductName.setText(productName.getName());
         tvQty.setText("Cantidad: " + productName.getQuantity());
@@ -283,9 +290,13 @@ public class Drink extends Fragment {
 
             Response response = client.newCall(request).execute();
 
+            Log.e("JSON --> ", json);
+
+
         } catch (Exception err) {
 
             Log.e("Error", err.toString());
+
 
         }
 
@@ -296,8 +307,6 @@ public class Drink extends Fragment {
     private class sendOrder extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
-
-
             return post(urls[0], Order);
         }
         // onPostExecute displays the results of the AsyncTask.
@@ -307,6 +316,9 @@ public class Drink extends Fragment {
             Toast.makeText(getActivity(), "OK!", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
 
 
 

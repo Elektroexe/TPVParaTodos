@@ -10,6 +10,7 @@ public abstract class ProductDTO implements Serializable {
 
     private int Id;
     private String Name;
+
     private double Price;
     private String Description;
 

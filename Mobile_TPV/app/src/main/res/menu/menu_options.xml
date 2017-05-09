@@ -14,4 +14,24 @@
         <!--android:icon="@drawable/ic_photo_library_black_24dp"-->
     </group>
 
+    <item android:title="Opciones">
+        <menu>
+            <item
+                android:id="@+id/nav_accept"
+                android:title="Aceptar" />
+            <item
+                android:id="@+id/nav_decline"
+                android:title="Declinar" />
+        </menu>
+    </item>
+
+    <item android:title="Enviar pedido">
+        <menu>
+            <item
+                android:id="@+id/nav_sendorder"
+                android:title="Enviar pedido" />
+        </menu>
+    </item>
+
+
 </menu>
