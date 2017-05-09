@@ -13,9 +13,9 @@ namespace Desktop.Model
         public override string Name { get; set; }
         public override double Price { get; set; }
         public string FamilyDish { get; set; }
-        public string Commentary { get; set; }
+        public string Description { get; set; }
 
-        public virtual List<MenuDTO> Menus { get; set; }
-        public virtual List<OrderDTO> Orders { get; set; }
+        //public virtual List<MenuDTO> Menus { get; set; }
+        //public virtual List<OrderDTO> Orders { get; set; }
     }
 }

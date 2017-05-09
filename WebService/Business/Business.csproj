@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{076A30DD-69FC-49E5-8922-E96A660B70E2}</ProjectGuid>
+    <ProjectGuid>{C1B91597-9887-42F4-92E6-502E78E269DE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Business</RootNamespace>
     <AssemblyName>Business</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -38,10 +38,6 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -55,69 +51,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Drink.cs">
-      <DependentUpon>TPVEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Food.cs">
-      <DependentUpon>TPVEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Menu.cs">
-      <DependentUpon>TPVEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Order.cs">
-      <DependentUpon>TPVEntities.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Drink.cs" />
+    <Compile Include="Food.cs" />
+    <Compile Include="Menu.cs" />
+    <Compile Include="Order.cs" />
+    <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Table.cs">
-      <DependentUpon>TPVEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TPVEntities.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TPVEntities.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TPVEntities.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TPVEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TPVEntities.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TPVEntities.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Waiter.cs">
-      <DependentUpon>TPVEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Zone.cs">
-      <DependentUpon>TPVEntities.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Staff.cs" />
+    <Compile Include="Table.cs" />
+    <Compile Include="TPVModel.cs" />
+    <Compile Include="Zone.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config" />
+    <None Include="App.config" />
     <None Include="packages.config" />
-    <EntityDeploy Include="TPVEntities.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TPVEntities.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="TPVEntities.edmx.diagram">
-      <DependentUpon>TPVEntities.edmx</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="TPVEntities.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TPVEntities.edmx</DependentUpon>
-      <LastGenOutput>TPVEntities.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="TPVEntities.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TPVEntities.edmx</DependentUpon>
-      <LastGenOutput>TPVEntities.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
