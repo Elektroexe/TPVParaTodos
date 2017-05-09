@@ -83,6 +83,10 @@ namespace Desktop.UserControls
                 {
                     btn.Click += viewOrderButton;
                 }
+                else if (i == 3)
+                {
+                    btn.Click += closeOrderButton;
+                }
 
                 if (i >= 1 && i < 4)
                 {
@@ -118,6 +122,13 @@ namespace Desktop.UserControls
             AddOrderController a = new AddOrderController(table.TableNumber, this.getActiveOrder());
         }
 
+        private void closeOrderButton(object sender, EventArgs e)
+        {
+            OrderDTO activeOrder = getActiveOrder();
+
+            new CloseOrderController(activeOrder);
+        }
+             
         private void viewOrderButton(object sender, EventArgs e)
         {
             this.mainPanel.Controls.OfType<MetroButton>().ToList().ForEach(b => b.Visible = false);
@@ -228,8 +239,8 @@ namespace Desktop.UserControls
         private OrderDTO getActiveOrder()
         {
             //string URI = "http://tpvparatodos.azurewebsites.net/api/Order/lastByTable/" + table.Table.Id;
-            //string URI = "http://172.16.100.19/TPVParaTodos/api/Orders/Manager/" + table.Table.Id;
-            string URI = "http://172.16.10.20/TPVParaTodos/api/Orders/Manager/" + table.Table.Id;
+            string URI = "http://172.16.100.19/TPVParaTodos/api/Orders/Manager/" + table.Table.Id;
+            //string URI = "http://172.16.10.20/TPVParaTodos/api/Orders/Manager/" + table.Table.Id;
             HttpWebRequest request = WebRequest.Create(URI) as HttpWebRequest;
             request.Method = "GET";
             WebResponse response = request.GetResponse();

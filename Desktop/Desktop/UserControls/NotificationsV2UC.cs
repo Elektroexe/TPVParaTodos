@@ -18,5 +18,10 @@ namespace Desktop.UserControls
             this.label1.Text = title;
             this.label2.Text = subtitle;
         }
+
+        public void setErrorNotification()
+        {
+            //this.BackColor = new Color(Color.FromArgb(255, ))
+        }
     }
 }

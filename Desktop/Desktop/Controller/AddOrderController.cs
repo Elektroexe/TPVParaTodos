@@ -193,6 +193,9 @@ namespace Desktop.Controller
             order.Total = 0;
             order.Commentary = comment;
 
+            // TESTING 
+            order.Menus = new List<MenuDTO>();
+
             // Add all meals to order
             this.putMealsInOrder<DrinkDTO>("Drink", ref order);
             this.putMealsInOrder<FoodDTO>("Food", ref order);
@@ -203,6 +206,12 @@ namespace Desktop.Controller
             // Show post status to user with a pop-up
             if ((serverResponse >= 200) && (serverResponse <= 299))
             {
+                fPop.ShowDialog();
+            }
+            else
+            {
+                fPop.messageTextLabel.Text = "Error añadiendo el pedido";
+                fPop.messageIconPb.Image = Properties.Resources.error_icon;
                 fPop.ShowDialog();
             }
         }
@@ -225,10 +234,7 @@ namespace Desktop.Controller
             // Add meals to order
             foreach (T m in mealsAux)
             {
-                for (int i = 0; i < (m as Meal).Quantity; i++)
-                {
-                    (prop.GetValue(order, null) as List<T>).Add(m);
-                }
+                (prop.GetValue(order, null) as List<T>).Add(m);
                 order.Total += (Decimal)(m as Meal).TotalPrice;
             }
         }

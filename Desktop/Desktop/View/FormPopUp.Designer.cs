@@ -81,8 +81,8 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox messageIconPb;
-        private MetroFramework.Controls.MetroLabel messageTextLabel;
+        public System.Windows.Forms.PictureBox messageIconPb;
+        public MetroFramework.Controls.MetroLabel messageTextLabel;
         private MetroFramework.Controls.MetroButton acceptBtn;
     }
 }
