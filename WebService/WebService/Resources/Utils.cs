@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
+using WebService.Hubs;
 using WebService.Models;
 
 namespace WebService.Resources
@@ -15,44 +18,50 @@ namespace WebService.Resources
         private static RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
         private static ApplicationUserManager aum = new ApplicationUserManager(userStore);
 
-        public static void CreateUser(string username, string email, string password)
+        public static async Task CreateUser(string username, string password)
         {
             if (aum.FindByEmail(username) == null)
             {
                 ApplicationUser newUser = new ApplicationUser()
                 {
                     UserName = username,
-                    Email = email,
+                    Email = username,
                     EmailConfirmed = true
                 };
-                aum.Create(newUser, password);
+                await aum.CreateAsync(newUser, password);
             }
         }
 
-        public static void CreateRole(string rolename)
+        public static async Task CreateRole(string rolename)
         {
             if (!roleManager.RoleExists(rolename))
             {
                 IdentityRole newRole = new IdentityRole();
                 newRole.Name = rolename;
-                roleManager.Create(newRole);
+                await roleManager.CreateAsync(newRole);
             }
         }
 
-        public static void AssignRole(string username, string rolename)
+        public static async Task AssignRole(string username, string rolename)
         {
             if (roleManager.RoleExists(rolename) && aum.FindByEmail(username) != null)
             {
-                aum.AddToRoleAsync(aum.FindByEmail(username).Id, rolename);
+                await aum.AddToRoleAsync(aum.FindByEmail(username).Id, rolename);
             }
         }
 
-        public static void RemoveRole(string username, string rolename)
+        public static async void RemoveRole(string username, string rolename)
         {
             if (roleManager.RoleExists(rolename) && aum.FindByEmail(username) != null)
             {
-                aum.RemoveFromRoleAsync(aum.FindByEmail(username).Id, rolename);
+                await aum.RemoveFromRoleAsync(aum.FindByEmail(username).Id, rolename);
             }
+        }
+
+        public static void NotifyChange(Notification notification)
+        {
+            IHubContext notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+            notificationHub.Clients.All.Notify(notification.Title, notification.Message, notification.Type);
         }
     }
 }
