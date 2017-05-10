@@ -64,7 +64,9 @@ public class Menu extends Fragment {
 
     private void initComponents() {
 
-        _URL = getString(R.string.URL_localGRANDE);
+        //_URL = getString(R.string.URL_localGRANDE);
+        //_URL = getString(R.string.URLlocalhostPEQUENA);
+        _URL = getString(R.string.URL_localPEQUENA);
 
         tableLayout = (TableLayout) rootView.findViewById(R.id.menuTableLayout_Menu);
         drawer = (DrawerLayout) rootView.findViewById(R.id.drawer_layout_Menu);

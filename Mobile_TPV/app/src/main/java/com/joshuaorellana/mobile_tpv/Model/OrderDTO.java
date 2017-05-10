@@ -4,6 +4,7 @@ import com.joshuaorellana.mobile_tpv.Model.Products.DrinkDTO;
 import com.joshuaorellana.mobile_tpv.Model.Products.FoodDTO;
 import com.joshuaorellana.mobile_tpv.Model.Products.MenuDTO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * Created by Joshua-OC on 09/05/2017.
  */
 
-public class OrderDTO {
+public class OrderDTO implements Serializable {
 
     private int Table_Id;
     private double Total;
@@ -34,6 +35,8 @@ public class OrderDTO {
         this.Menus = new ArrayList<>();
 
     }
+
+
 
     public int getTable_Id() {
         return Table_Id;
@@ -103,5 +106,18 @@ public class OrderDTO {
         Foods.add(food);
         Total += (food.getPrice() * food.getQuantity());
 
+    }
+
+    @Override
+    public String toString() {
+        return "OrderDTO{" +
+                "Table_Id=" + Table_Id +
+                ", Total=" + Total +
+                ", Date='" + Date + '\'' +
+                ", Commentary='" + Commentary + '\'' +
+                ", Drinks=" + Drinks +
+                ", Foods=" + Foods +
+                ", Menus=" + Menus +
+                '}';
     }
 }

@@ -11,6 +11,7 @@ import com.joshuaorellana.mobile_tpv.Model.OrderDTO;
 import com.joshuaorellana.mobile_tpv.R;
 import com.joshuaorellana.mobile_tpv.View.Fragment.Drink;
 import com.joshuaorellana.mobile_tpv.View.Fragment.Food;
+import com.joshuaorellana.mobile_tpv.View.Fragment.Menu;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -65,10 +66,8 @@ public class AddOrder extends AppCompatActivity {
 
         adapter.addFragment(new Drink(), "BEBIDAS");
         adapter.addFragment(new Food("Meat"), "CARNE");
-        adapter.addFragment(new Food("Meat"), "CARNE");
         adapter.addFragment(new Food("Starter"), "ENTRANTES");
-
-        //adapter.addFragment(new Menu(), "MENÚS");
+        adapter.addFragment(new Menu(), "MENÚS");
 
         viewPager.setAdapter(adapter);
 

@@ -20,11 +20,7 @@
         </activity>
         <activity android:name=".View.SelectedTable" />
         <activity android:name=".View.AddOrder" />
-        <activity
-            android:name=".View.ViewOrder"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_view_order"
-            android:theme="@style/FullscreenTheme"></activity>
+        <activity android:name=".View.ViewOrder"></activity>
     </application>
 
 </manifest>

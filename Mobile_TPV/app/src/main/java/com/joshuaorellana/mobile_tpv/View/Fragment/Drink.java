@@ -80,7 +80,9 @@ public class Drink extends Fragment {
 
     private void initComponents() {
 
-        _URL = getString(R.string.URL_localGRANDE);
+        //_URL = getString(R.string.URL_localGRANDE);
+        //_URL = getString(R.string.URLlocalhostPEQUENA);
+        _URL = getString(R.string.URL_localPEQUENA);
 
         tableLayout = (TableLayout) rootView.findViewById(R.id.menuTableLayout_Drink);
         drawer = (DrawerLayout) rootView.findViewById(R.id.drawer_layout_Drink);
@@ -264,6 +266,8 @@ public class Drink extends Fragment {
         InputStream inputStream = null;
         String result="";
 
+        Log.e("URL post --->", url);
+
         try {
 
             String json;
@@ -276,7 +280,7 @@ public class Drink extends Fragment {
             MediaType mediaType = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(mediaType, json);
             Request request = new Request.Builder()
-                    .url("http://172.16.100.19/TPVParaTodos/api/Orders/Manager")
+                    .url(url)
                     .post(body)
                     .addHeader("content-type", "application/json")
                     .build();

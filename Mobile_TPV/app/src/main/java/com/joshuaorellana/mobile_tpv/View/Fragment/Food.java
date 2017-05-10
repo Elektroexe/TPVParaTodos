@@ -85,7 +85,9 @@ public class Food extends Fragment {
 
     private void initComponents() {
 
-        _URL = getString(R.string.URL_localGRANDE);
+        //_URL = getString(R.string.URL_localGRANDE);
+        //_URL = getString(R.string.URLlocalhostPEQUENA);
+        _URL = getString(R.string.URL_localPEQUENA);
 
         tableLayout = (TableLayout) rootView.findViewById(R.id.menuTableLayout_Drink);
         drawer = (DrawerLayout) rootView.findViewById(R.id.drawer_layout_Drink);
@@ -175,8 +177,6 @@ public class Food extends Fragment {
                             drawer.openDrawer(Gravity.LEFT);
 
                             loadNavigationHeader(listFoods.get(auxNum), btMeat.getDrawable());
-
-
 
                         }
                     });
@@ -283,7 +283,7 @@ public class Food extends Fragment {
             MediaType mediaType = MediaType.parse("application/json");
             RequestBody body = RequestBody.create(mediaType, json);
             Request request = new Request.Builder()
-                    .url("http://172.16.100.19/TPVParaTodos/api/Orders/Manager")
+                    .url(url)
                     .post(body)
                     .addHeader("content-type", "application/json")
                     .build();
