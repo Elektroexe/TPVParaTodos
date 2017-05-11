@@ -65,4 +65,16 @@
         android:layout_marginTop="18dp"
         android:text="volver" />
 
+    <TextView
+        android:id="@+id/tvNumTable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imgTable"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="53dp"
+        android:text="1"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        android:textStyle="bold" />
+
 </RelativeLayout>

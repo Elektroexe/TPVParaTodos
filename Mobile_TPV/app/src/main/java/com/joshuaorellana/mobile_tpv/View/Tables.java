@@ -1,5 +1,6 @@
 package com.joshuaorellana.mobile_tpv.View;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 
 public class Tables extends AppCompatActivity {
 
-    private String _URL;
+    public static String _URL;
 
     private TableLayout tableLayout;
     private ArrayList<TableDTO> listTables;
@@ -32,7 +33,7 @@ public class Tables extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tables);
+        setContentView(R.layout.testing);
 
         initComponents();
 
@@ -41,11 +42,11 @@ public class Tables extends AppCompatActivity {
     private void initComponents() {
 
         //_URL = getString(R.string.URL_localGRANDE);
-        //_URL = getString(R.string.URLlocalhostGRANDE);
+        _URL = getString(R.string.URLlocalhostGRANDE);
         //_URL = getString(R.string.URLlocalhostPEQUENA);
-        _URL = getString(R.string.URL_localPEQUENA);
+        //_URL = getString(R.string.URL_localPEQUENA);
 
-        tableLayout = (TableLayout) findViewById(R.id.menuTableLayout);
+        tableLayout = (TableLayout) findViewById(R.id.menuTableLayoutTest);
         listTables = new ArrayList<>();
 
 
@@ -66,10 +67,15 @@ public class Tables extends AppCompatActivity {
             TableRow tr = new TableRow(this);
             tr.setId(i + 000);
 
-            tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+            tr.setPadding(10, 10, 10, 10);
 
-            for (int j = 0; j < 2; j++) {
+
+            TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT);
+
+            tr.setLayoutParams(params);
+
+            for (int j = 0; j < 3; j++) {
 
                 if (i < listTables.size()) {
 
@@ -77,14 +83,12 @@ public class Tables extends AppCompatActivity {
                     final int auxNum = i;
                     btTable.setId(listTables.get(i).getId());
 
-                    //btTable.setBackgroundResource(R.drawable.buttonshape);
-                    //btTable.setPadding(50,50,50,50);
+                    android.widget.TableRow.LayoutParams p = new android.widget.TableRow.LayoutParams();
+                    p.rightMargin = Tables.dpToPixel(10, getApplicationContext()); // right-margin = 10dp
+                    btTable.setLayoutParams(p);
 
 
-
-                    Picasso.with(this).load(R.drawable.table_icon).resize(150, 150).into(btTable);
-
-                    //btTable.setImageResource(R.mipmap.ic_launcher_round);
+                    Picasso.with(this).load(R.drawable.table_icon).resize(250, 250).into(btTable);
 
                     if (listTables.get(i).isEmpty()) {
                         btTable.setBackgroundResource(R.drawable.buttonshape);
@@ -125,6 +129,13 @@ public class Tables extends AppCompatActivity {
         }
 
 
+    }
+
+    private static Float scale;
+    public static int dpToPixel(int dp, Context context) {
+        if (scale == null)
+            scale = context.getResources().getDisplayMetrics().density;
+        return (int) ((float) dp * scale);
     }
 
     private class loadContent extends AsyncTask<String, Long, String> {

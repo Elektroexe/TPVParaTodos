@@ -25,13 +25,14 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.joshuaorellana.mobile_tpv.View.Tables._URL;
+
 /**
  * Created by Joshua-OC on 04/05/2017.
  */
 
 public class Menu extends Fragment {
 
-    private String _URL;
     private View rootView;
 
     private List<MenuDTO> listMenus;
@@ -63,10 +64,6 @@ public class Menu extends Fragment {
     }
 
     private void initComponents() {
-
-        //_URL = getString(R.string.URL_localGRANDE);
-        //_URL = getString(R.string.URLlocalhostPEQUENA);
-        _URL = getString(R.string.URL_localPEQUENA);
 
         tableLayout = (TableLayout) rootView.findViewById(R.id.menuTableLayout_Menu);
         drawer = (DrawerLayout) rootView.findViewById(R.id.drawer_layout_Menu);

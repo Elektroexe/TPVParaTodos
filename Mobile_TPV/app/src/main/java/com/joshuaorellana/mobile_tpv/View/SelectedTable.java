@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.joshuaorellana.mobile_tpv.Model.OrderDTO;
@@ -20,10 +21,14 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 
 import static com.joshuaorellana.mobile_tpv.View.AddOrder.Order;
+import static com.joshuaorellana.mobile_tpv.View.Tables._URL;
 
 public class SelectedTable extends AppCompatActivity {
 
     private ImageView imgTable;
+
+    private TextView txtNumTable;
+
     private Button btAddOrder;
     private Button btViewOrder;
     private Button btModifyOrder;
@@ -31,7 +36,7 @@ public class SelectedTable extends AppCompatActivity {
     private Button btExit;
 
     public static TableDTO auxTable;
-    private String _URL;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +49,7 @@ public class SelectedTable extends AppCompatActivity {
 
     private void initComponents() {
 
-        _URL = getString(R.string.URL_localPEQUENA);
+        txtNumTable = (TextView) findViewById(R.id.tvNumTable);
 
         imgTable = (ImageView) findViewById(R.id.imgTable);
         btAddOrder = (Button) findViewById(R.id.btnAddOrder);
@@ -57,11 +62,27 @@ public class SelectedTable extends AppCompatActivity {
 
         auxTable = (TableDTO) extras.getSerializable("Table");
 
+        txtNumTable.setText(String.valueOf(auxTable.getId()));
+
         Log.e("auxTable --> ", auxTable.toString());
 
         Bitmap bmp = (Bitmap) extras.getParcelable("imgButton");
 
         imgTable.setImageBitmap(bmp);
+
+        if (auxTable.isEmpty()) {
+
+            btAddOrder.setEnabled(true);
+            btModifyOrder.setEnabled(false);
+            btCloseOrder.setEnabled(false);
+            btViewOrder.setEnabled(false);
+
+        } else {
+            btAddOrder.setEnabled(false);
+            btModifyOrder.setEnabled(true);
+            btCloseOrder.setEnabled(true);
+            btViewOrder.setEnabled(true);
+        }
 
         setListeners();
 
@@ -93,17 +114,6 @@ public class SelectedTable extends AppCompatActivity {
 
                 new sendClose().execute(url);
 
-
-            }
-        });
-
-        btExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-
-
             }
         });
 
@@ -121,10 +131,9 @@ public class SelectedTable extends AppCompatActivity {
         protected String doInBackground(String... urls) {
             return post(urls[0], Order);
         }
-        // onPostExecute displays the results of the AsyncTask.
+
         @Override
         protected void onPostExecute(String result) {
-            //Toast.makeText(getBaseContext(), "Data Sent!", Toast.LENGTH_LONG).show();
             Toast.makeText(SelectedTable.this, "OK!", Toast.LENGTH_SHORT).show();
         }
     }
@@ -133,33 +142,16 @@ public class SelectedTable extends AppCompatActivity {
 
         try {
 
-            Log.e("url -->", url );
-
-//            String json;
-//
-//            Gson gson = new Gson();
-//            json = gson.toJson(order);
-
             OkHttpClient client = new OkHttpClient();
 
             RequestBody reqbody = RequestBody.create(null, new byte[0]);
             Request.Builder formBody = new Request.Builder().url(url).method("POST",reqbody).header("Content-Length", "0");
             client.newCall(formBody.build()).execute();
 
-//            Request request = new Request.Builder()
-//                    .url(url)
-//                    .post()
-//                    .build();
-//
-//            client.newCall(request).execute();
-
-            //Log.e("JSON --> ", json);
-
 
         } catch (Exception err) {
 
             Log.e("Error", err.toString());
-
 
         }
 
