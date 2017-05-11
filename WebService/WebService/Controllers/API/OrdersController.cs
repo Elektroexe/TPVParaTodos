@@ -62,20 +62,37 @@ namespace WebService.Controllers.API
             {
                 try
                 {
-                    Order order = orderManager.ToOrder();
-                    db.Orders.Add(order);
-                    db.SaveChanges();
-                    ChangeStatus(orderManager.Table_Id);
-                    NotifyRefresh(db.Tables.FirstOrDefault(a => a.Id == orderManager.Table_Id));
-                    RefreshTables();
-                    return Ok();
+                    if (CheckTableEmpty(orderManager.Table_Id))
+                    {
+                        AddOrderToTable(orderManager);
+                        return Ok();
+                    } else
+                    {
+                        return BadRequest("Mesa ocupada");
+                    }
                 }
                 catch (Exception ex)
                 {
                     return InternalServerError();
                 }
             }
-            return BadRequest();
+            return BadRequest("Modelo invalido");
+        }
+
+        private bool CheckTableEmpty(int table_Id)
+        {
+            Table table = db.Tables.FirstOrDefault(a => a.Id == table_Id);
+            return table.Empty;
+        }
+
+        private void AddOrderToTable(OrderManager orderManager)
+        {
+            Order order = orderManager.ToOrder();
+            db.Orders.Add(order);
+            db.SaveChanges();
+            ChangeStatus(orderManager.Table_Id);
+            NotifyRefresh(db.Tables.FirstOrDefault(a => a.Id == orderManager.Table_Id));
+            RefreshTables();
         }
 
         [HttpPut]
