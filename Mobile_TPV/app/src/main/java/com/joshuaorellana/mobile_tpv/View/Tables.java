@@ -2,7 +2,6 @@ package com.joshuaorellana.mobile_tpv.View;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.joshuaorellana.mobile_tpv.Model.TableDTO;
 import com.joshuaorellana.mobile_tpv.R;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -40,7 +40,10 @@ public class Tables extends AppCompatActivity {
 
     private void initComponents() {
 
-        _URL = getString(R.string.URL_localGRANDE);
+        //_URL = getString(R.string.URL_localGRANDE);
+        //_URL = getString(R.string.URLlocalhostGRANDE);
+        //_URL = getString(R.string.URLlocalhostPEQUENA);
+        _URL = getString(R.string.URL_localPEQUENA);
 
         tableLayout = (TableLayout) findViewById(R.id.menuTableLayout);
         listTables = new ArrayList<>();
@@ -74,16 +77,20 @@ public class Tables extends AppCompatActivity {
                     final int auxNum = i;
                     btTable.setId(listTables.get(i).getId());
 
-                    btTable.setMaxHeight(50);
-                    btTable.setMaxWidth(50);
+                    //btTable.setBackgroundResource(R.drawable.buttonshape);
+                    //btTable.setPadding(50,50,50,50);
+
+
+
+                    Picasso.with(this).load(R.drawable.table_icon).resize(150, 150).into(btTable);
+
+                    //btTable.setImageResource(R.mipmap.ic_launcher_round);
 
                     if (listTables.get(i).isEmpty()) {
-                        btTable.setBackgroundColor(Color.GREEN);
+                        btTable.setBackgroundResource(R.drawable.buttonshape);
                     } else {
-                        btTable.setBackgroundColor(Color.RED);
+                        btTable.setBackgroundResource(R.drawable.buttonshapered);
                     }
-
-                    btTable.setImageResource(R.mipmap.ic_launcher_round);
 
                     btTable.setOnClickListener(new View.OnClickListener() {
                         @Override
