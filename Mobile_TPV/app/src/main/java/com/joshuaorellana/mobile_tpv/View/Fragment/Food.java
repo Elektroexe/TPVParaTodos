@@ -39,6 +39,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static com.joshuaorellana.mobile_tpv.View.AddOrder.Order;
+import static com.joshuaorellana.mobile_tpv.View.Tables._URL;
 
 /**
  * Created by Joshua-OC on 08/05/2017.
@@ -48,7 +49,6 @@ public class Food extends Fragment {
 
     private String _Title;
 
-    private String _URL;
     private View rootView;
 
     private List<FoodDTO> listFoods;
@@ -84,10 +84,6 @@ public class Food extends Fragment {
     }
 
     private void initComponents() {
-
-        //_URL = getString(R.string.URL_localGRANDE);
-        //_URL = getString(R.string.URLlocalhostPEQUENA);
-        _URL = getString(R.string.URL_localPEQUENA);
 
         tableLayout = (TableLayout) rootView.findViewById(R.id.menuTableLayout_Drink);
         drawer = (DrawerLayout) rootView.findViewById(R.id.drawer_layout_Drink);

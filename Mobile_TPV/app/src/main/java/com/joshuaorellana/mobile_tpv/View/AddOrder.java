@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.joshuaorellana.mobile_tpv.Controller.ViewPagerAdapter;
 import com.joshuaorellana.mobile_tpv.Model.OrderDTO;
@@ -48,13 +47,10 @@ public class AddOrder extends AppCompatActivity {
 
         viewPager.getCurrentItem();
 
-
         TimeZone tz = TimeZone.getTimeZone("UTC");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ"); // Quoted "Z" to indicate UTC, no timezone offset
         df.setTimeZone(tz);
         String date = df.format(new Date());
-
-        Log.e("Date --> ", date);
 
         Order = new OrderDTO(auxTable.getId(), date);
 
