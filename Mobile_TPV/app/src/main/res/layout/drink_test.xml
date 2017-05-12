@@ -9,6 +9,11 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"></LinearLayout>
+
     <ScrollView
         android:id="@+id/scroller_Drink"
         android:layout_width="match_parent"

@@ -39,6 +39,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static com.joshuaorellana.mobile_tpv.View.AddOrder.Order;
+import static com.joshuaorellana.mobile_tpv.View.Tables._URL;
 
 
 /**
@@ -47,7 +48,6 @@ import static com.joshuaorellana.mobile_tpv.View.AddOrder.Order;
 
 public class Drink extends Fragment {
 
-    private String _URL;
     private View rootView;
 
     private List<DrinkDTO> listDrinks;
@@ -56,6 +56,8 @@ public class Drink extends Fragment {
     private DrawerLayout drawer;
     private NavigationView navigationView;
 
+
+    private TextView txtDrinkTest;
     private TextView tvProductName;
     private TextView tvQty;
     private ImageView imgBgHeader, imgProduct;
@@ -80,10 +82,6 @@ public class Drink extends Fragment {
 
     private void initComponents() {
 
-        //_URL = getString(R.string.URL_localGRANDE);
-        //_URL = getString(R.string.URLlocalhostPEQUENA);
-        _URL = getString(R.string.URL_localPEQUENA);
-
         tableLayout = (TableLayout) rootView.findViewById(R.id.menuTableLayout_Drink);
         drawer = (DrawerLayout) rootView.findViewById(R.id.drawer_layout_Drink);
         navigationView = (NavigationView) rootView.findViewById(R.id.nav_view_Drink);
@@ -91,6 +89,10 @@ public class Drink extends Fragment {
 
         tvProductName = (TextView) navHeader.findViewById(R.id.tvProductName);
         tvQty = (TextView) navHeader.findViewById(R.id.tvQty);
+
+        //txtDrinkTest = (TextView) rootView.findViewById(R.id.txtDrinkTest);
+
+        //txtDrinkTest.setText("bebidas");
 
         imgBgHeader = (ImageView) navHeader.findViewById(R.id.img_header_bg);
         imgProduct = (ImageView) navHeader.findViewById(R.id.img_Product);
@@ -129,7 +131,6 @@ public class Drink extends Fragment {
     private ArrayList<DrinkDTO> getDrinks(String json) {
         Gson gson = new Gson();
         Type tListType = new TypeToken<ArrayList<DrinkDTO>>() {}.getType();
-        Log.e("getDrinks --> ", "SALE");
         return gson.fromJson(json, tListType);
 
     }
