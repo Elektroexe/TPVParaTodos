@@ -128,6 +128,17 @@ public class Food extends Fragment {
 
             if(!listFoods.isEmpty()) {
                 createFoodsButtons();
+
+                for (FoodDTO aux : Order.getListFoods()) {
+                    for (int i = 0; i < listFoods.size(); i++) {
+
+                        FoodDTO auxB = listFoods.get(i);
+                        if (aux.getName().equals(auxB.getName()))
+                            auxB.setQuantity(aux.getQuantity());
+
+                    }
+                }
+
             }
         }
 

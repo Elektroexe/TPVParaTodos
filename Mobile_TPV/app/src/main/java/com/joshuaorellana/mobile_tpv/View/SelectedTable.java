@@ -94,6 +94,9 @@ public class SelectedTable extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent auxIntent = new Intent(SelectedTable.this, AddOrder.class);
+
+                auxIntent.putExtra("modify", false);
+
                 startActivity(auxIntent);
             }
         });
@@ -103,6 +106,19 @@ public class SelectedTable extends AppCompatActivity {
             public void onClick(View view) {
                 Intent auxIntent = new Intent(SelectedTable.this, ViewOrder.class);
                 startActivity(auxIntent);
+            }
+        });
+
+        btModifyOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent auxIntent = new Intent(SelectedTable.this, AddOrder.class);
+
+
+                auxIntent.putExtra("modify", true);
+
+                startActivity(auxIntent);
+
             }
         });
 

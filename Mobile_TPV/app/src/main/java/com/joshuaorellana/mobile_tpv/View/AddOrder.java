@@ -1,10 +1,14 @@
 package com.joshuaorellana.mobile_tpv.View;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
+import com.github.kevinsawicki.http.HttpRequest;
+import com.google.gson.Gson;
 import com.joshuaorellana.mobile_tpv.Controller.ViewPagerAdapter;
 import com.joshuaorellana.mobile_tpv.Model.OrderDTO;
 import com.joshuaorellana.mobile_tpv.R;
@@ -18,6 +22,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import static com.joshuaorellana.mobile_tpv.View.SelectedTable.auxTable;
+import static com.joshuaorellana.mobile_tpv.View.Tables._URL;
 
 public class AddOrder extends AppCompatActivity {
 
@@ -52,9 +57,64 @@ public class AddOrder extends AppCompatActivity {
         df.setTimeZone(tz);
         String date = df.format(new Date());
 
-        Order = new OrderDTO(auxTable.getId(), date);
+        Bundle auxIntent = getIntent().getExtras();
+
+        boolean modify = auxIntent.getBoolean("modify");
+
+        if (modify) {
+
+            Log.e("ModifyOrder --> ", "OK!");
+
+            String url = _URL + "api/Orders/Manager/" + auxTable.getId();
+
+            new loadContent().execute(url);
+
+        } else {
+
+            Log.e("AddOrder -->", "OK!");
+
+            Order = new OrderDTO(auxTable.getId(), date);
+        }
+
+
+
 
     }
+
+    private class loadContent extends AsyncTask<String, Long, String > {
+
+        protected String doInBackground(String... urls) {
+
+            try {
+                return HttpRequest.get(urls[0]).accept("application/json").body();
+            } catch (HttpRequest.HttpRequestException err) {
+                Log.e("ERROR HttpRequest: ", err.toString());
+            }
+
+            return null;
+
+        }
+
+        protected void onPostExecute(String response) {
+
+            Order = getTables(response);
+
+        }
+
+    }
+
+    private OrderDTO getTables(String json) {
+
+        Gson gson = new Gson();
+
+        //JsonParser parser = new JsonParser();
+        //JsonObject jsonObj = parser.parse(json).getAsJsonObject();
+
+        //Type tListType = new TypeToken<ArrayList<OrderDTO>>() {}.getType();
+        return gson.fromJson(json, OrderDTO.class);
+
+    }
+
 
     private void setupViewPager(ViewPager viewPager) {
 

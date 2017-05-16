@@ -12,15 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".View.Tables">
+        </activity>
+        <activity android:name=".View.SelectedTable" />
+        <activity android:name=".View.AddOrder" />
+        <activity android:name=".View.ViewOrder" />
+        <activity android:name=".View.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.SelectedTable" />
-        <activity android:name=".View.AddOrder" />
-        <activity android:name=".View.ViewOrder"></activity>
     </application>
 
 </manifest>

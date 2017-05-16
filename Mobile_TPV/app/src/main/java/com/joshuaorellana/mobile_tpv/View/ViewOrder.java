@@ -24,6 +24,10 @@ public class ViewOrder extends AppCompatActivity {
     private TextView tvText;
     private TextView tvDrinkOrder;
 
+    private TextView tvDrinkList;
+    private TextView tvFoodList;
+    private TextView tvMenuList;
+
     private OrderDTO Order;
 
     @Override
@@ -37,14 +41,12 @@ public class ViewOrder extends AppCompatActivity {
 
     private void initComponents() {
 
-
         String url = _URL + "api/Orders/Manager/" + auxTable.getId();
 
-        tvText = (TextView) findViewById(R.id.tv_Text);
-        tvDrinkOrder = (TextView) findViewById(R.id.tvDrinkOrder);
+        tvDrinkList = (TextView) findViewById(R.id.tv_DrinkList);
+        tvFoodList = (TextView) findViewById(R.id.tv_FoodList);
+        tvMenuList = (TextView) findViewById(R.id.tv_MenuList);
 
-        tvText.setText("");
-        tvDrinkOrder.setText("");
 
         new loadContent().execute(url);
 
@@ -61,7 +63,6 @@ public class ViewOrder extends AppCompatActivity {
             }
 
             return null;
-
         }
 
         protected void onPostExecute(String response) {
@@ -71,17 +72,11 @@ public class ViewOrder extends AppCompatActivity {
             showOrder();
 
         }
-
     }
 
     private OrderDTO getTables(String json) {
 
         Gson gson = new Gson();
-
-        //JsonParser parser = new JsonParser();
-        //JsonObject jsonObj = parser.parse(json).getAsJsonObject();
-
-        //Type tListType = new TypeToken<ArrayList<OrderDTO>>() {}.getType();
         return gson.fromJson(json, OrderDTO.class);
 
     }
@@ -94,44 +89,37 @@ public class ViewOrder extends AppCompatActivity {
 
         if (!drinks.isEmpty()) {
 
-            tvDrinkOrder.setText("Bebidas: \n");
-
             for (int i = 0; i < drinks.size(); i++) {
-                tvDrinkOrder.setText(tvDrinkOrder.getText() + drinks.get(i).getName() + "\t\t - \t\t Cantidad: " +
-                        drinks.get(i).getQuantity()+"\n");
-            }
 
-            tvDrinkOrder.setText(tvDrinkOrder.getText() + "\n");
+                DrinkDTO auxD = drinks.get(i);
+
+                tvDrinkList.setText(tvDrinkList.getText() + auxD.getName() + "\t\t -- \t\t" + auxD.getQuantity() + "\n");
+            }
+        } else {
+            tvDrinkList.setText("No hay.");
         }
 
         if (!foods.isEmpty()) {
 
-            tvDrinkOrder.setText(tvDrinkOrder.getText() + "Comida: \n");
-
             for (int i = 0; i < foods.size(); i++) {
-                tvDrinkOrder.setText(tvDrinkOrder.getText() + foods.get(i).getName() + "\t\t - \t\t Cantidad: " +
-                        foods.get(i).getQuantity()+"\n");
+                FoodDTO auxF = foods.get(i);
+
+                tvFoodList.setText(tvFoodList.getText() + auxF.getName() + "\t\t -- \t\t" + auxF.getQuantity() + "\n");
             }
-
-            tvDrinkOrder.setText(tvDrinkOrder.getText() + "\n");
-
+        } else {
+            tvFoodList.setText("No hay.");
         }
 
         if (!menus.isEmpty()) {
 
-            tvDrinkOrder.setText(tvDrinkOrder.getText() + "Menus: \n");
-
             for (int i = 0; i < menus.size(); i++) {
-                tvDrinkOrder.setText(tvDrinkOrder.getText() + menus.get(i).getName() + "\t\t - \t\t Cantidad: " +
-                        menus.get(i).getQuantity()+"\n");
+                MenuDTO auxM = menus.get(i);
+
+                tvMenuList.setText(tvMenuList.getText() + auxM.getName() + "\t\t -- \t\t" + auxM.getQuantity() + "\n");
             }
-
-            tvDrinkOrder.setText(tvDrinkOrder.getText() + "\n");
-
+        } else {
+            tvMenuList.setText("No hay.");
         }
 
-
     }
-
-
 }
