@@ -118,12 +118,21 @@ public class Drink extends Fragment {
 
         protected void onPostExecute(String response) {
 
-            Log.e("Response", response);
-
             listDrinks = getDrinks(response);
 
             if (!listDrinks.isEmpty()) {
                 createDrinkButtons();
+
+                for (DrinkDTO aux : Order.getListDrinks()) {
+                    for (int i = 0; i < listDrinks.size(); i++) {
+
+                        DrinkDTO auxB = listDrinks.get(i);
+                         if (aux.getName().equals(auxB.getName()))
+                             auxB.setQuantity(aux.getQuantity());
+
+                    }
+                }
+
             }
         }
     }
