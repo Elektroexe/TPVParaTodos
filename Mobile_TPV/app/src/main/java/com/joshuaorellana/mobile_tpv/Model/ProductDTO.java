@@ -1,5 +1,7 @@
 package com.joshuaorellana.mobile_tpv.Model;
 
+import android.content.ContentValues;
+
 import java.io.Serializable;
 
 /**
@@ -66,4 +68,6 @@ public abstract class ProductDTO implements Serializable {
                 ", Description='" + Description + '\'' +
                 '}';
     }
+
+    public abstract ContentValues toContentValues();
 }

@@ -1,5 +1,7 @@
 package com.joshuaorellana.mobile_tpv.Model.Products;
 
+import android.content.ContentValues;
+
 import com.joshuaorellana.mobile_tpv.Model.ProductDTO;
 
 /**
@@ -40,5 +42,16 @@ public class FoodDTO extends ProductDTO {
                 "FamilyDish='" + FamilyDish + '\'' +
                 ", Qty=" + Quantity +
                 '}';
+    }
+
+    @Override
+    public ContentValues toContentValues() {
+        ContentValues cv = new ContentValues();
+        cv.put("Id", getId());
+        cv.put("FamilyDish", FamilyDish);
+        cv.put("Name", getName());
+        cv.put("Price", getPrice());
+        cv.put("Description", getDescription());
+        return cv;
     }
 }

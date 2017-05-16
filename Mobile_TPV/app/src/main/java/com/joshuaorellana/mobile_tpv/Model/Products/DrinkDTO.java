@@ -1,5 +1,7 @@
 package com.joshuaorellana.mobile_tpv.Model.Products;
 
+import android.content.ContentValues;
+
 import com.joshuaorellana.mobile_tpv.Model.ProductDTO;
 
 /**
@@ -75,5 +77,19 @@ public class DrinkDTO extends ProductDTO {
                 ", Soda=" + Soda +
                 ", Alcohol=" + Alcohol +
                 '}';
+    }
+
+    @Override
+    public ContentValues toContentValues() {
+        ContentValues cv = new ContentValues();
+        cv.put("Id", getId());
+        cv.put("Capacity",Capacity);
+        cv.put("TypeBottle", TypeBottle);
+        cv.put("Soda", Soda ? 1 : 0);
+        cv.put("Alcohol", Alcohol ? 1 : 0);
+        cv.put("Name", getName());
+        cv.put("Price", getPrice());
+        cv.put("Description", getDescription());
+        return cv;
     }
 }
