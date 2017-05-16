@@ -16,7 +16,7 @@
         <activity android:name=".View.SelectedTable" />
         <activity android:name=".View.AddOrder" />
         <activity android:name=".View.ViewOrder" />
-        <activity android:name=".View.Login">
+        <activity android:name=".View.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

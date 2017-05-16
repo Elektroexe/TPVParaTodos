@@ -4,10 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Debug;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -15,19 +12,10 @@ import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-import com.github.kevinsawicki.http.HttpRequest;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.joshuaorellana.mobile_tpv.Controller.WebService;
-import com.joshuaorellana.mobile_tpv.Model.Products.DrinkDTO;
 import com.joshuaorellana.mobile_tpv.Model.TableDTO;
 import com.joshuaorellana.mobile_tpv.R;
-import com.joshuaorellana.mobile_tpv.View.Fragment.Drink;
 import com.squareup.picasso.Picasso;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Tables extends AppCompatActivity {
 
@@ -45,7 +33,7 @@ public class Tables extends AppCompatActivity {
 
     private void initComponents() {
         //_URL = getString(R.string.URL_localGRANDE);
-        //_URL = getString(R.string.URLlocalhostGRANDE);
+        _URL = getString(R.string.URLlocalhostGRANDE);
         //_URL = getString(R.string.URLlocalhostPEQUENA);
         //_URL = getString(R.string.URL_localPEQUENA);
         //listTables = new ArrayList<>();
