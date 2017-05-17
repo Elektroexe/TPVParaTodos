@@ -42,6 +42,7 @@ namespace WebService.Models
         public DbSet<Table> Tables { get; set; }
         public DbSet<Zone> Zones { get; set; }
         public DbSet<Fragment> Fragments { get; set; }
+        public DbSet<LogProduct> LogsProducts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

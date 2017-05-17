@@ -31,7 +31,7 @@ namespace WebService.Controllers.API
             }
             IHubContext contextHub = GlobalHost.ConnectionManager.GetHubContext<TableHub>();
             contextHub.Clients.All.Refresh(db.Tables.ToList().Select(a => new TableDTO(a)).ToJson());
-            Utils.NotifyChange(new Notification { Title = "Todas las mesas desocupadas", Message = "WebAPI ha liberado todas las mesas", Type = Models.Type.Success });
+            NotificationManager.Notify(new Notification { Title = "Todas las mesas desocupadas", Message = "WebAPI ha liberado todas las mesas", Type = Models.Type.Success });
             db.SaveChanges();
         }
     }

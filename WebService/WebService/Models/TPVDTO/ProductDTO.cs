@@ -15,7 +15,7 @@ namespace WebService.Models
         public string Name { get; set; }
         public decimal Price { get; set; }
         public string Description { get; set; }
-
+        public bool Available { get; set; }
         public ProductDTO() { }
 
         public ProductDTO(Product model)
@@ -24,14 +24,16 @@ namespace WebService.Models
             Name = model.Name;
             Price = model.Price;
             Description = model.Description;
+            Available = model.Available;
         }
 
-        public ProductDTO(int Id, string Name, decimal Price, string Description)
+        public ProductDTO(int Id, string Name, decimal Price, string Description, bool Available)
         {
             this.Id = Id;
             this.Name = Name;
             this.Price = Price;
             this.Description = Description;
+            this.Available = Available;
         }
     }
 }

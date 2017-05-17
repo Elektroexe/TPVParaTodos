@@ -18,7 +18,7 @@ namespace WebService.Models
 
         public virtual ICollection<Menu> Menus { get; set; }
 
-        public Drink()
+        public Drink() : base()
         {
             Menus = new List<Menu>();
         }

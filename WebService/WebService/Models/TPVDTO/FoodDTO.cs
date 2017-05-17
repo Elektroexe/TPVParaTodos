@@ -14,7 +14,7 @@ namespace WebService.Models
 
         public FoodDTO() { }
 
-        public FoodDTO(Food model) : base (model.Id, model.Name, model.Price, model.Description)
+        public FoodDTO(Food model) : base (model.Id, model.Name, model.Price, model.Description, model.Available)
         {
             FamilyDish = model.FamilyDish;
         }

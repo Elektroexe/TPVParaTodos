@@ -11,26 +11,15 @@ namespace WebService.Hubs
 {
     public class NotificationHub : Hub
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        
+    }
 
-        public void NotifyRole(string rolename, string message)
+    public class NotificationManager
+    {
+        public static void Notify(Notification notification)
         {
-            Clients.Group(rolename).GetNotify(message);
-        }
-
-        public override Task OnConnected()
-        {
-            //if (Context.User.Identity.IsAuthenticated)
-            //{
-            //    foreach (IdentityRole Role in db.Roles)
-            //    {
-            //        if (Context.User.IsInRole(Role.Name))
-            //        {
-            //            Groups.Add(Context.ConnectionId, Role.Name);
-            //        }
-            //    }
-            //}
-            return base.OnConnected();
+            IHubContext notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
+            notificationHub.Clients.All.Notify(notification.Title, notification.Message, notification.Type);
         }
     }
 }
