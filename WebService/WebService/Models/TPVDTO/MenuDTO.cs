@@ -12,7 +12,7 @@ namespace WebService.Models
         public short PeopleNumber { get; set; }
 
         public MenuDTO() { }
-        public MenuDTO(Menu model) : base (model.Id, model.Name, model.Price, model.Description)
+        public MenuDTO(Menu model) : base (model.Id, model.Name, model.Price, model.Description, model.Available)
         {
             PeopleNumber = model.PeopleNumber;
         }

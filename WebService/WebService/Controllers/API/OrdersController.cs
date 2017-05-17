@@ -172,7 +172,7 @@ namespace WebService.Controllers.API
 
         private void NotifyRefresh(Table table)
         { 
-            Utils.NotifyChange(new Notification
+            NotificationManager.Notify(new Notification
             {
                 Title = "Mesa " + table.Id,
                 Message = "La mesa " + table.Id + " ha sido " + (table.Empty ? "desocupada" : "ocupada"),

@@ -28,7 +28,7 @@ namespace WebService.Hubs
                 db.Entry(table).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
-            Utils.NotifyChange(new Notification { Title = "Mesa "+tableId, Message = "La mesa " + tableId + " ha sido " + (table.Empty ? "desocupada" : "ocupada"), Type = Models.Type.Success });
+            NotificationManager.Notify(new Notification { Title = "Mesa "+tableId, Message = "La mesa " + tableId + " ha sido " + (table.Empty ? "desocupada" : "ocupada"), Type = Models.Type.Success });
             Clients.All.Refresh(db.Tables.ToList().Select(a => new TableDTO(a)).ToJson());
         }
 

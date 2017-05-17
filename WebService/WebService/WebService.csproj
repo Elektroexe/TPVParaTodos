@@ -17,7 +17,7 @@
     <AssemblyName>WebService</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -214,6 +214,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\API\CheckDBController.cs" />
     <Compile Include="Controllers\API\DrinksController.cs" />
     <Compile Include="Controllers\API\FoodsController.cs" />
     <Compile Include="Controllers\API\MenusController.cs" />
@@ -235,6 +236,10 @@
     <Compile Include="Migrations\201704051353281_InitModel.Designer.cs">
       <DependentUpon>201704051353281_InitModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705161257412_AddAvailableAndTableLogs.cs" />
+    <Compile Include="Migrations\201705161257412_AddAvailableAndTableLogs.Designer.cs">
+      <DependentUpon>201705161257412_AddAvailableAndTableLogs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -252,6 +257,7 @@
     <Compile Include="Models\TPVModels\Drink.cs" />
     <Compile Include="Models\TPVModels\Food.cs" />
     <Compile Include="Models\TPVModels\Fragment.cs" />
+    <Compile Include="Models\TPVModels\LogProduct.cs" />
     <Compile Include="Models\TPVModels\Menu.cs" />
     <Compile Include="Models\TPVModels\Order.cs" />
     <Compile Include="Models\TPVModels\Product.cs" />
@@ -358,6 +364,9 @@
     <EmbeddedResource Include="Migrations\201704051353281_InitModel.resx">
       <DependentUpon>201704051353281_InitModel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705161257412_AddAvailableAndTableLogs.resx">
+      <DependentUpon>201705161257412_AddAvailableAndTableLogs.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -377,7 +386,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1550</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1550/</IISUrl>
+          <IISUrl>http://localhost/TPVParaTodos</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

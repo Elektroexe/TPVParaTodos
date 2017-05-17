@@ -17,7 +17,7 @@ namespace WebService.Models
 
         public DrinkDTO() { }
         
-        public DrinkDTO(Drink model) : base (model.Id, model.Name, model.Price, model.Description)
+        public DrinkDTO(Drink model) : base (model.Id, model.Name, model.Price, model.Description, model.Available)
         {
             Capacity = model.Capacity;
             TypeBottle = model.TypeBottle;

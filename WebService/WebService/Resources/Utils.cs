@@ -58,10 +58,6 @@ namespace WebService.Resources
             }
         }
 
-        public static void NotifyChange(Notification notification)
-        {
-            IHubContext notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-            notificationHub.Clients.All.Notify(notification.Title, notification.Message, notification.Type);
-        }
+        
     }
 }
