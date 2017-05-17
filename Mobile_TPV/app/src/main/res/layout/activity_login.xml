@@ -1,16 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.joshuaorellana.mobile_tpv.View.Login">
+    tools:context="com.joshuaorellana.mobile_tpv.View.LoginActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/bt_Access"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:layout_marginBottom="72dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginRight="56dp"
+        android:text="Acceder"
         tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="128dp" />
-</android.support.constraint.ConstraintLayout>
+        tools:layout_editor_absoluteY="128dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:id="@+id/et_User"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="36dp"
+        android:layout_marginRight="36dp"
+        android:layout_marginTop="78dp"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/et_Password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/et_User"
+        android:layout_alignRight="@+id/et_User"
+        android:layout_below="@+id/et_User"
+        android:layout_marginTop="37dp"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/tv_Username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/et_User"
+        android:layout_marginEnd="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="12dp"
+        android:layout_toLeftOf="@+id/et_User"
+        android:layout_toStartOf="@+id/et_User"
+        android:text="Usuario:" />
+
+    <TextView
+        android:id="@+id/tv_Pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tv_Username"
+        android:layout_alignRight="@+id/tv_Username"
+        android:layout_alignTop="@+id/et_Password"
+        android:layout_marginTop="11dp"
+        android:text="Contraseña:" />
+</RelativeLayout>

@@ -1,15 +1,9 @@
 package com.joshuaorellana.mobile_tpv.Controller;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.joshuaorellana.mobile_tpv.Model.Login;
-import com.joshuaorellana.mobile_tpv.Model.TableDTO;
+import android.util.Log;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.google.gson.Gson;
+import com.joshuaorellana.mobile_tpv.Model.Login;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -23,7 +17,8 @@ import okhttp3.Response;
 
 public class WebService {
 
-    static final String URL = "http://192.168.1.108/TPVParaTodos/api/";
+    //static final String URL = "http://192.168.1.108/TPVParaTodos/api/";
+    static final String URL = "http://172.16.100.15:1550/api/";
     public static String token;
 
     public static String Login(String username, String password){
@@ -32,7 +27,7 @@ public class WebService {
             MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
             RequestBody body = RequestBody.create(mediaType, "grant_type=password&username=" + username + "&password=" + password);
             Request request = new Request.Builder()
-                    .url("http://localhost/TPVParaTodos/token")
+                    .url("http://172.16.100.15:1550/token")
                     .post(body)
                     .addHeader("content-type", "application/x-www-form-urlencoded")
                     .build();
@@ -45,6 +40,7 @@ public class WebService {
                 return null;
             }
         } catch (Exception ex){
+            Log.e("Error!", ex.toString());
             return null;
         }
     }

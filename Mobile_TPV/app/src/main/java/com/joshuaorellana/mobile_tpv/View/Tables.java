@@ -1,13 +1,14 @@
 package com.joshuaorellana.mobile_tpv.View;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Debug;
 import android.os.Handler;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -15,43 +16,51 @@ import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-import com.github.kevinsawicki.http.HttpRequest;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.joshuaorellana.mobile_tpv.Controller.WebService;
-import com.joshuaorellana.mobile_tpv.Model.Products.DrinkDTO;
 import com.joshuaorellana.mobile_tpv.Model.TableDTO;
 import com.joshuaorellana.mobile_tpv.R;
-import com.joshuaorellana.mobile_tpv.View.Fragment.Drink;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import microsoft.aspnet.signalr.client.Platform;
+import microsoft.aspnet.signalr.client.SignalRFuture;
+import microsoft.aspnet.signalr.client.http.android.AndroidPlatformComponent;
+import microsoft.aspnet.signalr.client.hubs.HubConnection;
+import microsoft.aspnet.signalr.client.hubs.HubProxy;
+import microsoft.aspnet.signalr.client.hubs.SubscriptionHandler3;
 
 public class Tables extends AppCompatActivity {
 
     public static String _URL;
-    //private ArrayList<TableDTO> listTables;
     private TableLayout tableLayout;
     private TableDTO[] listTables;
+
+
+    private HubConnection connection;
+    private HubProxy hubNotifications;
+    final Handler mHandler = new Handler();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.testing);
+
+
+
         initComponents();
     }
 
     private void initComponents() {
         //_URL = getString(R.string.URL_localGRANDE);
-        //_URL = getString(R.string.URLlocalhostGRANDE);
+        _URL = getString(R.string.URLlocalhostGRANDE);
         //_URL = getString(R.string.URLlocalhostPEQUENA);
         //_URL = getString(R.string.URL_localPEQUENA);
-        //listTables = new ArrayList<>();
-        //String url = _URL + "api/Tables";
-        //Log.e("URL --> ", url);
-        //new loadContent().execute(url);
+
+        signalRNotifications();
+
         tableLayout = (TableLayout) findViewById(R.id.menuTableLayoutTest);
         Thread apiTables = new Thread(new Runnable() {
             @Override
@@ -124,29 +133,56 @@ public class Tables extends AppCompatActivity {
         return (int) ((float) dp * scale);
     }
 
-//    private class loadContent extends AsyncTask<String, Long, String> {
-//
-//        protected String doInBackground(String... urls) {
-//
-//            try {
-//                return HttpRequest.get(urls[0]).accept("application/json").body();
-//            } catch (HttpRequest.HttpRequestException exception) {
-//                return null;
-//            }
-//        }
-//
-//        protected void onPostExecute(String response) {
-//
-//            listTables = getTables(response);
-//
-//            if (!listTables.isEmpty())
-//                createTableButtons();
-//        }
-//    }
-//
-//    private ArrayList<TableDTO> getTables(String json) {
-//        Gson gson = new Gson();
-//        Type tListType = new TypeToken<ArrayList<TableDTO>>() {}.getType();
-//        return gson.fromJson(json, tListType);
-//    }
+    private void signalRNotifications() {
+
+        Platform.loadPlatformComponent(new AndroidPlatformComponent());
+
+        connection = new HubConnection(_URL);
+        hubNotifications = connection.createHubProxy("notificationHub");
+        hubNotifications.subscribe(this);
+
+        hubNotifications.on("notify", new SubscriptionHandler3<String, String, Integer>() {
+
+            @Override
+            public void run(final String title, final String message, final Integer test) {
+
+                mHandler.post(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        createNotification(title, message, test);
+
+                    }
+                });
+            }
+        }, String.class, String.class, Integer.class);
+
+        SignalRFuture<Void> awaitConnection = connection.start();
+
+        try {
+            awaitConnection.get();
+        } catch (InterruptedException e) {
+            Log.e("InterruptedException", e.toString());
+        } catch (ExecutionException e) {
+            Log.e("ExecutionException", e.toString());
+        }
+
+    }
+
+    private void createNotification(String title, String message, Integer x) {
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setVibrate(new long[] {1000, 1000, 1000, 1000, 1000})
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setPriority(Notification.PRIORITY_HIGH);
+
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(x, mBuilder.build());
+
+    }
+
 }

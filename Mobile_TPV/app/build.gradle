@@ -34,4 +34,6 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.7.0'
     compile 'com.android.support:support-v4:25.3.0'
     testCompile 'junit:junit:4.12'
+    compile files('libs/signalr-client-sdk-android.jar')
+    compile files('libs/signalr-client-sdk.jar')
 }
