@@ -23,8 +23,8 @@ namespace Desktop.Controller
     }
     public class Notifications
     {
-        //const string URI = "http://172.16.10.20/TPVParaTodos/signalr";
-        const string URI = "http://172.16.100.19/TPVParaTodos/signalr";
+        const string URI = "http://172.16.10.20/TPVParaTodos/signalr";
+        //const string URI = "http://172.16.100.19/TPVParaTodos/signalr";
 
         private static HubConnection WebServiceConnection { get; set; }
         private static IHubProxy HubProxy { get; set; }

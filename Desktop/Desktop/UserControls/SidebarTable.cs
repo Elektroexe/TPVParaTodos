@@ -119,12 +119,12 @@ namespace Desktop.UserControls
 
         private void modifyOrderButton(object sender, EventArgs e)
         {
-            AddOrderController a = new AddOrderController(table.TableNumber, this.getActiveOrder());
+            AddOrderController a = new AddOrderController(table.TableNumber, WebserviceConnection.getActiveOrder(table.Table.Id));
         }
 
         private void closeOrderButton(object sender, EventArgs e)
         {
-            OrderDTO activeOrder = getActiveOrder();
+            OrderDTO activeOrder = WebserviceConnection.getActiveOrder(table.Table.Id);
 
             new CloseOrderController(activeOrder);
         }
@@ -185,24 +185,26 @@ namespace Desktop.UserControls
             metroGrid1.BorderStyle = BorderStyle.Fixed3D;
             this.mainPanel.Controls.Add(metroGrid1);
 
-            List<Meal> meals = new List<Meal>();
-            OrderDTO order = this.getActiveOrder();
-            if (order.Drinks != null) meals.AddRange(order.Drinks);
-            if (order.Foods != null) meals.AddRange(order.Foods);
+            List<Product> products = new List<Product>();
+            OrderDTO order = WebserviceConnection.getActiveOrder(table.Table.Id);
+            if (order.Drinks != null) products.AddRange(order.Drinks);
+            if (order.Foods != null) products.AddRange(order.Foods);
+            if (order.Menus != null) products.AddRange(order.Menus);
 
-            BindingList<Meal> mealDataSource = new BindingList<Meal>(meals);
+            BindingList<Product> mealDataSource = new BindingList<Product>(products);
             metroGrid1.DataSource = mealDataSource;
 
 
             metroGrid1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            metroGrid1.Columns[0].Width = metroGrid1.Width / 2;
+            metroGrid1.Columns[0].Width = metroGrid1.Width / 3;
 
             metroGrid1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             metroGrid1.Columns[1].Width = metroGrid1.Width / 3;
             metroGrid1.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             metroGrid1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            metroGrid1.Columns[2].Width = metroGrid1.Width / 6 + (metroGrid1.Width /2 - (metroGrid1.Width / 6 + metroGrid1.Width / 3));
+            //metroGrid1.Columns[2].Width = metroGrid1.Width / 5 + (metroGrid1.Width /3 - (metroGrid1.Width / 6 + metroGrid1.Width / 3));
+            metroGrid1.Columns[2].Width = metroGrid1.Width / 3;
             metroGrid1.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             MetroButton btn = this.mainPanel.Controls.OfType<MetroButton>().Where(b => string.Equals(b.Name, "btn2")).FirstOrDefault();
@@ -215,41 +217,9 @@ namespace Desktop.UserControls
             MetroCheckBox chck = (MetroCheckBox)sender;
             TableDTO t = table.Table;
             //t.Empty = !chck.Checked;
-            TablesController.modifyTableStatus(t.Id);
+            WebserviceConnection.modifyTableStatus(t.Id);
         }
 
-        private void createBtn()
-        {
-
-        }
-
-        private List<DrinkDTO> getDrinks()
-        {
-            string URI = "http://tpvparatodos.azurewebsites.net/api/drink";
-            HttpWebRequest request = WebRequest.Create(URI) as HttpWebRequest;
-            request.Method = "GET";
-            WebResponse response = request.GetResponse();
-            Stream stream = response.GetResponseStream();
-            StreamReader sr = new StreamReader(stream);
-            string strsb = sr.ReadToEnd();
-
-            return (List<DrinkDTO>)Newtonsoft.Json.JsonConvert.DeserializeObject(strsb, typeof(List<DrinkDTO>));
-        }
-
-        private OrderDTO getActiveOrder()
-        {
-            //string URI = "http://tpvparatodos.azurewebsites.net/api/Order/lastByTable/" + table.Table.Id;
-            string URI = "http://172.16.100.19/TPVParaTodos/api/Orders/Manager/" + table.Table.Id;
-            //string URI = "http://172.16.10.20/TPVParaTodos/api/Orders/Manager/" + table.Table.Id;
-            HttpWebRequest request = WebRequest.Create(URI) as HttpWebRequest;
-            request.Method = "GET";
-            WebResponse response = request.GetResponse();
-            Stream stream = response.GetResponseStream();
-            StreamReader sr = new StreamReader(stream);
-            string strsb = sr.ReadToEnd();
-
-            return (OrderDTO)Newtonsoft.Json.JsonConvert.DeserializeObject(strsb, typeof(OrderDTO));
-        }
 
 
     }

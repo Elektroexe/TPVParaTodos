@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Desktop.Model
 {
-    public partial class FoodDTO: Meal
+    public partial class FoodDTO: Product
     {
 
         public override int Id { get; set; }
@@ -15,7 +15,5 @@ namespace Desktop.Model
         public string FamilyDish { get; set; }
         public string Description { get; set; }
 
-        //public virtual List<MenuDTO> Menus { get; set; }
-        //public virtual List<OrderDTO> Orders { get; set; }
     }
 }

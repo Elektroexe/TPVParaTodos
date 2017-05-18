@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Desktop.Model
 {
-    public abstract class Meal
+    public abstract class Product
     {
         private int qty;
-        public Meal() { }
+        public Product() { }
 
         [Browsable(false)]
         public virtual int Id { get; set; }

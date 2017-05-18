@@ -35,26 +35,22 @@ namespace Desktop.View
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.mealsTabControl = new MetroFramework.Controls.MetroTabControl();
             this.startersTab = new MetroFramework.Controls.MetroTabPage();
-            this.controlTabPanel = new System.Windows.Forms.Panel();
-            this.drinksTab = new System.Windows.Forms.TabPage();
-            this.meatsTab = new MetroFramework.Controls.MetroTabPage();
-            this.fishTab = new MetroFramework.Controls.MetroTabPage();
+            this.drinksTab = new MetroTabPage();
+            this.mainTab = new MetroFramework.Controls.MetroTabPage();
             this.dessertsTab = new MetroFramework.Controls.MetroTabPage();
             this.menusTab = new MetroFramework.Controls.MetroTabPage();
             this.metroGrid1 = new MetroFramework.Controls.MetroGrid();
             this.sendOrderBtn = new MetroFramework.Controls.MetroButton();
             this.mealsTabControl.SuspendLayout();
-            this.startersTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.metroGrid1)).BeginInit();
             this.SuspendLayout();
             // 
             // mealsTabControl
             // 
             this.mealsTabControl.Controls.Add(this.startersTab);
-            this.mealsTabControl.Controls.Add(this.drinksTab);
-            this.mealsTabControl.Controls.Add(this.meatsTab);
-            this.mealsTabControl.Controls.Add(this.fishTab);
+            this.mealsTabControl.Controls.Add(this.mainTab);
             this.mealsTabControl.Controls.Add(this.dessertsTab);
+            this.mealsTabControl.Controls.Add(this.drinksTab);
             this.mealsTabControl.Controls.Add(this.menusTab);
             this.mealsTabControl.Location = new System.Drawing.Point(299, 79);
             this.mealsTabControl.Name = "mealsTabControl";
@@ -66,7 +62,6 @@ namespace Desktop.View
             // 
             // startersTab
             // 
-            this.startersTab.Controls.Add(this.controlTabPanel);
             this.startersTab.HorizontalScrollbarBarColor = true;
             this.startersTab.HorizontalScrollbarHighlightOnWheel = false;
             this.startersTab.HorizontalScrollbarSize = 10;
@@ -81,15 +76,6 @@ namespace Desktop.View
             this.startersTab.VerticalScrollbarHighlightOnWheel = false;
             this.startersTab.VerticalScrollbarSize = 10;
             // 
-            // controlTabPanel
-            // 
-            this.controlTabPanel.AutoScroll = true;
-            this.controlTabPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.controlTabPanel.Location = new System.Drawing.Point(3, 3);
-            this.controlTabPanel.Name = "controlTabPanel";
-            this.controlTabPanel.Size = new System.Drawing.Size(1014, 503);
-            this.controlTabPanel.TabIndex = 2;
-            // 
             // drinksTab
             // 
             this.drinksTab.Location = new System.Drawing.Point(4, 38);
@@ -97,36 +83,26 @@ namespace Desktop.View
             this.drinksTab.Size = new System.Drawing.Size(1020, 509);
             this.drinksTab.TabIndex = 5;
             this.drinksTab.Text = "Bebidas";
+            this.drinksTab.UseVisualStyleBackColor = true;
+            this.drinksTab.VerticalScrollbarBarColor = true;
+            this.drinksTab.VerticalScrollbarHighlightOnWheel = false;
+            this.drinksTab.VerticalScrollbarSize = 10;
             // 
-            // meatsTab
+            // mainTab
             // 
-            this.meatsTab.HorizontalScrollbarBarColor = true;
-            this.meatsTab.HorizontalScrollbarHighlightOnWheel = false;
-            this.meatsTab.HorizontalScrollbarSize = 10;
-            this.meatsTab.Location = new System.Drawing.Point(4, 38);
-            this.meatsTab.Name = "meatsTab";
-            this.meatsTab.Padding = new System.Windows.Forms.Padding(3);
-            this.meatsTab.Size = new System.Drawing.Size(1020, 509);
-            this.meatsTab.TabIndex = 1;
-            this.meatsTab.Text = "Carnes";
-            this.meatsTab.UseVisualStyleBackColor = true;
-            this.meatsTab.VerticalScrollbarBarColor = true;
-            this.meatsTab.VerticalScrollbarHighlightOnWheel = false;
-            this.meatsTab.VerticalScrollbarSize = 10;
-            // 
-            // fishTab
-            // 
-            this.fishTab.HorizontalScrollbarBarColor = true;
-            this.fishTab.HorizontalScrollbarHighlightOnWheel = false;
-            this.fishTab.HorizontalScrollbarSize = 10;
-            this.fishTab.Location = new System.Drawing.Point(4, 38);
-            this.fishTab.Name = "fishTab";
-            this.fishTab.Size = new System.Drawing.Size(1020, 509);
-            this.fishTab.TabIndex = 2;
-            this.fishTab.Text = "Pescados";
-            this.fishTab.VerticalScrollbarBarColor = true;
-            this.fishTab.VerticalScrollbarHighlightOnWheel = false;
-            this.fishTab.VerticalScrollbarSize = 10;
+            this.mainTab.HorizontalScrollbarBarColor = true;
+            this.mainTab.HorizontalScrollbarHighlightOnWheel = false;
+            this.mainTab.HorizontalScrollbarSize = 10;
+            this.mainTab.Location = new System.Drawing.Point(4, 38);
+            this.mainTab.Name = "mainTab";
+            this.mainTab.Padding = new System.Windows.Forms.Padding(3);
+            this.mainTab.Size = new System.Drawing.Size(1020, 509);
+            this.mainTab.TabIndex = 1;
+            this.mainTab.Text = "Principales";
+            this.mainTab.UseVisualStyleBackColor = true;
+            this.mainTab.VerticalScrollbarBarColor = true;
+            this.mainTab.VerticalScrollbarHighlightOnWheel = false;
+            this.mainTab.VerticalScrollbarSize = 10;
             // 
             // dessertsTab
             // 
@@ -138,6 +114,7 @@ namespace Desktop.View
             this.dessertsTab.Size = new System.Drawing.Size(1020, 509);
             this.dessertsTab.TabIndex = 3;
             this.dessertsTab.Text = "Postres";
+            this.dessertsTab.UseVisualStyleBackColor = true;
             this.dessertsTab.VerticalScrollbarBarColor = true;
             this.dessertsTab.VerticalScrollbarHighlightOnWheel = false;
             this.dessertsTab.VerticalScrollbarSize = 10;
@@ -152,6 +129,7 @@ namespace Desktop.View
             this.menusTab.Size = new System.Drawing.Size(1020, 509);
             this.menusTab.TabIndex = 4;
             this.menusTab.Text = "Menús";
+            this.menusTab.UseVisualStyleBackColor = true;
             this.menusTab.VerticalScrollbarBarColor = true;
             this.menusTab.VerticalScrollbarHighlightOnWheel = false;
             this.menusTab.VerticalScrollbarSize = 10;
@@ -163,7 +141,7 @@ namespace Desktop.View
             this.metroGrid1.AllowUserToResizeColumns = false;
             this.metroGrid1.AllowUserToResizeRows = false;
             this.metroGrid1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.metroGrid1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.metroGrid1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.metroGrid1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.metroGrid1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -202,7 +180,6 @@ namespace Desktop.View
             this.metroGrid1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.metroGrid1.Size = new System.Drawing.Size(242, 543);
             this.metroGrid1.TabIndex = 1;
-            this.metroGrid1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             // 
             // sendOrderBtn
             // 
@@ -227,7 +204,6 @@ namespace Desktop.View
             this.Text = "Añadir comanda";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.mealsTabControl.ResumeLayout(false);
-            this.startersTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.metroGrid1)).EndInit();
             this.ResumeLayout(false);
 
@@ -237,13 +213,11 @@ namespace Desktop.View
 
         public MetroTabControl mealsTabControl;
         public MetroTabPage startersTab;
-        public MetroTabPage meatsTab;
-        public MetroTabPage fishTab;
+        public MetroTabPage mainTab;
         public MetroTabPage dessertsTab;
         public MetroTabPage menusTab;
+        public MetroTabPage drinksTab;
         public MetroGrid metroGrid1;
-        public System.Windows.Forms.Panel controlTabPanel;
         public MetroButton sendOrderBtn;
-        private System.Windows.Forms.TabPage drinksTab;
     }
 }

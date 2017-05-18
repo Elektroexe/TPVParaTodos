@@ -82,7 +82,7 @@
     <Compile Include="Controller\WebserviceConnection.cs" />
     <Compile Include="Model\DrinkDTO.cs" />
     <Compile Include="Model\FoodDTO.cs" />
-    <Compile Include="Model\Meal.cs" />
+    <Compile Include="Model\Product.cs" />
     <Compile Include="Model\MenuDTO.cs" />
     <Compile Include="Model\OrderDTO.cs" />
     <Compile Include="Model\TableDTO.cs" />
@@ -103,6 +103,9 @@
     </Compile>
     <Compile Include="UserControls\MealUC.Designer.cs">
       <DependentUpon>MealUC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MenuMealUC.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\NotificationsUC.cs">
       <SubType>UserControl</SubType>
@@ -185,9 +188,6 @@
     </Compile>
     <EmbeddedResource Include="UserControls\CommentaryUC.resx">
       <DependentUpon>CommentaryUC.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\MealUC.resx">
-      <DependentUpon>MealUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\NotificationsUC.resx">
       <DependentUpon>NotificationsUC.cs</DependentUpon>

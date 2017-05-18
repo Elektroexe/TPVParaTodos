@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Desktop.Model
 {
-    public partial class DrinkDTO: Meal
+    public partial class DrinkDTO: Product
     {
         public override int Id { get; set; }
         public override string Name { get; set; }

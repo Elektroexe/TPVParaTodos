@@ -20,7 +20,7 @@ namespace Desktop.Controller
         private FormCloseOrder _closeOrderView;
 
         private OrderDTO _activeOrder;
-        private List<Meal> _orderMeals;
+        private List<Product> _orderMeals;
 
         public CloseOrderController(OrderDTO order)
         {
@@ -39,16 +39,16 @@ namespace Desktop.Controller
 
         private void initList()
         {
-            _orderMeals = new List<Meal>();
+            _orderMeals = new List<Product>();
             _orderMeals.AddRange(_activeOrder.Drinks);
             _orderMeals.AddRange(_activeOrder.Foods);
         }
 
         private void refreshData()
         {
-            BindingList<Meal> mealDataSource = new BindingList<Meal>(_orderMeals);
+            BindingList<Product> mealDataSource = new BindingList<Product>(_orderMeals);
             _closeOrderView.closeTicketGrid.DataSource = mealDataSource;
-            //this._closeOrderView.sendOrderBtn.Enabled = meals.Count > 0;
+            //this._closeOrderView.sendOrderBtn.Enabled = products.Count > 0;
 
             foreach (DataGridViewColumn c in _closeOrderView.closeTicketGrid.Columns)
             {
@@ -60,6 +60,7 @@ namespace Desktop.Controller
         private void closeOrderBtnClick(object sender, EventArgs e)
         {
             createPdf();
+            closeOrder();
         }
 
         private void createPdf()
@@ -68,38 +69,64 @@ namespace Desktop.Controller
             System.Drawing.Image totalImage = (System.Drawing.Image)createBitmap(_closeOrderView.totalGridView);
 
 
-            SaveFileDialog dlg = new SaveFileDialog();
-            dlg.Filter = "PDF Files|*.pdf";
-            dlg.FilterIndex = 0;
+            //SaveFileDialog dlg = new SaveFileDialog();
+            //dlg.Filter = "PDF Files|*.pdf";
+            //dlg.FilterIndex = 0;
 
-            string fileName = string.Empty;
+            string fileName = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()).ToString() + ".pdf";
 
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                iTextSharp.text.Image im1 = iTextSharp.text.Image.GetInstance(orderImage, System.Drawing.Imaging.ImageFormat.Png);
-                iTextSharp.text.Image im2 = iTextSharp.text.Image.GetInstance(totalImage, System.Drawing.Imaging.ImageFormat.Png);
+            //if (dlg.ShowDialog() == DialogResult.OK)
+            //{
+            //    iTextSharp.text.Image im1 = iTextSharp.text.Image.GetInstance(orderImage, System.Drawing.Imaging.ImageFormat.Png);
+            //    iTextSharp.text.Image im2 = iTextSharp.text.Image.GetInstance(totalImage, System.Drawing.Imaging.ImageFormat.Png);
 
-                im1.ScaleAbsolute(505, im1.Height/2);
-                im2.ScaleAbsolute(im2.Width/2, im2.Height/2);
-                im2.Alignment = iTextSharp.text.Image.ALIGN_RIGHT;
+            //    im1.ScaleAbsolute(505, im1.Height/2);
+            //    im2.ScaleAbsolute(im2.Width/2, im2.Height/2);
+            //    im2.Alignment = iTextSharp.text.Image.ALIGN_RIGHT;
 
-                fileName = dlg.FileName;
+            //    fileName = dlg.FileName;
 
-                Document myDocument = new Document(iTextSharp.text.PageSize.A4, 45, 45, 42, 35);
-                PdfWriter.GetInstance(myDocument, new FileStream(fileName, FileMode.Create));
-                myDocument.Open();
+            //    Document myDocument = new Document(iTextSharp.text.PageSize.A4, 45, 45, 42, 35);
+            //    PdfWriter.GetInstance(myDocument, new FileStream(fileName, FileMode.Create));
+            //    myDocument.Open();
 
-                Paragraph p = new Paragraph();
-                p.Alignment = iTextSharp.text.Image.ALIGN_CENTER;
-                p.Font = FontFactory.GetFont(FontFactory.HELVETICA, 20);
-                p.Add("Mesa " + _activeOrder.Table_Id.ToString() + "\n\n");
+            //    Paragraph p = new Paragraph();
+            //    p.Alignment = iTextSharp.text.Image.ALIGN_CENTER;
+            //    p.Font = FontFactory.GetFont(FontFactory.HELVETICA, 20);
+            //    p.Add("Mesa " + _activeOrder.Table_Id.ToString() + "\n\n");
 
-                myDocument.Add(p);
-                myDocument.Add(im1);
-                myDocument.Add(new Paragraph("\n"));
-                myDocument.Add(im2);
-                myDocument.Close();
-            }
+            //    myDocument.Add(p);
+            //    myDocument.Add(im1);
+            //    myDocument.Add(new Paragraph("\n"));
+            //    myDocument.Add(im2);
+            //    myDocument.Close();
+            //}
+
+            //{
+            iTextSharp.text.Image im1 = iTextSharp.text.Image.GetInstance(orderImage, System.Drawing.Imaging.ImageFormat.Png);
+            iTextSharp.text.Image im2 = iTextSharp.text.Image.GetInstance(totalImage, System.Drawing.Imaging.ImageFormat.Png);
+
+            im1.ScaleAbsolute(505, im1.Height / 2);
+            im2.ScaleAbsolute(im2.Width / 2, im2.Height / 2);
+            im2.Alignment = iTextSharp.text.Image.ALIGN_RIGHT;
+
+            Document myDocument = new Document(iTextSharp.text.PageSize.A4, 45, 45, 42, 35);
+            PdfWriter.GetInstance(myDocument, new FileStream(fileName, FileMode.Create));
+            myDocument.Open();
+
+            Paragraph p = new Paragraph();
+            p.Alignment = iTextSharp.text.Image.ALIGN_CENTER;
+            p.Font = FontFactory.GetFont(FontFactory.HELVETICA, 20);
+            p.Add("Mesa " + _activeOrder.Table_Id.ToString() + "\n\n");
+
+            myDocument.Add(p);
+            myDocument.Add(im1);
+            myDocument.Add(new Paragraph("\n"));
+            myDocument.Add(im2);
+            myDocument.Close();
+
+
+            System.Diagnostics.Process.Start(fileName);
         }
 
         private Bitmap createBitmap(DataGridView grid)
@@ -108,6 +135,12 @@ namespace Desktop.Controller
             grid.DrawToBitmap(bitmap, new System.Drawing.Rectangle(0, 0, grid.Width, grid.Height));
 
             return bitmap;
+        }
+        
+        private void closeOrder()
+        {
+            WebserviceConnection.closeOrder(_activeOrder.Table_Id);
+            _closeOrderView.Close();
         }
     }
 }
