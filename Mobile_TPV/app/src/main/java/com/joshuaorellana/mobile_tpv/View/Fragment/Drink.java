@@ -90,16 +90,14 @@ public class Drink extends Fragment {
         tvProductName = (TextView) navHeader.findViewById(R.id.tvProductName);
         tvQty = (TextView) navHeader.findViewById(R.id.tvQty);
 
-        //txtDrinkTest = (TextView) rootView.findViewById(R.id.txtDrinkTest);
-
-        //txtDrinkTest.setText("bebidas");
-
         imgBgHeader = (ImageView) navHeader.findViewById(R.id.img_header_bg);
         imgProduct = (ImageView) navHeader.findViewById(R.id.img_Product);
 
         listDrinks = new ArrayList<>();
 
         String url = _URL + "api/Drinks";
+
+        Log.e("URL -->", url);
 
         new loadDrinks().execute(url);
 

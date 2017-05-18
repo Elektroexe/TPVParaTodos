@@ -22,7 +22,6 @@ import okhttp3.Response;
 public class WebService {
 
     //static final String URL = "http://192.168.1.108/TPVParaTodos/api/";
-    //static final String URL = "http://172.16.100.15:1550/api/";
     static final String URL = "http://tpvpt.azurewebsites.com/";
     public static String token;
 
