@@ -19,6 +19,7 @@ public class WebService {
 
     //static final String URL = "http://192.168.1.108/TPVParaTodos/api/";
     static final String URL = "http://172.16.100.15:1550/api/";
+    //static final String URL = "http://172.16.10.18:1550/api/";
     public static String token;
 
     public static String Login(String username, String password){
