@@ -1,9 +1,13 @@
 package com.joshuaorellana.mobile_tpv.Controller;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.joshuaorellana.mobile_tpv.Model.Login;
+import com.joshuaorellana.mobile_tpv.Model.ProductDTO;
+import com.joshuaorellana.mobile_tpv.Model.persistence.ProductsConversor;
+import com.joshuaorellana.mobile_tpv.Model.persistence.ProductsSQLiteHelper;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -18,7 +22,8 @@ import okhttp3.Response;
 public class WebService {
 
     //static final String URL = "http://192.168.1.108/TPVParaTodos/api/";
-    static final String URL = "http://172.16.100.15:1550/api/";
+    //static final String URL = "http://172.16.100.15:1550/api/";
+    static final String URL = "http://tpvpt.azurewebsites.com/";
     public static String token;
 
     public static String Login(String username, String password){
@@ -27,7 +32,7 @@ public class WebService {
             MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
             RequestBody body = RequestBody.create(mediaType, "grant_type=password&username=" + username + "&password=" + password);
             Request request = new Request.Builder()
-                    .url("http://172.16.100.15:1550/token")
+                    .url(URL + "token")
                     .post(body)
                     .addHeader("content-type", "application/x-www-form-urlencoded")
                     .build();
@@ -46,15 +51,15 @@ public class WebService {
     }
 
     public static <T> T[] Get(Class<T[]> classType) {
-        //if (token != null && token.length() > 0) {
-            String urlAPI = URL + classType.getSimpleName().replace("DTO[]", "s");
+        if (token != null && token.length() > 0) {
+            String urlAPI = URL + "api/" + classType.getSimpleName().replace("DTO[]", "s");
             T[] products;
             try {
                 OkHttpClient client = new OkHttpClient();
                 Request request = new Request.Builder()
                         .url(urlAPI)
                         .get()
-                        //.addHeader("authorization", token)
+                        .addHeader("authorization", token)
                         .build();
                 Response response = client.newCall(request).execute();
                 Gson gson = new Gson();
@@ -63,7 +68,23 @@ public class WebService {
                 return null;
             }
             return products;
-        //}
-        //return null;
+        }
+        return null;
+    }
+
+    public static ProductDTO[] CheckDB() {
+        try {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(URL)
+                    .get()
+                    .addHeader("authorization", token)
+                    .build();
+            Response response = client.newCall(request).execute();
+            Gson gson = new Gson();
+            return gson.fromJson(response.body().string(), ProductDTO[].class);
+        } catch (Exception ex) {
+            return null;
+        }
     }
 }

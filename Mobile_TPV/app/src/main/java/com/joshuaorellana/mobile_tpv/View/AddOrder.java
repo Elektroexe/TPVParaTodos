@@ -76,9 +76,6 @@ public class AddOrder extends AppCompatActivity {
             Order = new OrderDTO(auxTable.getId(), date);
         }
 
-
-
-
     }
 
     private class loadContent extends AsyncTask<String, Long, String > {
