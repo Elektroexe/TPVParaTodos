@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
-using Business;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Diagnostics;
-using WebService.Models.DTO;
+using WebService.Models;
+using WebService.Resources;
 
 namespace WebService.Hubs
 {
     public class TableHub : Hub
     {
-        private Entities db = new Entities();
+        private ApplicationDbContext db = new ApplicationDbContext();
         public void GetAll()
         {
-            Clients.Caller.Refresh(JsonFrom(db.Tables.ToList().Select(a => new TableDTO(a)).ToList()));
+            Clients.Caller.Refresh(db.Tables.ToList().Select(a => new TableDTO(a)).ToJson());
         }
 
         public void ChangeStatus(int tableId)
@@ -28,7 +28,8 @@ namespace WebService.Hubs
                 db.Entry(table).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
             }
-            Clients.All.Refresh(JsonFrom(db.Tables.ToList().Select(a => new TableDTO(a)).ToList()));
+            NotificationManager.Notify(new Notification { Title = "Mesa "+tableId, Message = "La mesa " + tableId + " ha sido " + (table.Empty ? "desocupada" : "ocupada"), Type = Models.Type.Success });
+            Clients.All.Refresh(db.Tables.ToList().Select(a => new TableDTO(a)).ToJson());
         }
 
         public override Task OnConnected()
@@ -36,10 +37,5 @@ namespace WebService.Hubs
             return base.OnConnected();
         }
 
-        private string JsonFrom (object data)
-        {
-            return JsonConvert.SerializeObject(data, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, PreserveReferencesHandling = PreserveReferencesHandling.None });
-        }
     }
-
 }

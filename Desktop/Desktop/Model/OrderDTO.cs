@@ -11,7 +11,7 @@ namespace Desktop.Model
         public int Id { get; set; }
         public int Table_Id { get; set; }
         public Nullable<decimal> Total { get; set; }
-        public System.DateTime Date { get; set; }
+        public DateTime Date { get; set; }
         public string Commentary { get; set; }
         //public string Employee_Id { get; set; }
         //public virtual TableDTO Table { get; set; }

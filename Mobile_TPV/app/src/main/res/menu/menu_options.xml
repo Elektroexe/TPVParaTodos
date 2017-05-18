@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_add"
+
+            android:title="Añadir" />
+        <!--android:icon="@drawable/ic_home_black_24dp"-->
+        <item
+            android:id="@+id/nav_remove"
+
+            android:title="Eliminar" />
+        <!--android:icon="@drawable/ic_photo_library_black_24dp"-->
+    </group>
+
+    <item android:title="Opciones">
+        <menu>
+            <item
+                android:id="@+id/nav_accept"
+                android:title="Aceptar" />
+            <item
+                android:id="@+id/nav_decline"
+                android:title="Declinar" />
+        </menu>
+    </item>
+
+    <item android:title="Enviar pedido">
+        <menu>
+            <item
+                android:id="@+id/nav_sendorder"
+                android:title="Enviar pedido" />
+        </menu>
+    </item>
+
+
+</menu>

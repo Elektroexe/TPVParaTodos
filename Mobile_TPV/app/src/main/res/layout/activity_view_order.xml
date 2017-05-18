@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.joshuaorellana.mobile_tpv.View.ViewOrder">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_OrderTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="PEDIDO"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_DrinkTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="25dp"
+                android:text=" - Bebidas"
+                android:textAlignment="textStart"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="44dp"
+                tools:layout_editor_absoluteY="60dp" />
+
+            <TextView
+                android:id="@+id/tv_DrinkList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="10dp"
+                tools:layout_editor_absoluteX="72dp"
+                tools:layout_editor_absoluteY="106dp" />
+
+            <TextView
+                android:id="@+id/tv_FoodTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="25dp"
+                android:text="- Comida"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="44dp"
+                tools:layout_editor_absoluteY="146dp" />
+
+            <TextView
+                android:id="@+id/tv_FoodList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="10dp"
+                tools:layout_editor_absoluteX="72dp"
+                tools:layout_editor_absoluteY="201dp" />
+
+            <TextView
+                android:id="@+id/tv_MenuTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="25dp"
+                android:text="- Menus"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tv_MenuList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="10dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
