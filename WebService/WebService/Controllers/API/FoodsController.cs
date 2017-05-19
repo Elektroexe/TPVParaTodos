@@ -7,6 +7,7 @@ using WebService.Models;
 
 namespace WebService.Controllers.API
 {
+    [Authorize]
     public class FoodsController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();

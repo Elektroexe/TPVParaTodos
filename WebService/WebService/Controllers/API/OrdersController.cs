@@ -12,6 +12,7 @@ using WebService.Resources;
 
 namespace WebService.Controllers.API
 {
+    [System.Web.Http.Authorize]
     public class OrdersController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();

@@ -12,9 +12,9 @@ namespace Desktop.UserControls
     {
         private DrinkDTO drink;
 
-        public override void SetDTO(Meal meal)
+        public override void SetDTO(Product product)
         {
-            drink = (DrinkDTO)meal;
+            drink = (DrinkDTO)product;
             this.nameLabel.Text = drink.Name;
             this.priceLabel.Text = drink.Price.ToString() + " €";
             this.qtyLabel.Text = drink.Quantity.ToString();
@@ -32,12 +32,12 @@ namespace Desktop.UserControls
 
         public DrinkMealUC() { }
 
-        public override Meal AddToOrder()
+        public override Product AddToOrder()
         {
             this.drink.Quantity += 1;
-            if (!AddOrderController.meals.Contains(this.drink))
+            if (!AddOrderController.products.Contains(this.drink))
             {
-                AddOrderController.meals.Add(this.drink);
+                AddOrderController.products.Add(this.drink);
             }
             else
             {
@@ -48,7 +48,7 @@ namespace Desktop.UserControls
         }
 
 
-        public override Meal DelFromOrder()
+        public override Product DelFromOrder()
         {
             if (this.drink.Quantity > 0)
             {
@@ -56,7 +56,7 @@ namespace Desktop.UserControls
             }
             if (this.drink.Quantity == 0)
             {
-                AddOrderController.meals.Remove(this.drink);
+                AddOrderController.products.Remove(this.drink);
             }
             else if (this.drink.Quantity > 0)
             {
@@ -68,7 +68,7 @@ namespace Desktop.UserControls
 
         private void modifyQuantity()
         {
-            foreach (Meal m in AddOrderController.meals)
+            foreach (Product m in AddOrderController.products)
             {
                 if (m.GetType() == typeof(DrinkDTO))
                 {

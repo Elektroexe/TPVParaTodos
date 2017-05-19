@@ -8,6 +8,7 @@ using Desktop.UserControls;
 using System.Drawing;
 using System.ComponentModel;
 using System.Reflection;
+using MetroFramework.Controls;
 
 namespace Desktop.Controller
 {
@@ -32,8 +33,8 @@ namespace Desktop.Controller
         #endregion
 
         #region Static Fields
-        // All of meals which take part of the order
-        public static List<Meal> meals;
+        // All of products which take part of the order
+        public static List<Product> products;
         #endregion
 
         #region Constructor
@@ -53,11 +54,11 @@ namespace Desktop.Controller
         /// <summary>
         /// Initialize all relevant items
         /// </summary>
-        /// <param name="tableNumber">table to which meals will be assigned</param>
+        /// <param name="tableNumber">table to which products will be assigned</param>
         /// <param name="activeOrder">table's active order (if it's null means no active order)</param>
         private void initControllerItems(int tableNumber, OrderDTO activeOrder)
         {
-            meals = new List<Meal>();
+            products = new List<Product>();
             _addOrderView = new FormAddOrder();
 
             if (activeOrder != null)
@@ -66,7 +67,7 @@ namespace Desktop.Controller
                 _addOrderView.Text = "Modificar comanda";
             }
 
-            initMeals();
+            initAllTabs();
             _addOrderView.Show();
             _tableNumber = tableNumber;
             _activeOrder = activeOrder;
@@ -74,16 +75,15 @@ namespace Desktop.Controller
         }
 
         /// <summary>
-        /// Add all meals which were in the active order to meal's list
+        /// Add all products which were in the active order to meal's list
         /// </summary>
         /// <param name="activeOrder">table's active order</param>
         private void fillMealsFromOrder(OrderDTO activeOrder)
         {
-            meals.AddRange(activeOrder.Foods);
-            meals.AddRange(activeOrder.Drinks);
+            products.AddRange(activeOrder.Foods);
+            products.AddRange(activeOrder.Drinks);
+            products.AddRange(activeOrder.Menus);
 
-            // TO_DO: Hardcoded
-            meals.ForEach(m => m.Quantity = 1);
         }
 
         /// <summary>
@@ -94,76 +94,110 @@ namespace Desktop.Controller
             _addOrderView.sendOrderBtn.Click += SendOrder;
         }
 
+        private void initAllTabs()
+        {
+            // Get all products from the database
+            List<Product> meals = new List<Product>();
+            meals.AddRange(WebserviceConnection.getMeal<FoodDTO>("foods"));
+            meals.AddRange(WebserviceConnection.getMeal<DrinkDTO>("drinks"));
+            meals.AddRange(WebserviceConnection.getMeal<MenuDTO>("menus"));
+
+            Dictionary<Panel, List<Product>> productsPanel = new Dictionary<Panel, List<Product>>();
+            foreach (Product prod in meals)
+            {
+                Panel p = null;
+                if (prod.GetType().Equals(typeof(FoodDTO)))
+                {
+                    p = (Panel)_addOrderView.panelControls[(prod as FoodDTO).FamilyDish.ToLower() + "Panel"];
+                }
+                else
+                {
+                    p = (Panel)_addOrderView.panelControls[prod.GetType().Name + "Panel"];
+                }
+                
+                if (!productsPanel.ContainsKey(p))
+                {
+                    productsPanel[p] = new List<Product>();
+                }
+
+                List<Product> productsDic = productsPanel[p];
+
+                productsDic.Add(prod);
+                productsPanel[p] = productsDic;
+            }
+
+            foreach (KeyValuePair<Panel, List<Product>> entry in productsPanel)
+            {
+                initMeals(entry.Key, entry.Value);
+            }
+        }
+
         /// <summary>
-        /// Initialize all meals (visible objects and it's DTOs classes)
+        /// Initialize all products (visible objects and it's DTOs classes)
         /// </summary>
-        private void initMeals()
-        {   
+        private void initMeals(Panel pa, List<Product> products)
+        {
             // Meals container size
-            int twidth = _addOrderView.controlTabPanel.Width;
-            int theight = _addOrderView.controlTabPanel.Height;
+            int twidth = pa.Width;
+            int theight = pa.Height;
 
             // Calculate how many elements fit in each row
             int horizontalQty = twidth / (MEALWIDTH + SPACEBETWEENMEALS);
             int totalSpace = (MEALWIDTH + SPACEBETWEENMEALS) * horizontalQty + SPACEBETWEENMEALS;
             if (totalSpace > twidth) horizontalQty--;
             totalSpace = (MEALWIDTH + SPACEBETWEENMEALS) * horizontalQty + SPACEBETWEENMEALS;
-            int initialX = (_addOrderView.controlTabPanel.Width - SystemInformation.VerticalScrollBarThumbHeight - totalSpace) / 2;
+            int initialX = (pa.Width - SystemInformation.VerticalScrollBarThumbHeight - totalSpace) / 2;
 
             // Set initial position for the first meal
-            int x = _addOrderView.controlTabPanel.Location.X + SPACEBETWEENMEALS + initialX;
-            int y = _addOrderView.controlTabPanel.Location.Y + SPACEBETWEENMEALS;
-
-            // Get all meals from the database
-            List<Meal> meals = new List<Meal>();
-            meals.AddRange(WebserviceConnection.getMeal<FoodDTO>("foods"));
-            meals.AddRange(WebserviceConnection.getMeal<DrinkDTO>("drinks"));
+            int x = pa.Location.X + SPACEBETWEENMEALS + initialX;
+            int y = pa.Location.Y + SPACEBETWEENMEALS;
 
             // Create all meal object and place in its container
-            this.createAndPlaceMeal(meals, x, y, initialX, horizontalQty);
+            this.createAndPlaceMeal(products, x, y, initialX, horizontalQty, pa);
         }
 
         /// <summary>
-        /// Create all meals object and place in its container
+        /// Create all products object and place in its container
         /// </summary>
-        /// <param name="t_meals">All meals to be placed</param>
+        /// <param name="t_meals">All products to be placed</param>
         /// <param name="t_x">Initial x position</param>
         /// <param name="t_y">Initial y position</param>
         /// <param name="initialX">Initial x without spaces</param>
         /// <param name="horizontalQty">Meals per row</param>
-        private void createAndPlaceMeal(List<Meal> t_meals,
+        private void createAndPlaceMeal(List<Product> t_meals,
                                         int t_x,
                                         int t_y,
                                         int initialX,
-                                        int horizontalQty)
+                                        int horizontalQty,
+                                        Panel pa)
         {
             int compt = 1;
-            foreach (Meal m in t_meals)
+            foreach (Product m in t_meals)
             {
                 // Get meal object from current order(if it's null we keep the default value)
-                Meal mAux = meals.Where(x => x.Id == m.Id).FirstOrDefault() ?? m;
+                Product mAux = products.Where(x => x.Id == m.Id).FirstOrDefault() ?? m;
 
                 // Prepare reflection string for future instanciations and invocations
-                string meal = (mAux.GetType() == typeof(FoodDTO)) ? "Food" : "Drink";
+                string meal = (mAux.GetType().Name.Replace("DTO", ""));
 
-                // Instanciate and initializate Meal user control with the type specified on the bellow string
+                // Instanciate and initializate Product user control with the type specified on the bellow string
                 MealUC mealuc = (MealUC)Activator.CreateInstance(null, "Desktop.UserControls." + meal + "MealUC").Unwrap();
-                mealuc.SetDTO(m);
-                mealuc.mealPictureBox.Image = WebserviceConnection.getImage(m.Id);
+                mealuc.SetDTO(mAux);
+                mealuc.mealPictureBox.Image = WebserviceConnection.getImage(mAux.Id);
                 mealuc.Location = new Point(t_x, t_y);
                 mealuc.plusPictureBox.MouseClick += UCClick;
                 mealuc.minusPictureBox.MouseClick += UCClick;
                 mealuc.mealPictureBox.MouseClick += UCMainPictureClick;
-                
+
                 // Place meal uc in its container
                 t_x += MEALWIDTH + SPACEBETWEENMEALS;
                 if (compt % horizontalQty == 0)
                 {
                     t_y += MEALHEIGHT + SPACEBETWEENMEALS;
-                    t_x = _addOrderView.controlTabPanel.Location.X + SPACEBETWEENMEALS + initialX;
+                    t_x = pa.Location.X + SPACEBETWEENMEALS + initialX;
                 }
                 compt++;
-                _addOrderView.controlTabPanel.Controls.Add(mealuc);
+                pa.Controls.Add(mealuc);
             }
         }
 
@@ -172,15 +206,15 @@ namespace Desktop.Controller
         /// </summary>
         private void RefreshData()
         {
-            BindingList<Meal> mealDataSource = new BindingList<Meal>(meals);
+            BindingList<Product> mealDataSource = new BindingList<Product>(products);
             _addOrderView.metroGrid1.DataSource = mealDataSource;
 
-            this._addOrderView.sendOrderBtn.Enabled = meals.Count > 0;
+            this._addOrderView.sendOrderBtn.Enabled = products.Count > 0;
         }
 
 
         /// <summary>
-        /// Create a new order from meals added to the list
+        /// Create a new order from products added to the list
         /// </summary>
         /// <param name="fPop">form to show web connection</param>
         /// <param name="comment">user comments</param>
@@ -188,20 +222,22 @@ namespace Desktop.Controller
         {
             // Create new order and set its properties
             OrderDTO order = new OrderDTO();
+            order.Id = (_activeOrder != null) ? _activeOrder.Id : 0;
             order.Date = DateTime.Now;
             order.Table_Id = this._tableNumber;
             order.Total = 0;
             order.Commentary = comment;
 
             // TESTING 
-            order.Menus = new List<MenuDTO>();
+            //order.Menus = new List<MenuDTO>();
 
-            // Add all meals to order
+            // Add all products to order
             this.putMealsInOrder<DrinkDTO>("Drink", ref order);
             this.putMealsInOrder<FoodDTO>("Food", ref order);
+            this.putMealsInOrder<MenuDTO>("Menu", ref order);
 
             // Post the order via web service and get its response code
-            int serverResponse = WebserviceConnection.PostOrder(order);
+            int serverResponse = WebserviceConnection.PostAndPutOrder(order);
 
             // Show post status to user with a pop-up
             if ((serverResponse >= 200) && (serverResponse <= 299))
@@ -217,25 +253,25 @@ namespace Desktop.Controller
         }
 
         /// <summary>
-        /// Put all added meals to order
+        /// Put all added products to order
         /// </summary>
         /// <typeparam name="T">type of meal (can be FoodDTO or DrinkDTO)</typeparam>
         /// <param name="mealType">string with meal's type for reflection</param>
-        /// <param name="order">order where we're going to add meals</param>
+        /// <param name="order">order where we're going to add products</param>
         private void putMealsInOrder<T>(string mealType, ref OrderDTO order)
         {
-            // Get all meals of this type
-            List<T> mealsAux = meals.OfType<T>().ToList();
+            // Get all products of this type
+            List<T> mealsAux = products.OfType<T>().ToList();
 
             // Get the proper property and initializate it with reflection
             PropertyInfo prop = order.GetType().GetProperty(mealType + "s");
             prop.SetValue(order, new List<T>(), null);
 
-            // Add meals to order
+            // Add products to order
             foreach (T m in mealsAux)
             {
                 (prop.GetValue(order, null) as List<T>).Add(m);
-                order.Total += (Decimal)(m as Meal).TotalPrice;
+                order.Total += (Decimal)(m as Product).TotalPrice;
             }
         }
 
@@ -244,7 +280,10 @@ namespace Desktop.Controller
         #region Event handlers
         private void UCMainPictureClick(object sender, EventArgs e)
         {
-            List<MealUC> MealUCList = _addOrderView.controlTabPanel.Controls.OfType<MealUC>().ToList();
+            List<Panel> panels = _addOrderView.Controls.OfType<Panel>().ToList();
+            List<MealUC> MealUCList = new List<MealUC>();
+            panels.ForEach(x => MealUCList.AddRange(x.Controls.OfType<MealUC>()));
+
             foreach (MealUC m in MealUCList)
             {
                 PictureBox p = (PictureBox)sender;

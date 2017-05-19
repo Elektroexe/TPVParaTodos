@@ -13,6 +13,7 @@ using WebService.Models;
 
 namespace WebService.Controllers.API
 {
+    [Authorize]
     public class DrinksController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();

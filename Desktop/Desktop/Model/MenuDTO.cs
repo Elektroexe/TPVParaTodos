@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Desktop.Model
 {
-    public partial class MenuDTO
+    public partial class MenuDTO: Product
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public decimal Price { get; set; }
+        public override int Id { get; set; }
+        public override string Name { get; set; }
+        public override double Price { get; set; }
         public short PeopleNumber { get; set; }
         public string Description { get; set; }
 

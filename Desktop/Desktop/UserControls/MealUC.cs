@@ -42,11 +42,11 @@ namespace Desktop.UserControls
             this.mealPictureBox.Visible = true;
         }
 
-        public abstract Meal AddToOrder();
+        public abstract Product AddToOrder();
 
-        public abstract Meal DelFromOrder();
+        public abstract Product DelFromOrder();
 
-        public abstract void SetDTO(Meal meal);
+        public abstract void SetDTO(Product product);
 
         protected void RepositionLabels()
         {
@@ -59,7 +59,7 @@ namespace Desktop.UserControls
                 this.nameLabel.Text = firstText;
             }
             int newX = this.Width / 2 - this.nameLabel.Width / 2;
-            this.nameLabel.Location = new Point(newX ,this.nameLabel.Location.Y );
+            this.nameLabel.Location = new Point(newX, this.nameLabel.Location.Y);
 
             newX = this.Width / 2 - this.priceLabel.Width / 2;
             this.priceLabel.Location = new Point(newX, this.priceLabel.Location.Y);
