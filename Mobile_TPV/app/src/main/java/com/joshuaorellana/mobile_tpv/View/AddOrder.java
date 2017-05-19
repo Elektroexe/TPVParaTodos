@@ -10,16 +10,22 @@ import android.util.Log;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 import com.joshuaorellana.mobile_tpv.Controller.ViewPagerAdapter;
+import com.joshuaorellana.mobile_tpv.Controller.WebService;
 import com.joshuaorellana.mobile_tpv.Model.OrderDTO;
 import com.joshuaorellana.mobile_tpv.R;
 import com.joshuaorellana.mobile_tpv.View.Fragment.Drink;
 import com.joshuaorellana.mobile_tpv.View.Fragment.Food;
 import com.joshuaorellana.mobile_tpv.View.Fragment.Menu;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import static com.joshuaorellana.mobile_tpv.View.SelectedTable.auxTable;
 import static com.joshuaorellana.mobile_tpv.View.Tables._URL;
@@ -31,7 +37,6 @@ public class AddOrder extends AppCompatActivity {
     private ViewPagerAdapter adapter;
 
     public static OrderDTO Order;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +58,7 @@ public class AddOrder extends AppCompatActivity {
         viewPager.getCurrentItem();
 
         TimeZone tz = TimeZone.getTimeZone("UTC");
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ"); // Quoted "Z" to indicate UTC, no timezone offset
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
         df.setTimeZone(tz);
         String date = df.format(new Date());
 
@@ -63,22 +68,13 @@ public class AddOrder extends AppCompatActivity {
 
         if (modify) {
 
-            Log.e("ModifyOrder --> ", "OK!");
-
             String url = _URL + "api/Orders/Manager/" + auxTable.getId();
 
             new loadContent().execute(url);
 
         } else {
-
-            Log.e("AddOrder -->", "OK!");
-
             Order = new OrderDTO(auxTable.getId(), date);
         }
-
-
-
-
     }
 
     private class loadContent extends AsyncTask<String, Long, String > {
@@ -86,8 +82,18 @@ public class AddOrder extends AppCompatActivity {
         protected String doInBackground(String... urls) {
 
             try {
-                return HttpRequest.get(urls[0]).accept("application/json").body();
-            } catch (HttpRequest.HttpRequestException err) {
+
+                OkHttpClient client = new OkHttpClient();
+                Request request = new Request.Builder()
+                        .url(urls[0])
+                        .get()
+                        .addHeader("Authorization", WebService.token)
+                        .build();
+                Response response = client.newCall(request).execute();
+
+                return response.body().string();
+
+            } catch (HttpRequest.HttpRequestException | IOException err) {
                 Log.e("ERROR HttpRequest: ", err.toString());
             }
 
@@ -106,11 +112,6 @@ public class AddOrder extends AppCompatActivity {
     private OrderDTO getTables(String json) {
 
         Gson gson = new Gson();
-
-        //JsonParser parser = new JsonParser();
-        //JsonObject jsonObj = parser.parse(json).getAsJsonObject();
-
-        //Type tListType = new TypeToken<ArrayList<OrderDTO>>() {}.getType();
         return gson.fromJson(json, OrderDTO.class);
 
     }
@@ -121,8 +122,9 @@ public class AddOrder extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         adapter.addFragment(new Drink(), "BEBIDAS");
-        adapter.addFragment(new Food("Meat"), "CARNE");
         adapter.addFragment(new Food("Starter"), "ENTRANTES");
+        adapter.addFragment(new Food("Main"), "PRINCIPAL");
+        adapter.addFragment(new Food("Dessert"), "POSTRES");
         adapter.addFragment(new Menu(), "MENÚS");
 
         viewPager.setAdapter(adapter);

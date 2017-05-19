@@ -24,6 +24,7 @@ import microsoft.aspnet.signalr.client.hubs.SubscriptionHandler1;
 import microsoft.aspnet.signalr.client.hubs.SubscriptionHandler3;
 
 import static com.joshuaorellana.mobile_tpv.View.Tables.listButtons;
+import static com.joshuaorellana.mobile_tpv.View.Tables.listTables;
 
 /**
  * Created by Joshua-OC on 16/05/2017.
@@ -31,7 +32,7 @@ import static com.joshuaorellana.mobile_tpv.View.Tables.listButtons;
 
 public class SignalR {
 
-    static final String URL = "http://172.16.100.15:1550/signalr/";
+    static final String URL = "http://tpvpt.azurewebsites.net/signalr/";
 
     private TableDTO[] tables;
     private Context context;
@@ -107,26 +108,24 @@ public class SignalR {
                     @Override
                     public void run() {
 
-                        TableDTO[] test = getNewTables(newTables);
+                        SignalR.this.tables = getNewTables(newTables);
 
-                        Log.e("Test size! -->", String.valueOf(test.length));
+                        listTables = SignalR.this.tables;
 
-                        for (TableDTO auxTable : test) {
+                        for (TableDTO auxTable : SignalR.this.tables) {
 
                             for(int i = 0; i < listButtons.size(); i++) {
 
                                 if (listButtons.get(i).getId() == auxTable.getId()) {
                                     if (auxTable.isEmpty()) {
-                                        listButtons.get(i).setBackgroundResource(R.drawable.buttonshape);
+                                        listButtons.get(i).setBackgroundResource(R.drawable.table_green);
                                     } else {
-                                        listButtons.get(i).setBackgroundResource(R.drawable.buttonshapered);
+                                        listButtons.get(i).setBackgroundResource(R.drawable.table_red);
                                     }
                                 }
                             }
 
                         }
-
-                        Log.e("newTables -->", newTables);
 
                     }
                 });

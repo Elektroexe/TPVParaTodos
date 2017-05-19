@@ -37,7 +37,6 @@ public class SelectedTable extends AppCompatActivity {
 
     public static TableDTO auxTable;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +44,12 @@ public class SelectedTable extends AppCompatActivity {
 
         initComponents();
 
+    }
+
+    @Override
+    protected void onStart() {
+        checkEmpty();
+        super.onStart();
     }
 
     private void initComponents() {
@@ -61,28 +66,14 @@ public class SelectedTable extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         auxTable = (TableDTO) extras.getSerializable("Table");
-
         txtNumTable.setText(String.valueOf(auxTable.getId()));
 
-        Log.e("auxTable --> ", auxTable.toString());
 
         Bitmap bmp = (Bitmap) extras.getParcelable("imgButton");
 
         imgTable.setImageBitmap(bmp);
 
-        if (auxTable.isEmpty()) {
-
-            btAddOrder.setEnabled(true);
-            btModifyOrder.setEnabled(false);
-            btCloseOrder.setEnabled(false);
-            btViewOrder.setEnabled(false);
-
-        } else {
-            btAddOrder.setEnabled(false);
-            btModifyOrder.setEnabled(true);
-            btCloseOrder.setEnabled(true);
-            btViewOrder.setEnabled(true);
-        }
+        checkEmpty();
 
         setListeners();
 
@@ -94,7 +85,6 @@ public class SelectedTable extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent auxIntent = new Intent(SelectedTable.this, AddOrder.class);
-
                 auxIntent.putExtra("modify", false);
 
                 startActivity(auxIntent);
@@ -113,8 +103,6 @@ public class SelectedTable extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent auxIntent = new Intent(SelectedTable.this, AddOrder.class);
-
-
                 auxIntent.putExtra("modify", true);
 
                 startActivity(auxIntent);
@@ -127,8 +115,11 @@ public class SelectedTable extends AppCompatActivity {
             public void onClick(View view) {
 
                 String url = _URL + "api/Orders/Close/" +auxTable.getId();
+                auxTable.setEmpty(true);
 
                 new sendClose().execute(url);
+
+                checkEmpty();
 
             }
         });
@@ -140,6 +131,22 @@ public class SelectedTable extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void checkEmpty() {
+
+        if (auxTable.isEmpty()) {
+            btAddOrder.setEnabled(true);
+            btModifyOrder.setEnabled(false);
+            btCloseOrder.setEnabled(false);
+            btViewOrder.setEnabled(false);
+
+        } else {
+            btAddOrder.setEnabled(false);
+            btModifyOrder.setEnabled(true);
+            btCloseOrder.setEnabled(true);
+            btViewOrder.setEnabled(true);
+        }
     }
 
     private class sendClose extends AsyncTask<String, Void, String> {

@@ -8,13 +8,19 @@ import android.widget.TextView;
 
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
+import com.joshuaorellana.mobile_tpv.Controller.WebService;
 import com.joshuaorellana.mobile_tpv.Model.OrderDTO;
 import com.joshuaorellana.mobile_tpv.Model.Products.DrinkDTO;
 import com.joshuaorellana.mobile_tpv.Model.Products.FoodDTO;
 import com.joshuaorellana.mobile_tpv.Model.Products.MenuDTO;
 import com.joshuaorellana.mobile_tpv.R;
 
+import java.io.IOException;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import static com.joshuaorellana.mobile_tpv.View.SelectedTable.auxTable;
 import static com.joshuaorellana.mobile_tpv.View.Tables._URL;
@@ -57,8 +63,18 @@ public class ViewOrder extends AppCompatActivity {
         protected String doInBackground(String... urls) {
 
             try {
-                return HttpRequest.get(urls[0]).accept("application/json").body();
-            } catch (HttpRequest.HttpRequestException err) {
+
+                OkHttpClient client = new OkHttpClient();
+                Request request = new Request.Builder()
+                        .url(urls[0])
+                        .get()
+                        .addHeader("Authorization", WebService.token)
+                        .build();
+                Response response = client.newCall(request).execute();
+
+                return response.body().string();
+
+            } catch (HttpRequest.HttpRequestException | IOException err) {
                 Log.e("ERROR HttpRequest: ", err.toString());
             }
 

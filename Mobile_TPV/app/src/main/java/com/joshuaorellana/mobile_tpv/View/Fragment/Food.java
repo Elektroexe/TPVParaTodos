@@ -22,11 +22,13 @@ import android.widget.Toast;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.joshuaorellana.mobile_tpv.Controller.WebService;
 import com.joshuaorellana.mobile_tpv.Model.OrderDTO;
 import com.joshuaorellana.mobile_tpv.Model.Products.FoodDTO;
 import com.joshuaorellana.mobile_tpv.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static com.joshuaorellana.mobile_tpv.View.AddOrder.Order;
+import static com.joshuaorellana.mobile_tpv.View.SelectedTable.auxTable;
 import static com.joshuaorellana.mobile_tpv.View.Tables._URL;
 
 /**
@@ -75,7 +78,7 @@ public class Food extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.drink_test, container, false);
+        rootView = inflater.inflate(R.layout.fragment_product, container, false);
 
         initComponents();
 
@@ -85,9 +88,9 @@ public class Food extends Fragment {
 
     private void initComponents() {
 
-        tableLayout = (TableLayout) rootView.findViewById(R.id.menuTableLayout_Drink);
-        drawer = (DrawerLayout) rootView.findViewById(R.id.drawer_layout_Drink);
-        navigationView = (NavigationView) rootView.findViewById(R.id.nav_view_Drink);
+        tableLayout = (TableLayout) rootView.findViewById(R.id.menuTableLayout_Product);
+        drawer = (DrawerLayout) rootView.findViewById(R.id.drawerLayout_Product);
+        navigationView = (NavigationView) rootView.findViewById(R.id.nav_view_Product);
         View navHeader = navigationView.getHeaderView(0);
 
         tvProductName = (TextView) navHeader.findViewById(R.id.tvProductName);
@@ -110,8 +113,19 @@ public class Food extends Fragment {
         protected String doInBackground(String... urls) {
 
             try {
-                return HttpRequest.get(urls[0]).accept("application/json").body();
-            } catch (HttpRequest.HttpRequestException execption) {
+                //return HttpRequest.get(urls[0]).accept("application/json").body();
+
+                OkHttpClient client = new OkHttpClient();
+                Request request = new Request.Builder()
+                        .url(urls[0])
+                        .get()
+                        .addHeader("Authorization", WebService.token)
+                        .build();
+                Response response = client.newCall(request).execute();
+
+                return response.body().string();
+
+            } catch (HttpRequest.HttpRequestException | IOException err) {
                 return null;
             }
 
@@ -204,8 +218,6 @@ public class Food extends Fragment {
 
     private void setUpNavigationView(final FoodDTO product) {
 
-        Log.e("Product", product.toString());
-
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -292,6 +304,7 @@ public class Food extends Fragment {
             Request request = new Request.Builder()
                     .url(url)
                     .post(body)
+                    .addHeader("Authorization", WebService.token)
                     .addHeader("content-type", "application/json")
                     .build();
 
@@ -321,6 +334,7 @@ public class Food extends Fragment {
         protected void onPostExecute(String result) {
             //Toast.makeText(getBaseContext(), "Data Sent!", Toast.LENGTH_LONG).show();
             Toast.makeText(getActivity(), "OK!", Toast.LENGTH_SHORT).show();
+            auxTable.setEmpty(!auxTable.isEmpty());
         }
     }
 
