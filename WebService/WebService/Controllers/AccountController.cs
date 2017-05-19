@@ -370,6 +370,7 @@ namespace WebService.Controllers
                     Phone = model.Phone,
                     LastConnection = DateTime.Now
                 });
+                db.SaveChanges();
             }
 
             return Ok();
