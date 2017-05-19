@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPopUp));
             this.messageTextLabel = new MetroFramework.Controls.MetroLabel();
             this.acceptBtn = new MetroFramework.Controls.MetroButton();
             this.messageIconPb = new System.Windows.Forms.PictureBox();
@@ -72,6 +73,7 @@
             this.Controls.Add(this.acceptBtn);
             this.Controls.Add(this.messageTextLabel);
             this.Controls.Add(this.messageIconPb);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormPopUp";
             ((System.ComponentModel.ISupportInitialize)(this.messageIconPb)).EndInit();
             this.ResumeLayout(false);

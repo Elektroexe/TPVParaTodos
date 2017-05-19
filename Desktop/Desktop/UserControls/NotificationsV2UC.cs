@@ -12,16 +12,21 @@ namespace Desktop.UserControls
 {
     public partial class NotificationsV2UC : UserControl
     {
-        public NotificationsV2UC(string title, string subtitle)
+        public NotificationsV2UC(string title, string subtitle, bool correct)
         {
             InitializeComponent();
             this.label1.Text = title;
             this.label2.Text = subtitle;
+            if (!correct)
+            {
+                setErrorNotification();
+            }
         }
 
         public void setErrorNotification()
         {
-            //this.BackColor = new Color(Color.FromArgb(255, ))
+            this.BackColor = Color.FromArgb(217, 83, 79);
+            this.pictureBox1.Image = new Bitmap(Properties.Resources.warning);
         }
     }
 }

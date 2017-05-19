@@ -16,6 +16,7 @@ namespace Desktop.View
         public FormLogin()
         {
             InitializeComponent();
+            this.FocusMe();
         }
     }
 }

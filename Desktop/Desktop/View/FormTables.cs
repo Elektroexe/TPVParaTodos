@@ -31,14 +31,6 @@ namespace Desktop.View
 
         private void InitAllTablesUC()
         {
-            //TESTING
-            //Random rnd = new Random();
-            //List<Color> colors = new List<Color>();
-
-            //colors.Add(Color.Red);
-            //colors.Add(Color.Green);
-            //colors.Add(Color.Blue);
-            //FI TESTING
 
             int antX = 0;
             int antY = 0;
@@ -50,7 +42,6 @@ namespace Desktop.View
             for (int i = 1; i <= QTYTABLES; i++)
             {
                 TableUC table = new TableUC(i , 1);
-                //table.BorderColor = colors[rnd.Next(0, 3)]; // TESTING
 
                 int x = halfWidth - (table.Width * TABLES_PER_ROW / 2 + TABLESEPARATION * TABLES_PER_ROW / 2) + antX + TABLESEPARATION / 2;
                 int y = halfHeight - (table.Height * QTY_ROWS / 2 + TABLESEPARATION * QTY_ROWS / 2) + antY + TABLESEPARATION / 2;

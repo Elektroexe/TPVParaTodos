@@ -24,6 +24,9 @@ namespace Desktop.Controller
         // Current table's number
         private int _tableNumber;
 
+        // Notifications
+        private Notifications not;
+
         #region Constants
         private const int MEALWIDTH = 150;
         private const int MEALHEIGHT = 150;
@@ -51,6 +54,12 @@ namespace Desktop.Controller
         #endregion
 
         #region Private helpers
+        private void initNotifications()
+        {
+            not = new Notifications(_addOrderView);
+            not.startListeningNotifications();
+        }
+
         /// <summary>
         /// Initialize all relevant items
         /// </summary>
@@ -60,6 +69,11 @@ namespace Desktop.Controller
         {
             products = new List<Product>();
             _addOrderView = new FormAddOrder();
+            _addOrderView.FormClosed += (o, e) =>
+            {
+                not.finish();
+            };
+            initNotifications();
 
             if (activeOrder != null)
             {
@@ -209,6 +223,15 @@ namespace Desktop.Controller
             BindingList<Product> mealDataSource = new BindingList<Product>(products);
             _addOrderView.metroGrid1.DataSource = mealDataSource;
 
+            _addOrderView.metroGrid1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            _addOrderView.metroGrid1.Columns[0].Width = _addOrderView.metroGrid1.Width / 3;
+            _addOrderView.metroGrid1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            _addOrderView.metroGrid1.Columns[1].Width = _addOrderView.metroGrid1.Width / 3;
+            _addOrderView.metroGrid1.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            _addOrderView.metroGrid1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            _addOrderView.metroGrid1.Columns[2].Width = _addOrderView.metroGrid1.Width / 3;
+            _addOrderView.metroGrid1.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
             this._addOrderView.sendOrderBtn.Enabled = products.Count > 0;
         }
 
@@ -227,9 +250,6 @@ namespace Desktop.Controller
             order.Table_Id = this._tableNumber;
             order.Total = 0;
             order.Commentary = comment;
-
-            // TESTING 
-            //order.Menus = new List<MenuDTO>();
 
             // Add all products to order
             this.putMealsInOrder<DrinkDTO>("Drink", ref order);
@@ -280,7 +300,7 @@ namespace Desktop.Controller
         #region Event handlers
         private void UCMainPictureClick(object sender, EventArgs e)
         {
-            List<Panel> panels = _addOrderView.Controls.OfType<Panel>().ToList();
+            List<Panel> panels = _addOrderView.panelControls.Values.ToList();
             List<MealUC> MealUCList = new List<MealUC>();
             panels.ForEach(x => MealUCList.AddRange(x.Controls.OfType<MealUC>()));
 
@@ -308,8 +328,8 @@ namespace Desktop.Controller
             fPop.FormClosed += (senderf, ef) =>
             {
                 this._addOrderView.Close();
+                
             };
-
 
             new FormOpacity(_addOrderView, c);
             c.contBtn.Click += (senderComment, eComment) => { createOrder(fPop, c.commentaryTextBox.Text); };

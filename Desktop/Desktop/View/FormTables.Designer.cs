@@ -30,6 +30,7 @@ namespace Desktop.View
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTables));
             this.SuspendLayout();
             // 
             // FormTables
@@ -37,6 +38,7 @@ namespace Desktop.View
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1350, 691);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormTables";
             this.Resizable = false;
             this.Style = MetroFramework.MetroColorStyle.Silver;

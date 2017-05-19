@@ -34,6 +34,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCloseOrder));
             this.closeTicketGrid = new MetroFramework.Controls.MetroGrid();
             this.closeBtn = new MetroFramework.Controls.MetroButton();
             this.totalGridView = new MetroFramework.Controls.MetroGrid();
@@ -165,6 +166,7 @@
             this.Controls.Add(this.totalGridView);
             this.Controls.Add(this.closeBtn);
             this.Controls.Add(this.closeTicketGrid);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormCloseOrder";
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Cerrar ticket";
