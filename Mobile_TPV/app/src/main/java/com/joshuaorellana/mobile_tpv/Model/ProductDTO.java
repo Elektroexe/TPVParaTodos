@@ -1,6 +1,7 @@
 package com.joshuaorellana.mobile_tpv.Model;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 
 import java.io.Serializable;
 
@@ -70,4 +71,6 @@ public abstract class ProductDTO implements Serializable {
     }
 
     public abstract ContentValues toContentValues();
+
+    public abstract ProductDTO fromCursor(Cursor cursor);
 }

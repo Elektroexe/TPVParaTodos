@@ -32,11 +32,6 @@ public class Tables extends AppCompatActivity {
 
     public static List<ImageButton> listButtons;
 
-
-    private HubConnection connection;
-
-    final Handler mHandler = new Handler();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +41,8 @@ public class Tables extends AppCompatActivity {
     }
 
     private void initComponents() {
-        //_URL = getString(R.string.URL_localGRANDE);
-        _URL = getString(R.string.URLlocalhostGRANDE);
-        //_URL = getString(R.string.URLlocalhostPEQUENA);
-        //_URL = getString(R.string.URL_localPEQUENA);
-
+        _URL = "http://192.168.1.108/TPVParaTodos/";
+        //_URL = getString(R.string.URL);
         tableLayout = (TableLayout) findViewById(R.id.menuTableLayoutTest);
         listButtons = new ArrayList<>();
 
@@ -69,7 +61,7 @@ public class Tables extends AppCompatActivity {
 
         try {
             apiTables.join();
-            if (listTables.length > 0) {
+            if (listTables != null && listTables.length > 0) {
 
                 createTableButtons();
 
@@ -78,7 +70,6 @@ public class Tables extends AppCompatActivity {
                 sgnlR.getNotifications();
                 sgnlR.getRefreshTable();
             }
-
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

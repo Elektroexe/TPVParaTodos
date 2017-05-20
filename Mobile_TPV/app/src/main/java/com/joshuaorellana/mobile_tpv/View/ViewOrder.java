@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
+import com.joshuaorellana.mobile_tpv.Controller.WebService;
 import com.joshuaorellana.mobile_tpv.Model.OrderDTO;
 import com.joshuaorellana.mobile_tpv.Model.Products.DrinkDTO;
 import com.joshuaorellana.mobile_tpv.Model.Products.FoodDTO;
@@ -41,45 +42,59 @@ public class ViewOrder extends AppCompatActivity {
 
     private void initComponents() {
 
-        String url = _URL + "api/Orders/Manager/" + auxTable.getId();
+//        String url = _URL + "api/Orders/Manager/" + auxTable.getId();
 
         tvDrinkList = (TextView) findViewById(R.id.tv_DrinkList);
         tvFoodList = (TextView) findViewById(R.id.tv_FoodList);
         tvMenuList = (TextView) findViewById(R.id.tv_MenuList);
 
 
-        new loadContent().execute(url);
+//        new loadContent().execute(url);
 
-    }
-
-    private class loadContent extends AsyncTask<String, Long, String > {
-
-        protected String doInBackground(String... urls) {
-
-            try {
-                return HttpRequest.get(urls[0]).accept("application/json").body();
-            } catch (HttpRequest.HttpRequestException err) {
-                Log.e("ERROR HttpRequest: ", err.toString());
+        Thread getOrder = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Order = WebService.GetOrder(auxTable.getId());
             }
-
-            return null;
+        });
+        getOrder.start();
+        try {
+            getOrder.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        showOrder();
 
-        protected void onPostExecute(String response) {
-
-            Order = getTables(response);
-
-            showOrder();
-
-        }
     }
 
-    private OrderDTO getTables(String json) {
-
-        Gson gson = new Gson();
-        return gson.fromJson(json, OrderDTO.class);
-
-    }
+//    private class loadContent extends AsyncTask<String, Long, String > {
+//
+//        protected String doInBackground(String... urls) {
+//
+//            try {
+//                return HttpRequest.get(urls[0]).accept("application/json").body();
+//            } catch (HttpRequest.HttpRequestException err) {
+//                Log.e("ERROR HttpRequest: ", err.toString());
+//            }
+//
+//            return null;
+//        }
+//
+//        protected void onPostExecute(String response) {
+//
+//            Order = getTables(response);
+//
+//            showOrder();
+//
+//        }
+//    }
+//
+//    private OrderDTO getTables(String json) {
+//
+//        Gson gson = new Gson();
+//        return gson.fromJson(json, OrderDTO.class);
+//
+//    }
 
     private void showOrder() {
 

@@ -1,6 +1,7 @@
 package com.joshuaorellana.mobile_tpv.Model.Products;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 
 import com.joshuaorellana.mobile_tpv.Model.ProductDTO;
 
@@ -12,6 +13,9 @@ public class MenuDTO extends ProductDTO {
 
     private int PeopleNumber;
     private int Quantity;
+
+    public MenuDTO() {
+    }
 
     public MenuDTO(int id, String name, double price, String description, int peopleNumber) {
 
@@ -53,5 +57,16 @@ public class MenuDTO extends ProductDTO {
         cv.put("Price", getPrice());
         cv.put("Description", getDescription());
         return cv;
+    }
+
+    @Override
+    public ProductDTO fromCursor(Cursor cursor) {
+        MenuDTO product = new MenuDTO();
+        product.setId(cursor.getInt(0));
+        product.setPeopleNumber(cursor.getInt(1));
+        product.setName(cursor.getString(2));
+        product.setPrice(cursor.getDouble(3));
+        product.setDescription(cursor.getString(4));
+        return product;
     }
 }

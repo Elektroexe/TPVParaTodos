@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.joshuaorellana.mobile_tpv.Controller.WebService;
 import com.joshuaorellana.mobile_tpv.Model.OrderDTO;
 import com.joshuaorellana.mobile_tpv.Model.TableDTO;
 import com.joshuaorellana.mobile_tpv.R;
@@ -126,9 +127,25 @@ public class SelectedTable extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String url = _URL + "api/Orders/Close/" +auxTable.getId();
+//                String url = _URL + "api/Orders/Close/" +auxTable.getId();
+//
+//                new sendClose().execute(url);
 
-                new sendClose().execute(url);
+                Thread closeOrder = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        WebService.CloseOrder(auxTable.getId());
+                    }
+                });
+
+                closeOrder.start();
+
+                try {
+                    closeOrder.join();
+                    finishActivity(RESULT_OK);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -142,36 +159,36 @@ public class SelectedTable extends AppCompatActivity {
 
     }
 
-    private class sendClose extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... urls) {
-            return post(urls[0], Order);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            Toast.makeText(SelectedTable.this, "OK!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private static String post(String url, OrderDTO order) {
-
-        try {
-
-            OkHttpClient client = new OkHttpClient();
-
-            RequestBody reqbody = RequestBody.create(null, new byte[0]);
-            Request.Builder formBody = new Request.Builder().url(url).method("POST",reqbody).header("Content-Length", "0");
-            client.newCall(formBody.build()).execute();
-
-
-        } catch (Exception err) {
-
-            Log.e("Error", err.toString());
-
-        }
-
-        return null;
-
-    }
+//    private class sendClose extends AsyncTask<String, Void, String> {
+//        @Override
+//        protected String doInBackground(String... urls) {
+//            return post(urls[0], Order);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            Toast.makeText(SelectedTable.this, "OK!", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+//
+//    private static String post(String url, OrderDTO order) {
+//
+//        try {
+//
+//            OkHttpClient client = new OkHttpClient();
+//
+//            RequestBody reqbody = RequestBody.create(null, new byte[0]);
+//            Request.Builder formBody = new Request.Builder().url(url).method("POST",reqbody).header("Content-Length", "0");
+//            client.newCall(formBody.build()).execute();
+//
+//
+//        } catch (Exception err) {
+//
+//            Log.e("Error", err.toString());
+//
+//        }
+//
+//        return null;
+//
+//    }
 }

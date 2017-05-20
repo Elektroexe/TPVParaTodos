@@ -22,8 +22,12 @@ import android.widget.Toast;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.joshuaorellana.mobile_tpv.Controller.WebService;
 import com.joshuaorellana.mobile_tpv.Model.OrderDTO;
+import com.joshuaorellana.mobile_tpv.Model.Products.DrinkDTO;
 import com.joshuaorellana.mobile_tpv.Model.Products.FoodDTO;
+import com.joshuaorellana.mobile_tpv.Model.persistence.ProductsConversor;
+import com.joshuaorellana.mobile_tpv.Model.persistence.ProductsSQLiteHelper;
 import com.joshuaorellana.mobile_tpv.R;
 import com.squareup.picasso.Picasso;
 
@@ -98,57 +102,84 @@ public class Food extends Fragment {
 
 
         listFoods = new ArrayList<>();
+//
+//        String url = _URL + "api/Foods";
+//
+//        new loadFoods().execute(url);
 
-        String url = _URL + "api/Foods";
+//        List<FoodDTO> auxList = getFood(response);
 
-        new loadFoods().execute(url);
+        ProductsSQLiteHelper helper = new ProductsSQLiteHelper(getActivity().getApplicationContext(), "Products", null, 1);
+        ProductsConversor conversor = new ProductsConversor(helper);
+        List<FoodDTO> auxList = conversor.getProducts(FoodDTO.class);
+        conversor.closeConnection();
 
-    }
-
-    private class loadFoods extends AsyncTask<String, Long, String> {
-
-        protected String doInBackground(String... urls) {
-
-            try {
-                return HttpRequest.get(urls[0]).accept("application/json").body();
-            } catch (HttpRequest.HttpRequestException execption) {
-                return null;
-            }
-
+        for (FoodDTO auxFood : auxList) {
+            if (auxFood.getFamilyDish().equals(_Title))
+                listFoods.add(auxFood);
         }
 
-        protected void onPostExecute(String response) {
+        if (!listFoods.isEmpty()) {
+            createFoodsButtons();
 
-            ArrayList<FoodDTO> auxList = getFood(response);
+            for (FoodDTO aux : Order.getListFoods()) {
+                for (int i = 0; i < listFoods.size(); i++) {
 
-            for (FoodDTO auxFood : auxList ) {
-                if (auxFood.getFamilyDish().equals(_Title))
-                    listFoods.add(auxFood);
-            }
+                    FoodDTO auxB = listFoods.get(i);
+                    if (aux.getName().equals(auxB.getName()))
+                        auxB.setQuantity(aux.getQuantity());
 
-            if(!listFoods.isEmpty()) {
-                createFoodsButtons();
-
-                for (FoodDTO aux : Order.getListFoods()) {
-                    for (int i = 0; i < listFoods.size(); i++) {
-
-                        FoodDTO auxB = listFoods.get(i);
-                        if (aux.getName().equals(auxB.getName()))
-                            auxB.setQuantity(aux.getQuantity());
-
-                    }
                 }
-
             }
+
         }
 
     }
 
-    private ArrayList<FoodDTO> getFood(String json) {
-        Gson gson = new Gson();
-        Type tListType = new TypeToken<ArrayList<FoodDTO>>() {}.getType();
-        return gson.fromJson(json, tListType);
-    }
+//    private class loadFoods extends AsyncTask<String, Long, String> {
+//
+//        protected String doInBackground(String... urls) {
+//
+//            try {
+//                return HttpRequest.get(urls[0]).accept("application/json").body();
+//            } catch (HttpRequest.HttpRequestException execption) {
+//                return null;
+//            }
+//
+//        }
+//
+//        protected void onPostExecute(String response) {
+//
+//            ArrayList<FoodDTO> auxList = getFood(response);
+//
+//            for (FoodDTO auxFood : auxList ) {
+//                if (auxFood.getFamilyDish().equals(_Title))
+//                    listFoods.add(auxFood);
+//            }
+//
+//            if(!listFoods.isEmpty()) {
+//                createFoodsButtons();
+//
+//                for (FoodDTO aux : Order.getListFoods()) {
+//                    for (int i = 0; i < listFoods.size(); i++) {
+//
+//                        FoodDTO auxB = listFoods.get(i);
+//                        if (aux.getName().equals(auxB.getName()))
+//                            auxB.setQuantity(aux.getQuantity());
+//
+//                    }
+//                }
+//
+//            }
+//        }
+//
+//    }
+//
+//    private ArrayList<FoodDTO> getFood(String json) {
+//        Gson gson = new Gson();
+//        Type tListType = new TypeToken<ArrayList<FoodDTO>>() {}.getType();
+//        return gson.fromJson(json, tListType);
+//    }
 
     private void createFoodsButtons() {
         int i = 0;
@@ -219,7 +250,7 @@ public class Food extends Fragment {
                         break;
                     case R.id.nav_remove:
 
-                        if (product.getQuantity() < 0 )
+                        if (product.getQuantity() < 0)
                             product.setQuantity(0);
 
                         tvQty.setText("Cantidad: " + product.getQuantity());
@@ -240,9 +271,23 @@ public class Food extends Fragment {
 
                     case R.id.nav_sendorder:
 
-                        String url = _URL + "api/Orders/Manager";
-                        new sendOrder().execute(url);
+//                        String url = _URL + "api/Orders/Manager";
+//                        new sendOrder().execute(url);
+//
+//                        break;
 
+                        Thread getOrder = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                WebService.PostOrder(Order);
+                            }
+                        });
+                        getOrder.start();
+                        try {
+                            getOrder.join();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         break;
                 }
 
@@ -253,7 +298,7 @@ public class Food extends Fragment {
                 }
                 menuItem.setChecked(true);
 
-                for(int i = 0; i < Order.getListFoods().size(); i++) {
+                for (int i = 0; i < Order.getListFoods().size(); i++) {
                     Log.e("Foods --> ", Order.getListFoods().get(i).toString());
                 }
 
@@ -276,7 +321,7 @@ public class Food extends Fragment {
     private static String post(String url, OrderDTO order) {
 
         InputStream inputStream = null;
-        String result="";
+        String result = "";
 
         try {
 
@@ -316,6 +361,7 @@ public class Food extends Fragment {
         protected String doInBackground(String... urls) {
             return post(urls[0], Order);
         }
+
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
@@ -323,10 +369,6 @@ public class Food extends Fragment {
             Toast.makeText(getActivity(), "OK!", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
-
 
 
 }

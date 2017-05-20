@@ -23,9 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         initComponents();
-
     }
 
     private void initComponents() {
@@ -33,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
         btAccess = (Button) findViewById(R.id.bt_Access);
         edtUsername = (EditText) findViewById(R.id.et_User);
         edtPassword = (EditText) findViewById(R.id.et_Password);
+        edtUsername.setText("ManagerTest");
+        edtPassword.setText("Manager");
 
         btAccess.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,19 +63,13 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (token != null) {
                     Log.e(" LOGIN --> ","Access granted!!");
-                    WebService.token = token;
+                    WebService.token = "bearer  " + token;
                     Intent auxIntent = new Intent(LoginActivity.this, Tables.class);
                     startActivity(auxIntent);
                 } else {
                     Log.e(" LOGIN --> ", "Access denied!!");
                 }
-
-
-
             }
         });
-
-
     }
-
 }

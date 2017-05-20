@@ -17,7 +17,10 @@ import android.widget.TextView;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.joshuaorellana.mobile_tpv.Model.Products.FoodDTO;
 import com.joshuaorellana.mobile_tpv.Model.Products.MenuDTO;
+import com.joshuaorellana.mobile_tpv.Model.persistence.ProductsConversor;
+import com.joshuaorellana.mobile_tpv.Model.persistence.ProductsSQLiteHelper;
 import com.joshuaorellana.mobile_tpv.R;
 import com.squareup.picasso.Picasso;
 
@@ -77,40 +80,49 @@ public class Menu extends Fragment {
         imgProduct = (ImageView) navHeader.findViewById(R.id.img_Product);
 
 
-        listMenus = new ArrayList<>();
+//        listMenus = new ArrayList<>();
+//
+//        String url = _URL + "api/Menus";
+//
+//        new loadMenus().execute(url);
 
-        String url = _URL + "api/Menus";
+        ProductsSQLiteHelper helper = new ProductsSQLiteHelper(getActivity().getApplicationContext(), "Products", null, 1);
+        ProductsConversor conversor = new ProductsConversor(helper);
+        listMenus = conversor.getProducts(MenuDTO.class);
+        conversor.closeConnection();
 
-        new loadMenus().execute(url);
-
-    }
-
-    private class loadMenus extends AsyncTask<String, Long, String> {
-
-        protected String doInBackground(String... urls) {
-
-            try {
-                return HttpRequest.get(urls[0]).accept("application/json").body();
-            } catch (HttpRequest.HttpRequestException execption) {
-                return null;
-            }
+        if(!listMenus.isEmpty()) {
+            createMenusButtons();
         }
 
-        protected void onPostExecute(String response) {
-
-            listMenus = getMenus(response);
-
-            if(!listMenus.isEmpty()) {
-                createMenusButtons();
-            }
-        }
     }
 
-    private ArrayList<MenuDTO> getMenus(String json) {
-        Gson gson = new Gson();
-        Type tListType = new TypeToken<ArrayList<MenuDTO>>() {}.getType();
-        return gson.fromJson(json, tListType);
-    }
+//    private class loadMenus extends AsyncTask<String, Long, String> {
+//
+//        protected String doInBackground(String... urls) {
+//
+//            try {
+//                return HttpRequest.get(urls[0]).accept("application/json").body();
+//            } catch (HttpRequest.HttpRequestException execption) {
+//                return null;
+//            }
+//        }
+//
+//        protected void onPostExecute(String response) {
+//
+//            listMenus = getMenus(response);
+//
+//            if(!listMenus.isEmpty()) {
+//                createMenusButtons();
+//            }
+//        }
+//    }
+
+//    private ArrayList<MenuDTO> getMenus(String json) {
+//        Gson gson = new Gson();
+//        Type tListType = new TypeToken<ArrayList<MenuDTO>>() {}.getType();
+//        return gson.fromJson(json, tListType);
+//    }
 
     private void createMenusButtons() {
         int i = 0;

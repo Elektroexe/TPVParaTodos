@@ -31,7 +31,8 @@ import static com.joshuaorellana.mobile_tpv.View.Tables.listButtons;
 
 public class SignalR {
 
-    static final String URL = "http://172.16.100.15:1550/signalr/";
+    final String URL = "http://192.168.1.108/TPVParaTodos/signalr/";
+    //final String URL = "http://tpvpt.azurewebsites.net/signalr/";
 
     private TableDTO[] tables;
     private Context context;

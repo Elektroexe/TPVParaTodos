@@ -1,7 +1,10 @@
 package com.joshuaorellana.mobile_tpv.View;
 
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,15 +13,25 @@ import android.util.Log;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 import com.joshuaorellana.mobile_tpv.Controller.ViewPagerAdapter;
+import com.joshuaorellana.mobile_tpv.Controller.WebService;
 import com.joshuaorellana.mobile_tpv.Model.OrderDTO;
+import com.joshuaorellana.mobile_tpv.Model.ProductDTO;
+import com.joshuaorellana.mobile_tpv.Model.Products.DrinkDTO;
+import com.joshuaorellana.mobile_tpv.Model.Products.FoodDTO;
+import com.joshuaorellana.mobile_tpv.Model.Update;
+import com.joshuaorellana.mobile_tpv.Model.persistence.ProductsConversor;
+import com.joshuaorellana.mobile_tpv.Model.persistence.ProductsSQLiteHelper;
 import com.joshuaorellana.mobile_tpv.R;
 import com.joshuaorellana.mobile_tpv.View.Fragment.Drink;
 import com.joshuaorellana.mobile_tpv.View.Fragment.Food;
 import com.joshuaorellana.mobile_tpv.View.Fragment.Menu;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import static com.joshuaorellana.mobile_tpv.View.SelectedTable.auxTable;
@@ -31,15 +44,46 @@ public class AddOrder extends AppCompatActivity {
     private ViewPagerAdapter adapter;
 
     public static OrderDTO Order;
-
+    private int versionDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_order);
-
+        updateDB();
         initComponents();
+    }
 
+    private void updateDB(){
+        versionDB = getVersionDB();
+        Thread update = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ProductsSQLiteHelper helper = new ProductsSQLiteHelper(getApplicationContext(), "Products", null, 1);
+                ProductsConversor conversor = new ProductsConversor(helper);
+                Update newProducts = WebService.CheckDB(versionDB);
+                setVersionDB(versionDB + newProducts.getFoods().size() + newProducts.getMenus().size() + newProducts.getDrinks().size());
+                conversor.updateProducts(newProducts);
+                conversor.closeConnection();
+            }
+        });
+        update.start();
+        try {
+            update.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private int getVersionDB(){
+        SharedPreferences shared = getSharedPreferences(getString(R.string.preferencesFile), MODE_PRIVATE);
+        return shared.getInt(getString(R.string.versionDB), 0);
+    }
+
+    private void setVersionDB(int newVersionDB){
+        SharedPreferences shared = getSharedPreferences(getString(R.string.preferencesFile), MODE_PRIVATE);
+        SharedPreferences.Editor editor = shared.edit();
+        editor.putInt(getString(R.string.versionDB), newVersionDB);
     }
 
     private void initComponents() {
@@ -64,10 +108,18 @@ public class AddOrder extends AppCompatActivity {
         if (modify) {
 
             Log.e("ModifyOrder --> ", "OK!");
-
-            String url = _URL + "api/Orders/Manager/" + auxTable.getId();
-
-            new loadContent().execute(url);
+            Thread getOrder = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Order = WebService.GetOrder(auxTable.getId());
+                }
+            });
+            getOrder.start();
+            try {
+                getOrder.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
         } else {
 
@@ -78,39 +130,32 @@ public class AddOrder extends AppCompatActivity {
 
     }
 
-    private class loadContent extends AsyncTask<String, Long, String > {
+//    private class loadContent extends AsyncTask<String, Long, String > {
+//
+//        protected String doInBackground(String... urls) {
+//
+//            try {
+//                return HttpRequest.get(urls[0]).accept("application/json").body();
+//            } catch (HttpRequest.HttpRequestException err) {
+//                Log.e("ERROR HttpRequest: ", err.toString());
+//            }
+//
+//            return null;
+//
+//        }
+//
+//        protected void onPostExecute(String response) {
+//
+//            Order = getTables(response);
+//
+//        }
+//
+//    }
 
-        protected String doInBackground(String... urls) {
-
-            try {
-                return HttpRequest.get(urls[0]).accept("application/json").body();
-            } catch (HttpRequest.HttpRequestException err) {
-                Log.e("ERROR HttpRequest: ", err.toString());
-            }
-
-            return null;
-
-        }
-
-        protected void onPostExecute(String response) {
-
-            Order = getTables(response);
-
-        }
-
-    }
-
-    private OrderDTO getTables(String json) {
-
-        Gson gson = new Gson();
-
-        //JsonParser parser = new JsonParser();
-        //JsonObject jsonObj = parser.parse(json).getAsJsonObject();
-
-        //Type tListType = new TypeToken<ArrayList<OrderDTO>>() {}.getType();
-        return gson.fromJson(json, OrderDTO.class);
-
-    }
+//    private OrderDTO getTables(String json) {
+//        Gson gson = new Gson();
+//        return gson.fromJson(json, OrderDTO.class);
+//    }
 
 
     private void setupViewPager(ViewPager viewPager) {
