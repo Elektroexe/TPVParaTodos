@@ -12,6 +12,7 @@ namespace Desktop.Model
         public override int Id { get; set; }
         public override string Name { get; set; }
         public override double Price { get; set; }
+        public override bool Available { get; set; }
         public string FamilyDish { get; set; }
         public string Description { get; set; }
 

@@ -221,9 +221,17 @@ namespace Desktop.Controller
                 mealuc.SetDTO(mAux);
                 mealuc.mealPictureBox.Image = WebserviceConnection.getImage(mAux.Id);
                 mealuc.Location = new Point(t_x, t_y);
-                mealuc.plusPictureBox.MouseClick += UCClick;
-                mealuc.minusPictureBox.MouseClick += UCClick;
-                mealuc.mealPictureBox.MouseClick += UCMainPictureClick;
+
+                if (!mAux.Available)
+                {
+                    mealuc.toGray();
+                }
+                else
+                {
+                    mealuc.plusPictureBox.MouseClick += UCClick;
+                    mealuc.minusPictureBox.MouseClick += UCClick;
+                    mealuc.mealPictureBox.MouseClick += UCMainPictureClick;
+                }
 
                 // Place meal uc in its container
                 t_x += MEALWIDTH + SPACEBETWEENMEALS;

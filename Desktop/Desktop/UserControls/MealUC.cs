@@ -64,5 +64,26 @@ namespace Desktop.UserControls
             newX = this.Width / 2 - this.priceLabel.Width / 2;
             this.priceLabel.Location = new Point(newX, this.priceLabel.Location.Y);
         }
+
+        public void toGray()
+        {
+            Bitmap b = this.mealPictureBox.Image as Bitmap;
+            for (int i = 0; i < b.Width; i++)
+            {
+                for (int j = 0; j < b.Height; j++)
+                {
+                    Color c = b.GetPixel(i, j);
+
+                    //Apply conversion equation
+                    byte gray = (byte)(.21 * c.R + .71 * c.G + .071 * c.B);
+
+                    //Set the color of this pixel
+                    b.SetPixel(i, j, Color.FromArgb(gray, gray, gray));
+                }
+            }
+            this.mealPictureBox.Click -= mealPictureBox_Click;
+            this.mealPictureBox.Image = b;
+        }
+
     }
 }

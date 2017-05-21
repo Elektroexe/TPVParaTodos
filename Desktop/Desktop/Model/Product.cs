@@ -35,5 +35,8 @@ namespace Desktop.Model
 
         [Browsable(false)]
         public virtual double Price { get; set; }
+
+        [Browsable(false)]
+        public virtual bool Available { get; set; }
     }
 }

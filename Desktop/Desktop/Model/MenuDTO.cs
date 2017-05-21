@@ -13,7 +13,7 @@ namespace Desktop.Model
         public override double Price { get; set; }
         public short PeopleNumber { get; set; }
         public string Description { get; set; }
-
+        public override bool Available { get; set; }
         public virtual List<DrinkDTO> Drinks { get; set; }
         public virtual List<FoodDTO> Foods { get; set; }
         public virtual List<OrderDTO> Orders { get; set; }

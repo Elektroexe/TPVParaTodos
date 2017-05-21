@@ -15,10 +15,7 @@ namespace Desktop.Controller
 {
     public class WebserviceConnection
     {
-        //private const string URI = "http://tpvparatodos.azurewebsites.net/";
         private const string URI = "http://tpvpt.azurewebsites.net/";
-        //private const string URI = "http://172.16.10.20/TPVParaTodos/";
-        //private const string URI = "http://172.16.100.19/TPVParaTodos/";
 
         #region Webservice Fields
         private const string TOKEN_TYPE = "bearer";
@@ -27,7 +24,6 @@ namespace Desktop.Controller
 
         #region Hub Fields
         private const string HUB_URI = "http://tpvpt.azurewebsites.net/signalr";
-        //private const string HUB_URI = "http://172.16.100.19/TPVParaTodos/signalr";
         private static HubConnection webserviceConnection;
         private static IHubProxy HubProxy;
         #endregion
