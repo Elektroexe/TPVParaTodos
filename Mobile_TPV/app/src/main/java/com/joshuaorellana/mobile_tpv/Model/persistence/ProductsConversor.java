@@ -1,11 +1,13 @@
-package com.joshuaorellana.mobile_tpv.Model.persistence;
+package com.joshuaorellana.mobile_tpv.model.persistence;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.joshuaorellana.mobile_tpv.Model.ProductDTO;
-import com.joshuaorellana.mobile_tpv.Model.Products.*;
-import com.joshuaorellana.mobile_tpv.Model.Update;
+import com.joshuaorellana.mobile_tpv.model.business.DrinkDTO;
+import com.joshuaorellana.mobile_tpv.model.business.FoodDTO;
+import com.joshuaorellana.mobile_tpv.model.business.MenuDTO;
+import com.joshuaorellana.mobile_tpv.model.business.ProductDTO;
+import com.joshuaorellana.mobile_tpv.model.Update;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

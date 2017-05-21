@@ -1,4 +1,4 @@
-package com.joshuaorellana.mobile_tpv.Model;
+package com.joshuaorellana.mobile_tpv.model.business;
 
 import android.content.ContentValues;
 import android.database.Cursor;

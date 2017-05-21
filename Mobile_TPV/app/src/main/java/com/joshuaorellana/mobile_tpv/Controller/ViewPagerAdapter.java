@@ -1,4 +1,4 @@
-package com.joshuaorellana.mobile_tpv.Controller;
+package com.joshuaorellana.mobile_tpv.controller;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

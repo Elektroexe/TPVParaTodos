@@ -1,43 +1,28 @@
-package com.joshuaorellana.mobile_tpv.View;
+package com.joshuaorellana.mobile_tpv.controller;
 
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Debug;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.github.kevinsawicki.http.HttpRequest;
-import com.google.gson.Gson;
-import com.joshuaorellana.mobile_tpv.Controller.ViewPagerAdapter;
-import com.joshuaorellana.mobile_tpv.Controller.WebService;
-import com.joshuaorellana.mobile_tpv.Model.OrderDTO;
-import com.joshuaorellana.mobile_tpv.Model.ProductDTO;
-import com.joshuaorellana.mobile_tpv.Model.Products.DrinkDTO;
-import com.joshuaorellana.mobile_tpv.Model.Products.FoodDTO;
-import com.joshuaorellana.mobile_tpv.Model.Update;
-import com.joshuaorellana.mobile_tpv.Model.persistence.ProductsConversor;
-import com.joshuaorellana.mobile_tpv.Model.persistence.ProductsSQLiteHelper;
+import com.joshuaorellana.mobile_tpv.controller.common.WebService;
+import com.joshuaorellana.mobile_tpv.model.business.OrderDTO;
+import com.joshuaorellana.mobile_tpv.model.Update;
+import com.joshuaorellana.mobile_tpv.model.persistence.ProductsConversor;
+import com.joshuaorellana.mobile_tpv.model.persistence.ProductsSQLiteHelper;
 import com.joshuaorellana.mobile_tpv.R;
-import com.joshuaorellana.mobile_tpv.View.Fragment.Drink;
-import com.joshuaorellana.mobile_tpv.View.Fragment.Food;
-import com.joshuaorellana.mobile_tpv.View.Fragment.Menu;
+import com.joshuaorellana.mobile_tpv.controller.fragment.DrinkFragment;
+import com.joshuaorellana.mobile_tpv.controller.fragment.FoodFragment;
+import com.joshuaorellana.mobile_tpv.controller.fragment.MenuFragment;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.TimeZone;
 
-import static com.joshuaorellana.mobile_tpv.View.SelectedTable.auxTable;
-import static com.joshuaorellana.mobile_tpv.View.Tables._URL;
-
-public class AddOrder extends AppCompatActivity {
+public class AddOrderActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -59,7 +44,7 @@ public class AddOrder extends AppCompatActivity {
         Thread update = new Thread(new Runnable() {
             @Override
             public void run() {
-                ProductsSQLiteHelper helper = new ProductsSQLiteHelper(getApplicationContext(), "Products", null, 1);
+                ProductsSQLiteHelper helper = new ProductsSQLiteHelper(getApplicationContext(), "product", null, 1);
                 ProductsConversor conversor = new ProductsConversor(helper);
                 Update newProducts = WebService.CheckDB(versionDB);
                 setVersionDB(versionDB + newProducts.getFoods().size() + newProducts.getMenus().size() + newProducts.getDrinks().size());
@@ -111,7 +96,7 @@ public class AddOrder extends AppCompatActivity {
             Thread getOrder = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    Order = WebService.GetOrder(auxTable.getId());
+                    Order = WebService.GetOrder(SelectedTableActivity.auxTable.getId());
                 }
             });
             getOrder.start();
@@ -122,7 +107,7 @@ public class AddOrder extends AppCompatActivity {
             }
 
         } else {
-            Order = new OrderDTO(auxTable.getId(), date);
+            Order = new OrderDTO(SelectedTableActivity.auxTable.getId(), date);
         }
 
     }
@@ -131,11 +116,11 @@ public class AddOrder extends AppCompatActivity {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(new Drink(), "BEBIDAS");
-        adapter.addFragment(new Food("Starter"), "ENTRANTES");
-        adapter.addFragment(new Food("Main"), "PRINCIPAL");
-        adapter.addFragment(new Food("Dessert"), "POSTRES");
-        adapter.addFragment(new Menu(), "MENÚS");
+        adapter.addFragment(new DrinkFragment(), "BEBIDAS");
+        adapter.addFragment(new FoodFragment("Starter"), "ENTRANTES");
+        adapter.addFragment(new FoodFragment("Main"), "PRINCIPAL");
+        adapter.addFragment(new FoodFragment("Dessert"), "POSTRES");
+        adapter.addFragment(new MenuFragment(), "MENÚS");
 
         viewPager.setAdapter(adapter);
 

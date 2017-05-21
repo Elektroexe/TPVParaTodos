@@ -1,49 +1,47 @@
-package com.joshuaorellana.mobile_tpv.Model.Products;
+package com.joshuaorellana.mobile_tpv.model.business;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-
-import com.joshuaorellana.mobile_tpv.Model.ProductDTO;
 
 /**
  * Created by Joshua-OC on 08/05/2017.
  */
 
-public class MenuDTO extends ProductDTO {
+public class FoodDTO extends ProductDTO {
 
-    private int PeopleNumber;
+    private String FamilyDish;
     private int Quantity;
 
-    public MenuDTO() {
+    public FoodDTO() {
     }
 
-    public MenuDTO(int id, String name, double price, String description, int peopleNumber) {
+    public FoodDTO(int id, String name, double price, String description, String familyDish) {
 
         super(id, name, price, description);
-        this.PeopleNumber = peopleNumber;
+        this.FamilyDish = familyDish;
         this.Quantity = 0;
     }
 
-    public int getPeopleNumber() {
-        return PeopleNumber;
+    public String getFamilyDish() {
+        return FamilyDish;
     }
 
-    public void setPeopleNumber(int peopleNumber) {
-        PeopleNumber = peopleNumber;
+    public void setFamilyDish(String familyDish) {
+        FamilyDish = familyDish;
     }
 
     public int getQuantity() {
         return Quantity;
     }
 
-    public void setQty(int qty) {
+    public void setQuantity(int qty) {
         this.Quantity = qty;
     }
 
     @Override
     public String toString() {
-        return "MenuDTO{" +
-                "PeopleNumber=" + PeopleNumber +
+        return "FoodDTO{" +
+                "FamilyDish='" + FamilyDish + '\'' +
                 ", Qty=" + Quantity +
                 '}';
     }
@@ -52,7 +50,7 @@ public class MenuDTO extends ProductDTO {
     public ContentValues toContentValues() {
         ContentValues cv = new ContentValues();
         cv.put("Id", getId());
-        cv.put("PeopleNumber", PeopleNumber);
+        cv.put("FamilyDish", FamilyDish);
         cv.put("Name", getName());
         cv.put("Price", getPrice());
         cv.put("Description", getDescription());
@@ -61,9 +59,9 @@ public class MenuDTO extends ProductDTO {
 
     @Override
     public ProductDTO fromCursor(Cursor cursor) {
-        MenuDTO product = new MenuDTO();
+        FoodDTO product = new FoodDTO();
         product.setId(cursor.getInt(0));
-        product.setPeopleNumber(cursor.getInt(1));
+        product.setFamilyDish(cursor.getString(1));
         product.setName(cursor.getString(2));
         product.setPrice(cursor.getDouble(3));
         product.setDescription(cursor.getString(4));

@@ -1,4 +1,4 @@
-package com.joshuaorellana.mobile_tpv.View;
+package com.joshuaorellana.mobile_tpv.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.joshuaorellana.mobile_tpv.Controller.WebService;
 import com.joshuaorellana.mobile_tpv.R;
+import com.joshuaorellana.mobile_tpv.controller.common.WebService;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -28,23 +28,18 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initComponents() {
-
         btAccess = (Button) findViewById(R.id.bt_Access);
         edtUsername = (EditText) findViewById(R.id.et_User);
         edtPassword = (EditText) findViewById(R.id.et_Password);
+        tvIncorrect = (TextView) findViewById(R.id.tv_Incorrect);
         edtUsername.setText("ManagerTest");
         edtPassword.setText("Manager");
-        tvIncorrect = (TextView) findViewById(R.id.tv_Incorrect);
-
         btAccess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 tvIncorrect.setText("");
-
                 final String user = edtUsername.getText().toString();
                 final String pwd = edtPassword.getText().toString();
-
                 Thread connecting = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -55,25 +50,19 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-
                 connecting.start();
-
                 try {
                     connecting.join();
-                } catch (InterruptedException err) {
+                } catch (Exception err) {
                     err.printStackTrace();
                 }
-
                 if (token != null) {
-
-                    WebService.token = token;
-                    Intent auxIntent = new Intent(LoginActivity.this, Tables.class);
+                    WebService.token = "bearer " + token;
+                    Intent auxIntent = new Intent(LoginActivity.this, TablesActivity.class);
                     startActivity(auxIntent);
 
                 } else {
-
                     tvIncorrect.setText("Usuario o contraseña incorrectos!");
-
                 }
 
             }

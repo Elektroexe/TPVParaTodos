@@ -1,4 +1,4 @@
-package com.joshuaorellana.mobile_tpv.Model.persistence;
+package com.joshuaorellana.mobile_tpv.model.persistence;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

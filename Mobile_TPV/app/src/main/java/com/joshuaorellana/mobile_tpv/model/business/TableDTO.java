@@ -1,4 +1,4 @@
-package com.joshuaorellana.mobile_tpv.Model;
+package com.joshuaorellana.mobile_tpv.model.business;
 
 import java.io.Serializable;
 

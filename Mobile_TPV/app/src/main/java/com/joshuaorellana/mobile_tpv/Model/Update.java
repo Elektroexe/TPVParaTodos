@@ -1,8 +1,8 @@
-package com.joshuaorellana.mobile_tpv.Model;
+package com.joshuaorellana.mobile_tpv.model;
 
-import com.joshuaorellana.mobile_tpv.Model.Products.DrinkDTO;
-import com.joshuaorellana.mobile_tpv.Model.Products.FoodDTO;
-import com.joshuaorellana.mobile_tpv.Model.Products.MenuDTO;
+import com.joshuaorellana.mobile_tpv.model.business.DrinkDTO;
+import com.joshuaorellana.mobile_tpv.model.business.FoodDTO;
+import com.joshuaorellana.mobile_tpv.model.business.MenuDTO;
 
 import java.util.ArrayList;
 import java.util.List;

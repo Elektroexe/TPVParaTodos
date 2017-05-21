@@ -1,21 +1,11 @@
-package com.joshuaorellana.mobile_tpv.Controller;
+package com.joshuaorellana.mobile_tpv.controller.common;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.joshuaorellana.mobile_tpv.Model.Login;
-import com.joshuaorellana.mobile_tpv.Model.OrderDTO;
-import com.joshuaorellana.mobile_tpv.Model.ProductDTO;
-import com.joshuaorellana.mobile_tpv.Model.Products.DrinkDTO;
-import com.joshuaorellana.mobile_tpv.Model.Products.FoodDTO;
-import com.joshuaorellana.mobile_tpv.Model.Products.MenuDTO;
-import com.joshuaorellana.mobile_tpv.Model.Update;
-import com.joshuaorellana.mobile_tpv.Model.persistence.ProductsConversor;
-import com.joshuaorellana.mobile_tpv.Model.persistence.ProductsSQLiteHelper;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.joshuaorellana.mobile_tpv.model.Login;
+import com.joshuaorellana.mobile_tpv.model.business.OrderDTO;
+import com.joshuaorellana.mobile_tpv.model.Update;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
