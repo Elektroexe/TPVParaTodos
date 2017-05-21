@@ -1,5 +1,6 @@
 package com.joshuaorellana.mobile_tpv.controller.fragment;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -34,6 +35,7 @@ import static com.joshuaorellana.mobile_tpv.controller.SelectedTableActivity.aux
  * Created by Joshua-OC on 08/05/2017.
  */
 
+@SuppressLint("ValidFragment")
 public class FoodFragment extends Fragment {
 
     private String _Title;
@@ -49,6 +51,8 @@ public class FoodFragment extends Fragment {
     private TextView tvProductName;
     private TextView tvQty;
     private ImageView imgBgHeader, imgProduct;
+
+    public FoodFragment(){ }
 
     public FoodFragment(String title) {
         this._Title = title;
