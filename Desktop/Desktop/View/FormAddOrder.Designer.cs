@@ -33,11 +33,12 @@ namespace Desktop.View
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAddOrder));
             this.mealsTabControl = new MetroFramework.Controls.MetroTabControl();
             this.startersTab = new MetroFramework.Controls.MetroTabPage();
-            this.drinksTab = new MetroTabPage();
             this.mainTab = new MetroFramework.Controls.MetroTabPage();
             this.dessertsTab = new MetroFramework.Controls.MetroTabPage();
+            this.drinksTab = new MetroFramework.Controls.MetroTabPage();
             this.menusTab = new MetroFramework.Controls.MetroTabPage();
             this.metroGrid1 = new MetroFramework.Controls.MetroGrid();
             this.sendOrderBtn = new MetroFramework.Controls.MetroButton();
@@ -76,18 +77,6 @@ namespace Desktop.View
             this.startersTab.VerticalScrollbarHighlightOnWheel = false;
             this.startersTab.VerticalScrollbarSize = 10;
             // 
-            // drinksTab
-            // 
-            this.drinksTab.Location = new System.Drawing.Point(4, 38);
-            this.drinksTab.Name = "drinksTab";
-            this.drinksTab.Size = new System.Drawing.Size(1020, 509);
-            this.drinksTab.TabIndex = 5;
-            this.drinksTab.Text = "Bebidas";
-            this.drinksTab.UseVisualStyleBackColor = true;
-            this.drinksTab.VerticalScrollbarBarColor = true;
-            this.drinksTab.VerticalScrollbarHighlightOnWheel = false;
-            this.drinksTab.VerticalScrollbarSize = 10;
-            // 
             // mainTab
             // 
             this.mainTab.HorizontalScrollbarBarColor = true;
@@ -118,6 +107,21 @@ namespace Desktop.View
             this.dessertsTab.VerticalScrollbarBarColor = true;
             this.dessertsTab.VerticalScrollbarHighlightOnWheel = false;
             this.dessertsTab.VerticalScrollbarSize = 10;
+            // 
+            // drinksTab
+            // 
+            this.drinksTab.HorizontalScrollbarBarColor = true;
+            this.drinksTab.HorizontalScrollbarHighlightOnWheel = false;
+            this.drinksTab.HorizontalScrollbarSize = 10;
+            this.drinksTab.Location = new System.Drawing.Point(4, 38);
+            this.drinksTab.Name = "drinksTab";
+            this.drinksTab.Size = new System.Drawing.Size(1020, 509);
+            this.drinksTab.TabIndex = 5;
+            this.drinksTab.Text = "Bebidas";
+            this.drinksTab.UseVisualStyleBackColor = true;
+            this.drinksTab.VerticalScrollbarBarColor = true;
+            this.drinksTab.VerticalScrollbarHighlightOnWheel = false;
+            this.drinksTab.VerticalScrollbarSize = 10;
             // 
             // menusTab
             // 
@@ -199,6 +203,7 @@ namespace Desktop.View
             this.Controls.Add(this.sendOrderBtn);
             this.Controls.Add(this.metroGrid1);
             this.Controls.Add(this.mealsTabControl);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormAddOrder";
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "Añadir comanda";

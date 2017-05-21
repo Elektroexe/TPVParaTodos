@@ -1,12 +1,14 @@
 ﻿using Desktop.UserControls;
 using Desktop.View;
 using Microsoft.AspNet.SignalR.Client;
+using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
@@ -23,16 +25,22 @@ namespace Desktop.Controller
     }
     public class Notifications
     {
-        const string URI = "http://172.16.10.20/TPVParaTodos/signalr";
-        //const string URI = "http://172.16.100.19/TPVParaTodos/signalr";
+        const string URI = "http://tpvpt.azurewebsites.net/signalr";
+        //private const string URI = "http://172.16.100.19/TPVParaTodos/signalr";
 
-        private static HubConnection WebServiceConnection { get; set; }
-        private static IHubProxy HubProxy { get; set; }
+        private HubConnection WebServiceConnection { get; set; }
+        private IHubProxy HubProxy { get; set; }
 
         private const int DEFAULT_TIME = 5;
-        public static List<Notification> activeNotifications;
+        public List<Notification> activeNotifications;
+        private Form activeForm;
 
-        public static PictureBox addNotificationToList(NotificationsV2UC notification)
+        public Notifications(Form form)
+        {
+            activeForm = form;
+        }
+
+        public PictureBox addNotificationToList(NotificationsV2UC notification)
         {
             if (activeNotifications == null)
             {
@@ -62,23 +70,18 @@ namespace Desktop.Controller
 
             System.Timers.Timer t = new System.Timers.Timer();
             t.Interval = 1000;
-            //t.Tick += (s, e) =>
-            //{
-            //    n.remainingTime--;
-            //    MessageBox.Show("hola" + n.remainingTime);
-            //    if (n.remainingTime <= 0)
-            //    {
-            //        t.Stop();
-            //        t.Dispose();
-            //        deleteNotificationFromList(n);
-            //    }
-            //};
             t.Elapsed += (s, e) =>
             {
                 n.remainingTime--;
-                if (n.remainingTime <= 0)
+                if (activeForm == null)
                 {
-                    //MessageBox.Show("hola" + n.remainingTime);
+                    t.Stop();
+                    t.Dispose();
+                    activeNotifications.Remove(n);
+                    t.Enabled = false;
+                }
+                else if (n.remainingTime <= 0)
+                {
                     t.Stop();
                     t.Dispose();
                     deleteNotificationFromList(n);
@@ -93,15 +96,15 @@ namespace Desktop.Controller
             return pb;
         }
 
-        public static void deleteNotificationFromList(Notification n)
+        public void deleteNotificationFromList(Notification n)
         {
-            (n.activeNotification.Parent as Form).Invoke(new MethodInvoker(delegate ()
+            (activeForm as Form).Invoke(new MethodInvoker(delegate ()
             {
                 fadeOut(n);
             }));
         }
 
-        private static void fadeOut(Notification n)
+        private void fadeOut(Notification n)
         {
             Transition t = new Transition(new TransitionType_Linear(400));
             t.add(n.activeNotification, "Left", -n.activeNotification.Width);
@@ -109,15 +112,18 @@ namespace Desktop.Controller
             t.run();
             t.TransitionCompletedEvent += (s, e) =>
             {
-                (n.activeNotification.Parent as Form).Invoke(new MethodInvoker(delegate ()
+                if (activeForm != null)
                 {
-                    (n.activeNotification.Parent as Form).Controls.Remove(n.activeNotification);
-                    activeNotifications.RemoveAt(0);
-                }));
+                    (activeForm as Form).Invoke(new MethodInvoker(delegate ()
+                    {
+                        (activeForm as Form).Controls.Remove(n.activeNotification);
+                        activeNotifications.RemoveAt(0);
+                    }));
+                }
             };
         }
 
-        private static void fadeIn(Notification n)
+        private void fadeIn(Notification n)
         {
             Transition t = new Transition(new TransitionType_Linear(400));
             t.add(n.activeNotification, "Left", 30);
@@ -125,10 +131,10 @@ namespace Desktop.Controller
         }
 
 
-        public static void displaceNotifications()
+        public void displaceNotifications()
         {
             PictureBox pAux = activeNotifications.First().activeNotification;
-            (pAux.Parent as Form).Invoke(new MethodInvoker(delegate ()
+            (activeForm as Form).Invoke(new MethodInvoker(delegate ()
             {
                 pAux.Location = new Point(pAux.Location.X, pAux.Location.Y - pAux.Height - 20);
             }));
@@ -139,14 +145,14 @@ namespace Desktop.Controller
             {
                 PictureBox pb = n.activeNotification;
                 initialPos = initialPos + pAux.Height + 20;
-                (pb.Parent as Form).Invoke(new MethodInvoker(delegate ()
+                (activeForm as Form).Invoke(new MethodInvoker(delegate ()
                 {
                     pb.Location = new Point(pb.Location.X, initialPos);
                 }));
             }
         }
 
-        public async static void startListeningNotifications()
+        public async void startListeningNotifications()
         {
             WebServiceConnection = new HubConnection(URI);
             HubProxy = WebServiceConnection.CreateHubProxy("notificationHub");
@@ -163,19 +169,34 @@ namespace Desktop.Controller
             }
         }
 
-        private static void newNotification(int id, string title, string subtitle)
+        private void newNotification(int id, string title, string subtitle)
         {
-            Form f = Application.OpenForms.Cast<Form>().Where(x => !x.GetType().Equals(typeof(FormOpacity)) && !x.GetType().Equals(typeof(Form))).Last();
-            NotificationsV2UC not = new NotificationsV2UC(title, subtitle);
-            PictureBox pb = Notifications.addNotificationToList(not);
-            f.Invoke(new MethodInvoker(delegate ()
+            if (activeForm != null)
             {
-                pb.Parent = f;
-                f.Controls.Add(pb);
-                pb.BringToFront();
-            }));
+                NotificationsV2UC not = new NotificationsV2UC(title, subtitle, (id == 0));
+                PictureBox pb = addNotificationToList(not);
+                activeForm.Invoke(new MethodInvoker(delegate ()
+                {
+                    pb.Parent = activeForm;
+                    activeForm.Controls.Add(pb);
+                    pb.BringToFront();
+                }));
+            }
+            else
+            {
+                WebServiceConnection.Dispose();
+            }
 
 
+        }
+        
+        public void finish()
+        {
+            if (activeNotifications != null)
+            {
+                activeNotifications.Clear();
+            }
+            activeForm = null;
         }
     }
 }

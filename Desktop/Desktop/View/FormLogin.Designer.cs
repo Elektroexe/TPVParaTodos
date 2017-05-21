@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLogin));
             this.usernameTxtbox = new MetroFramework.Controls.MetroTextBox();
             this.passwordTxtbox = new MetroFramework.Controls.MetroTextBox();
             this.loginBtn = new MetroFramework.Controls.MetroButton();
-            this.rememberChck = new MetroFramework.Controls.MetroCheckBox();
             this.userLabel = new MetroFramework.Controls.MetroLabel();
             this.passwordLabel = new MetroFramework.Controls.MetroLabel();
             this.SuspendLayout();
@@ -104,22 +104,12 @@
             // 
             this.loginBtn.Enabled = false;
             this.loginBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
-            this.loginBtn.Location = new System.Drawing.Point(191, 301);
+            this.loginBtn.Location = new System.Drawing.Point(191, 274);
             this.loginBtn.Name = "loginBtn";
             this.loginBtn.Size = new System.Drawing.Size(149, 40);
             this.loginBtn.TabIndex = 2;
             this.loginBtn.Text = "Iniciar sesión";
             this.loginBtn.UseSelectable = true;
-            // 
-            // rememberChck
-            // 
-            this.rememberChck.AutoSize = true;
-            this.rememberChck.Location = new System.Drawing.Point(191, 209);
-            this.rememberChck.Name = "rememberChck";
-            this.rememberChck.Size = new System.Drawing.Size(112, 15);
-            this.rememberChck.TabIndex = 3;
-            this.rememberChck.Text = "Recordar usuario";
-            this.rememberChck.UseSelectable = true;
             // 
             // userLabel
             // 
@@ -143,13 +133,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(530, 418);
+            this.ClientSize = new System.Drawing.Size(530, 380);
             this.Controls.Add(this.passwordLabel);
             this.Controls.Add(this.userLabel);
-            this.Controls.Add(this.rememberChck);
             this.Controls.Add(this.loginBtn);
             this.Controls.Add(this.passwordTxtbox);
             this.Controls.Add(this.usernameTxtbox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormLogin";
             this.Resizable = false;
@@ -165,7 +155,6 @@
         public MetroFramework.Controls.MetroTextBox usernameTxtbox;
         public MetroFramework.Controls.MetroTextBox passwordTxtbox;
         public MetroFramework.Controls.MetroButton loginBtn;
-        public MetroFramework.Controls.MetroCheckBox rememberChck;
         private MetroFramework.Controls.MetroLabel userLabel;
         private MetroFramework.Controls.MetroLabel passwordLabel;
     }

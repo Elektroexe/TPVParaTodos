@@ -33,16 +33,13 @@ namespace Desktop.Controller
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             tablesView = new FormTables();
+            tablesView.Visible = false;
 
             WebserviceConnection.initWebSocketListener(updateTables);
 
-            Notifications.startListeningNotifications();
-
-            Button btn = new Button();
-            btn.Location = new Point(1000, 700);
-            btn.Text = "hola";
-            btn.Click += (o, e) => { new LoginController(); };
-            tablesView.Controls.Add(btn);
+            Notifications n = new Notifications(tablesView);
+            n.startListeningNotifications();
+            LoginController l = new LoginController(this.tablesView);
 
         }
         #endregion
@@ -58,10 +55,15 @@ namespace Desktop.Controller
                 syncTables(t);
             }
 
-            // Refresh the view
-            tablesView.Invoke(new MethodInvoker(delegate () {
-                tablesView.Refresh();
-            }));
+            try {
+                // Refresh the view
+                tablesView.Invoke(new MethodInvoker(delegate () {
+                    tablesView.Refresh();
+                }));
+            } catch(Exception ex)
+            {
+                // Excepcion prevista
+            }
 
             // Refresh sidebar's table object
             SidebarTable sidebar = this.tablesView.rightPanel;

@@ -27,6 +27,7 @@ namespace Desktop.Controller
 
         #region Hub Fields
         private const string HUB_URI = "http://tpvpt.azurewebsites.net/signalr";
+        //private const string HUB_URI = "http://172.16.100.19/TPVParaTodos/signalr";
         private static HubConnection webserviceConnection;
         private static IHubProxy HubProxy;
         #endregion
@@ -51,6 +52,7 @@ namespace Desktop.Controller
         {
             string url = URI + "Image/Product/" + id;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.Headers.Add("Authorization", TOKEN_TYPE + " " + WebserviceConnection.token);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             Stream recieveStream = response.GetResponseStream();
 
@@ -61,6 +63,7 @@ namespace Desktop.Controller
         {
             string URI = WebserviceConnection.URI + "api/" + "Orders/Manager";
             HttpWebRequest request = WebRequest.Create(URI) as HttpWebRequest;
+            request.Headers.Add("Authorization", TOKEN_TYPE + " " + WebserviceConnection.token);
             string sb = JsonConvert.SerializeObject(order, new JsonSerializerSettings
             {
                 ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore,
@@ -118,6 +121,7 @@ namespace Desktop.Controller
         {
             HttpWebRequest request = WebRequest.Create(URI + "api/Orders/Manager/" + tableId) as HttpWebRequest;
             request.Method = "GET";
+            request.Headers.Add("Authorization", TOKEN_TYPE + " " + WebserviceConnection.token);
             WebResponse response = request.GetResponse();
             Stream stream = response.GetResponseStream();
             StreamReader sr = new StreamReader(stream);
@@ -129,6 +133,7 @@ namespace Desktop.Controller
         public static void closeOrder(int tableId)
         {
             HttpWebRequest request = WebRequest.Create(URI + "api/Orders/Close/" + tableId) as HttpWebRequest;
+            request.Headers.Add("Authorization", TOKEN_TYPE + " " + WebserviceConnection.token);
             request.Method = "POST";
             request.ContentLength = 0;
             WebResponse response = request.GetResponse();

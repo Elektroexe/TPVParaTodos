@@ -59,11 +59,13 @@
         android:id="@+id/btExit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/btnCloseOrder"
-        android:layout_marginTop="18dp"
-        android:text="volver" />
+        android:text="volver"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="15dp" />
 
     <TextView
         android:id="@+id/tvNumTable"
@@ -74,6 +76,7 @@
         android:layout_marginBottom="53dp"
         android:text="1"
         android:textAlignment="center"
+        android:textColor="@android:color/holo_red_dark"
         android:textSize="36sp"
         android:textStyle="bold" />
 

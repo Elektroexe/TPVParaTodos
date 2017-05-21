@@ -79,6 +79,7 @@ namespace Desktop.View
             formChild.FormBorderStyle = FormBorderStyle.None;
             formChild.ShowInTaskbar = false;
             commentary.contBtn.Click += CloseForm;
+            commentary.skipBtn.Click += CloseForm;
 
             formChild.Controls.Add(commentary);
 
