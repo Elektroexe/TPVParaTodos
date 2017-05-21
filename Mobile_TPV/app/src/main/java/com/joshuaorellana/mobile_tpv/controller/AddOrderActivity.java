@@ -26,7 +26,6 @@ public class AddOrderActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private ViewPagerAdapter adapter;
 
     public static OrderDTO Order;
     private int versionDB;
@@ -72,26 +71,18 @@ public class AddOrderActivity extends AppCompatActivity {
     }
 
     private void initComponents() {
-
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
-
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-
         viewPager.getCurrentItem();
-
         TimeZone tz = TimeZone.getTimeZone("UTC");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
         df.setTimeZone(tz);
         String date = df.format(new Date());
-
         Bundle auxIntent = getIntent().getExtras();
-
         boolean modify = auxIntent.getBoolean("modify");
-
         if (modify) {
-
             Log.e("ModifyOrder --> ", "OK!");
             Thread getOrder = new Thread(new Runnable() {
                 @Override
@@ -105,24 +96,18 @@ public class AddOrderActivity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         } else {
             Order = new OrderDTO(SelectedTableActivity.auxTable.getId(), date);
         }
-
     }
 
     private void setupViewPager(ViewPager viewPager) {
-
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
         adapter.addFragment(new DrinkFragment(), "BEBIDAS");
         adapter.addFragment(new FoodFragment("Starter"), "ENTRANTES");
         adapter.addFragment(new FoodFragment("Main"), "PRINCIPAL");
         adapter.addFragment(new FoodFragment("Dessert"), "POSTRES");
         adapter.addFragment(new MenuFragment(), "MENÚS");
-
         viewPager.setAdapter(adapter);
-
     }
 }

@@ -26,7 +26,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import static com.joshuaorellana.mobile_tpv.controller.AddOrderActivity.Order;
-import static com.joshuaorellana.mobile_tpv.controller.TablesActivity._URL;
+import static com.joshuaorellana.mobile_tpv.controller.SelectedTableActivity.auxTable;
 
 
 /**
@@ -43,13 +43,11 @@ public class DrinkFragment extends Fragment {
     private DrawerLayout drawer;
     private NavigationView navigationView;
 
-
     private TextView tvProductName;
     private TextView tvQty;
     private ImageView imgProduct;
 
-    public DrinkFragment() {
-    }
+    public DrinkFragment() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,13 +56,9 @@ public class DrinkFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         rootView = inflater.inflate(R.layout.fragment_product, container, false);
-
         initComponents();
-
         return rootView;
-
     }
 
     private void initComponents() {
@@ -103,8 +97,7 @@ public class DrinkFragment extends Fragment {
                 if (i < listDrinks.size()) {
                     final ImageButton btDrink = new ImageButton(getActivity().getApplicationContext());
                     final int auxNum = i;
-                    String url = _URL + "Image/Product/" + listDrinks.get(i).getId();
-                    Picasso.with(getActivity().getApplicationContext()).load(url).resize(250, 250).into(btDrink);
+                    Picasso.with(getActivity().getApplicationContext()).load(WebService.PathImage(listDrinks.get(i).getId())).resize(250, 250).into(btDrink);
                     btDrink.setScaleType(ImageButton.ScaleType.CENTER_INSIDE);
                     btDrink.setId(listDrinks.get(i).getId());
                     btDrink.setOnClickListener(new View.OnClickListener() {
@@ -157,6 +150,7 @@ public class DrinkFragment extends Fragment {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
+                        auxTable.setEmpty(false);
                         break;
                 }
                 if (menuItem.isChecked()) {

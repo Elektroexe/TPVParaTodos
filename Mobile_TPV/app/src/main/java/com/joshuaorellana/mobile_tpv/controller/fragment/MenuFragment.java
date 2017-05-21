@@ -16,6 +16,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.joshuaorellana.mobile_tpv.controller.common.WebService;
 import com.joshuaorellana.mobile_tpv.model.business.MenuDTO;
 import com.joshuaorellana.mobile_tpv.model.persistence.ProductsConversor;
 import com.joshuaorellana.mobile_tpv.model.persistence.ProductsSQLiteHelper;
@@ -25,7 +26,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.joshuaorellana.mobile_tpv.controller.TablesActivity._URL;
 
 /**
  * Created by Joshua-OC on 04/05/2017.
@@ -77,8 +77,6 @@ public class MenuFragment extends Fragment {
         }
     }
 
-
-
     private void createMenusButtons() {
         int i = 0;
         while (i < listMenus.size()) {
@@ -90,8 +88,7 @@ public class MenuFragment extends Fragment {
                 if (i < listMenus.size()) {
                     final ImageButton btMeat = new ImageButton(getActivity().getApplicationContext());
                     final int auxNum = i;
-                    String url = _URL + "Image/Product/" + listMenus.get(i).getId();
-                    Picasso.with(getActivity().getApplicationContext()).load(url).resize(250, 250).into(btMeat);
+                    Picasso.with(getActivity().getApplicationContext()).load(WebService.PathImage(listMenus.get(i).getId())).resize(250, 250).into(btMeat);
                     btMeat.setScaleType(ImageButton.ScaleType.CENTER_INSIDE);
                     btMeat.setId(listMenus.get(i).getId());
                     btMeat.setOnClickListener(new View.OnClickListener() {

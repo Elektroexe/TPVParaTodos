@@ -1,7 +1,6 @@
 package com.joshuaorellana.mobile_tpv.controller.fragment;
 
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -17,32 +16,19 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.joshuaorellana.mobile_tpv.controller.common.WebService;
-import com.joshuaorellana.mobile_tpv.model.business.OrderDTO;
 import com.joshuaorellana.mobile_tpv.model.business.FoodDTO;
 import com.joshuaorellana.mobile_tpv.model.persistence.ProductsConversor;
 import com.joshuaorellana.mobile_tpv.model.persistence.ProductsSQLiteHelper;
 import com.joshuaorellana.mobile_tpv.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.InputStream;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
 import static com.joshuaorellana.mobile_tpv.controller.AddOrderActivity.Order;
 import static com.joshuaorellana.mobile_tpv.controller.SelectedTableActivity.auxTable;
-import static com.joshuaorellana.mobile_tpv.controller.TablesActivity._URL;
 
 /**
  * Created by Joshua-OC on 08/05/2017.
@@ -121,8 +107,7 @@ public class FoodFragment extends Fragment {
                 if (i < listFoods.size()) {
                     final ImageButton btMeat = new ImageButton(getActivity().getApplicationContext());
                     final int auxNum = i;
-                    String url = _URL + "Image/Product/" + listFoods.get(i).getId();
-                    Picasso.with(getActivity().getApplicationContext()).load(url).resize(250, 250).into(btMeat);
+                    Picasso.with(getActivity().getApplicationContext()).load(WebService.PathImage(listFoods.get(i).getId())).resize(250, 250).into(btMeat);
                     btMeat.setScaleType(ImageButton.ScaleType.CENTER_INSIDE);
                     btMeat.setId(listFoods.get(i).getId());
                     btMeat.setOnClickListener(new View.OnClickListener() {
@@ -175,6 +160,7 @@ public class FoodFragment extends Fragment {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
+                        auxTable.setEmpty(false);
                         break;
                 }
                 if (menuItem.isChecked()) {

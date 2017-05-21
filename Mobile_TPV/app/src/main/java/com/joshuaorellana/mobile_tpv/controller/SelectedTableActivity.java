@@ -1,5 +1,6 @@
 package com.joshuaorellana.mobile_tpv.controller;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -58,7 +59,7 @@ public class SelectedTableActivity extends AppCompatActivity {
                 Intent auxIntent = new Intent(SelectedTableActivity.this, AddOrderActivity.class);
                 auxIntent.putExtra("modify", false);
 
-                startActivity(auxIntent);
+                startActivityForResult(auxIntent, 0);
             }
         });
         btViewOrder.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +74,7 @@ public class SelectedTableActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent auxIntent = new Intent(SelectedTableActivity.this, AddOrderActivity.class);
                 auxIntent.putExtra("modify", true);
-                startActivity(auxIntent);
+                startActivityForResult(auxIntent, 0);
             }
         });
         btCloseOrder.setOnClickListener(new View.OnClickListener() {
@@ -88,16 +89,17 @@ public class SelectedTableActivity extends AppCompatActivity {
                 closeOrder.start();
                 try {
                     closeOrder.join();
-                    finishActivity(RESULT_OK);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                auxTable.setEmpty(true);
+                checkEmpty();
             }
         });
         btExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                ((Activity) view.getContext()).finish();
             }
         });
     }
@@ -117,4 +119,9 @@ public class SelectedTableActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        checkEmpty();
+    }
 }

@@ -3,6 +3,7 @@ package com.joshuaorellana.mobile_tpv.controller.common;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.joshuaorellana.mobile_tpv.R;
 import com.joshuaorellana.mobile_tpv.model.Login;
 import com.joshuaorellana.mobile_tpv.model.business.OrderDTO;
 import com.joshuaorellana.mobile_tpv.model.Update;
@@ -19,13 +20,13 @@ import okhttp3.Response;
 
 public class WebService {
 
+
     static final String URL = "http://192.168.1.108/TPVParaTodos/";
     //static final String URL = "http://tpvpt.azurewebsites.net/";
     public static String token;
 
     public static String Login(String username, String password) {
         try {
-
             OkHttpClient client = new OkHttpClient();
             MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
             RequestBody body = RequestBody.create(mediaType, "grant_type=password&username=" + username + "&password=" + password);
@@ -47,24 +48,26 @@ public class WebService {
         return null;
     }
 
-	/*public static void Logout() {
+	public static boolean Logout() {
         try {
             OkHttpClient client = new OkHttpClient();
+            MediaType mediaType = MediaType.parse("application/json");
+            RequestBody body = RequestBody.create(mediaType, "");
             Request request = new Request.Builder()
                     .url("http://tpvpt.azurewebsites.net/api/Account/Logout")
-                    .post(null)
+                    .post(body)
+                    .addHeader("content-type", "application/json")
                     .addHeader("authorization", token)
-                    .addHeader("content-length", "0")
-                    .addHeader("content-type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW")
                     .build();
-
             Response response = client.newCall(request).execute();
-
-
-        } catch (IOException err) {
-            err.printStackTrace();
+            if (response.isSuccessful()){
+                return true;
+            }
+        } catch (Exception err) {
+            return false;
         }
-    }*/
+        return false;
+    }
 
     public static <T> T[] Get(Class<T[]> classType) {
         try {
@@ -158,5 +161,9 @@ public class WebService {
             return false;
         }
         return false;
+    }
+
+    public static String PathImage(int productId){
+        return URL + "Image/Product/" + productId;
     }
 }

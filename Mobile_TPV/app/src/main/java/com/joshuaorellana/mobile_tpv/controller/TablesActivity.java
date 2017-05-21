@@ -1,5 +1,6 @@
 package com.joshuaorellana.mobile_tpv.controller;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,12 +27,12 @@ import java.util.List;
 
 public class TablesActivity extends AppCompatActivity {
 
-    public static String _URL;
     private TableLayout tableLayout;
     private FloatingActionButton btLogout;
 
     public static TableDTO[] listTables;
     public static List<ImageButton> listButtons;
+    private SignalR signalR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,43 +42,36 @@ public class TablesActivity extends AppCompatActivity {
     }
 
     private void initComponents() {
-        _URL = "http://192.168.1.108/TPVParaTodos/";
-        //_URL = getString(R.string.URL);
         tableLayout = (TableLayout) findViewById(R.id.menuTableLayout);
         btLogout = (FloatingActionButton) findViewById(R.id.btLogout);
         listButtons = new ArrayList<>();
-
         Thread apiTables = new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    listTables = WebService.Get(TableDTO[].class);
-                } catch (Exception ex){
-                    ex.printStackTrace();
-                }
+                listTables = WebService.Get(TableDTO[].class);
             }
         });
         apiTables.start();
         try {
             apiTables.join();
-            if (listTables != null && listTables.length > 0) {
-                createTableButtons();
-                final SignalR sgnlR = new SignalR(listTables, getApplicationContext());
-                Thread connectingSignalR = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            sgnlR.getNotifications();
-                            sgnlR.getRefreshTable();
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                });
-                connectingSignalR.start();
-            }
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+        }
+        if (listTables != null && listTables.length > 0) {
+            createTableButtons();
+            signalR = new SignalR(getApplicationContext());
+            Thread connectingSignalR = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        signalR.getNotifications();
+                        signalR.getRefreshTable();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
+            connectingSignalR.start();
         }
         btLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,8 +92,9 @@ public class TablesActivity extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getTitle().equals("Si")) {
-            //WebService.Logout();
+            WebService.Logout();
             WebService.token = "";
+            ((Activity) (findViewById(item.getItemId()).getContext())).finish();
         } else if (item.getTitle().equals("No")) {
             return true;
         } else {

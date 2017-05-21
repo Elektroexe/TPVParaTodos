@@ -35,12 +35,10 @@ public class SignalR {
     final String URL = "http://192.168.1.108/TPVParaTodos/signalr/";
     //final String URL = "http://tpvpt.azurewebsites.net/signalr/";
 
-    private TableDTO[] tables;
     private Context context;
     private Handler mHandler;
 
-    public SignalR(TableDTO[] tables, Context context) {
-        this.tables = tables;
+    public SignalR(Context context) {
         this.context = context;
         mHandler = new Handler();
     }
@@ -88,9 +86,8 @@ public class SignalR {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        SignalR.this.tables = getNewTables(newTables);
-                        listTables = SignalR.this.tables;
-                        for (TableDTO auxTable : SignalR.this.tables) {
+                        listTables = getNewTables(newTables);
+                        for (TableDTO auxTable : listTables) {
                             for(int i = 0; i < listButtons.size(); i++) {
                                 if (listButtons.get(i).getId() == auxTable.getId()) {
                                     if (auxTable.isEmpty()) {

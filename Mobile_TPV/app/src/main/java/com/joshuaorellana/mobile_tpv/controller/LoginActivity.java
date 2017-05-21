@@ -43,11 +43,7 @@ public class LoginActivity extends AppCompatActivity {
                 Thread connecting = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        try {
-                            token = WebService.Login(user, pwd);
-                        } catch (Exception ex){
-                            ex.printStackTrace();
-                        }
+                        token = WebService.Login(user, pwd);
                     }
                 });
                 connecting.start();
@@ -59,13 +55,17 @@ public class LoginActivity extends AppCompatActivity {
                 if (token != null) {
                     WebService.token = "bearer " + token;
                     Intent auxIntent = new Intent(LoginActivity.this, TablesActivity.class);
-                    startActivity(auxIntent);
-
+                    startActivityForResult(auxIntent, 0);
                 } else {
                     tvIncorrect.setText("Usuario o contraseña incorrectos!");
                 }
-
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        edtPassword.setText("");
     }
 }
