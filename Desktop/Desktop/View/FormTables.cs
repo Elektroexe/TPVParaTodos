@@ -36,8 +36,8 @@ namespace Desktop.View
             int antY = 0;
 
 
-            int halfWidth = this.Width / 2;
-            int halfHeight = this.Height / 2;
+            int halfWidth = Screen.PrimaryScreen.WorkingArea.Width / 2;
+            int halfHeight = Screen.PrimaryScreen.WorkingArea.Height / 2;
 
             for (int i = 1; i <= QTYTABLES; i++)
             {

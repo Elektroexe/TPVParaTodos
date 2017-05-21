@@ -23,7 +23,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>4</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -199,12 +199,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ValuesStrings.resx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\IconUC.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\IconUC.Designer.cs">
-      <DependentUpon>IconUC.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="UserControls\CommentaryUC.resx">
       <DependentUpon>CommentaryUC.cs</DependentUpon>
     </EmbeddedResource>
@@ -248,9 +242,6 @@
     <EmbeddedResource Include="Resources\ValuesStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ValuesStrings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\IconUC.resx">
-      <DependentUpon>IconUC.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Desktop_TemporaryKey.pfx" />
     <None Include="packages.config" />

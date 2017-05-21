@@ -62,7 +62,7 @@ namespace Desktop.Controller
                 }));
             } catch(Exception ex)
             {
-                // Excepcion prevista
+                // Excepcion prevista, no es necesario tratarla
             }
 
             // Refresh sidebar's table object
@@ -71,20 +71,27 @@ namespace Desktop.Controller
             {
                 TableUC t = (TableUC)tablesView.Controls["tableUC" + sidebar.Table.Table.Id.ToString()];
                 sidebar.Table.Table = t.Table;
+
+                sidebar.Invoke(new MethodInvoker(delegate ()
+                {
+                    sidebar.refreshButtons(t.Table.Empty);
+                }));
             }
             
             // Refresh sidebar
             if (tablesView.rightPanel != null)
             {
-                tablesView.rightPanel.Invoke(new MethodInvoker(delegate ()
+                try {
+                    tablesView.rightPanel.Invoke(new MethodInvoker(delegate ()
+                    {
+                        tablesView.rightPanel.Refresh();
+                    }));
+                } catch (Exception)
                 {
-                    tablesView.rightPanel.Refresh();
-                }));
+                    // Excepcion prevista, no es necesario tratarla
+                }
             }
         }
-        #endregion
-
-        
 
         private void syncTables(TableDTO table)
         {
@@ -92,6 +99,7 @@ namespace Desktop.Controller
             t.Table = table;
         }
 
+        #endregion
 
         public void start()
         {

@@ -15,8 +15,8 @@ namespace Desktop.UserControls
         public NotificationsV2UC(string title, string subtitle, bool correct)
         {
             InitializeComponent();
-            this.label1.Text = title;
-            this.label2.Text = subtitle;
+            this.title.Text = title;
+            this.subtitle.Text = subtitle;
             if (!correct)
             {
                 setErrorNotification();

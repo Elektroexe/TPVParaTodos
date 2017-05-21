@@ -26,7 +26,6 @@ namespace Desktop.Controller
     public class Notifications
     {
         const string URI = "http://tpvpt.azurewebsites.net/signalr";
-        //private const string URI = "http://172.16.100.19/TPVParaTodos/signalr";
 
         private HubConnection WebServiceConnection { get; set; }
         private IHubProxy HubProxy { get; set; }
@@ -55,7 +54,7 @@ namespace Desktop.Controller
             notification.DrawToBitmap(bmp, notification.ClientRectangle);
 
             PictureBox pb = new PictureBox();
-            pb.Location = new Point(-notification.Width, 620);
+            pb.Location = new Point(-notification.Width, Screen.PrimaryScreen.WorkingArea.Height - 100);
             pb.SizeMode = PictureBoxSizeMode.AutoSize;
             pb.Image = bmp;
 
@@ -90,8 +89,6 @@ namespace Desktop.Controller
             };
 
             t.Enabled = true;
-
-            //t.Start();
 
             return pb;
         }
@@ -164,7 +161,6 @@ namespace Desktop.Controller
             }
             catch (HttpRequestException)
             {
-                //StatusText.Text = "Unable to connect to server: Start server before connecting clients.";
                 return;
             }
         }

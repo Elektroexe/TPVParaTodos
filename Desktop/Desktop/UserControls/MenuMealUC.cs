@@ -30,7 +30,7 @@ namespace Desktop.UserControls
             this.RepositionLabels();
         }
 
-        // TEST
+
         public MenuMealUC()
         { }
         public override Product AddToOrder()

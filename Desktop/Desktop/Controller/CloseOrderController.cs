@@ -5,12 +5,8 @@ using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Desktop.Controller
@@ -48,7 +44,6 @@ namespace Desktop.Controller
         {
             BindingList<Product> mealDataSource = new BindingList<Product>(_orderMeals);
             _closeOrderView.closeTicketGrid.DataSource = mealDataSource;
-            //this._closeOrderView.sendOrderBtn.Enabled = products.Count > 0;
 
             foreach (DataGridViewColumn c in _closeOrderView.closeTicketGrid.Columns)
             {
@@ -68,45 +63,12 @@ namespace Desktop.Controller
             System.Drawing.Image orderImage = (System.Drawing.Image)createBitmap(_closeOrderView.closeTicketGrid);
             System.Drawing.Image totalImage = (System.Drawing.Image)createBitmap(_closeOrderView.totalGridView);
 
-
-            //SaveFileDialog dlg = new SaveFileDialog();
-            //dlg.Filter = "PDF Files|*.pdf";
-            //dlg.FilterIndex = 0;
-
             string fileName = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()).ToString() + ".pdf";
 
-            //if (dlg.ShowDialog() == DialogResult.OK)
-            //{
-            //    iTextSharp.text.Image im1 = iTextSharp.text.Image.GetInstance(orderImage, System.Drawing.Imaging.ImageFormat.Png);
-            //    iTextSharp.text.Image im2 = iTextSharp.text.Image.GetInstance(totalImage, System.Drawing.Imaging.ImageFormat.Png);
-
-            //    im1.ScaleAbsolute(505, im1.Height/2);
-            //    im2.ScaleAbsolute(im2.Width/2, im2.Height/2);
-            //    im2.Alignment = iTextSharp.text.Image.ALIGN_RIGHT;
-
-            //    fileName = dlg.FileName;
-
-            //    Document myDocument = new Document(iTextSharp.text.PageSize.A4, 45, 45, 42, 35);
-            //    PdfWriter.GetInstance(myDocument, new FileStream(fileName, FileMode.Create));
-            //    myDocument.Open();
-
-            //    Paragraph p = new Paragraph();
-            //    p.Alignment = iTextSharp.text.Image.ALIGN_CENTER;
-            //    p.Font = FontFactory.GetFont(FontFactory.HELVETICA, 20);
-            //    p.Add("Mesa " + _activeOrder.Table_Id.ToString() + "\n\n");
-
-            //    myDocument.Add(p);
-            //    myDocument.Add(im1);
-            //    myDocument.Add(new Paragraph("\n"));
-            //    myDocument.Add(im2);
-            //    myDocument.Close();
-            //}
-
-            //{
             iTextSharp.text.Image im1 = iTextSharp.text.Image.GetInstance(orderImage, System.Drawing.Imaging.ImageFormat.Png);
             iTextSharp.text.Image im2 = iTextSharp.text.Image.GetInstance(totalImage, System.Drawing.Imaging.ImageFormat.Png);
 
-            im1.ScaleAbsolute(505, im1.Height / 2);
+            im1.ScaleAbsolute(505, 250);
             im2.ScaleAbsolute(im2.Width / 2, im2.Height / 2);
             im2.Alignment = iTextSharp.text.Image.ALIGN_RIGHT;
 
@@ -139,8 +101,14 @@ namespace Desktop.Controller
         
         private void closeOrder()
         {
-            WebserviceConnection.closeOrder(_activeOrder.Table_Id);
-            _closeOrderView.Close();
+            try {
+                WebserviceConnection.closeOrder(_activeOrder.Table_Id);
+                _closeOrderView.Close();
+            } catch(Exception ex)
+            {
+                FormPopUp fPop = new FormPopUp(false, "Error cerrando el pedido");
+                fPop.ShowDialog();
+            }
         }
     }
 }

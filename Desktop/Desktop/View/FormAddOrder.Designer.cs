@@ -48,6 +48,9 @@ namespace Desktop.View
             // 
             // mealsTabControl
             // 
+            this.mealsTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.mealsTabControl.Controls.Add(this.startersTab);
             this.mealsTabControl.Controls.Add(this.mainTab);
             this.mealsTabControl.Controls.Add(this.dessertsTab);
@@ -144,6 +147,8 @@ namespace Desktop.View
             this.metroGrid1.AllowUserToDeleteRows = false;
             this.metroGrid1.AllowUserToResizeColumns = false;
             this.metroGrid1.AllowUserToResizeRows = false;
+            this.metroGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.metroGrid1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.metroGrid1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.metroGrid1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
@@ -187,12 +192,13 @@ namespace Desktop.View
             // 
             // sendOrderBtn
             // 
+            this.sendOrderBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.sendOrderBtn.Enabled = false;
             this.sendOrderBtn.Location = new System.Drawing.Point(23, 636);
             this.sendOrderBtn.Name = "sendOrderBtn";
             this.sendOrderBtn.Size = new System.Drawing.Size(242, 38);
             this.sendOrderBtn.TabIndex = 2;
-            this.sendOrderBtn.Text = "Enviar comanda";
+            this.sendOrderBtn.Text = "Enviar pedido";
             this.sendOrderBtn.UseSelectable = true;
             // 
             // FormAddOrder
@@ -206,7 +212,7 @@ namespace Desktop.View
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormAddOrder";
             this.Style = MetroFramework.MetroColorStyle.Silver;
-            this.Text = "Añadir comanda";
+            this.Text = "Añadir pedido";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.mealsTabControl.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.metroGrid1)).EndInit();

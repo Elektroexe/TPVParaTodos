@@ -49,6 +49,9 @@
             this.closeTicketGrid.AllowUserToDeleteRows = false;
             this.closeTicketGrid.AllowUserToResizeColumns = false;
             this.closeTicketGrid.AllowUserToResizeRows = false;
+            this.closeTicketGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.closeTicketGrid.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.closeTicketGrid.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.closeTicketGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
@@ -93,6 +96,7 @@
             // 
             // closeBtn
             // 
+            this.closeBtn.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.closeBtn.FontSize = MetroFramework.MetroButtonSize.Medium;
             this.closeBtn.Location = new System.Drawing.Point(595, 593);
             this.closeBtn.Name = "closeBtn";
@@ -107,6 +111,7 @@
             this.totalGridView.AllowUserToDeleteRows = false;
             this.totalGridView.AllowUserToResizeColumns = false;
             this.totalGridView.AllowUserToResizeRows = false;
+            this.totalGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.totalGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.totalGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.totalGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;

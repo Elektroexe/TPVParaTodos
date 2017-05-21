@@ -118,24 +118,23 @@ namespace Desktop.View
         {
             formChild.Activate();
             timerOpacity.Tick -= TimerOpacity_Tick;
-            timerOpacity.Tick += asd2;
+            timerOpacity.Tick += fateOutTimer;
             timerOpacity.Start();
 
-            this.asd();
+            this.leftTransition();
 
 
         }
 
-        // TODO: REFACTORIZAR
-        private void asd()
+        private void leftTransition()
         {
             Transition t = new Transition(new TransitionType_Linear(400));
             t.add(formChild, "Left", this.Width);
-            t.TransitionCompletedEvent += asd3;
+            t.TransitionCompletedEvent += Close;
             t.run();
         }
 
-        private void asd2(object sender, EventArgs e)
+        private void fateOutTimer(object sender, EventArgs e)
         {
             if (Opacity > 0)
             {
@@ -148,7 +147,7 @@ namespace Desktop.View
             }
         }
 
-        private void asd3(object sender, EventArgs e)
+        private void Close(object sender, EventArgs e)
         {
             formChild.Close();
             this.Close();

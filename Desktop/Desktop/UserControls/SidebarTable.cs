@@ -13,13 +13,14 @@ using Desktop.Model;
 using Desktop.Controller;
 using System.Net;
 using System.IO;
+using Desktop.View;
 
 namespace Desktop.UserControls
 {
     public partial class SidebarTable : MetroUserControl
     {
 
-        private readonly String[] buttons = new String[] { "Añadir comanda", "Ver comanda", "Modificar comanda", "Cerrar comanda" };
+        private readonly String[] buttons = new String[] { "Añadir pedido", "Ver pedido", "Modificar pedido", "Cerrar pedido" };
 
         private TableUC table;
 
@@ -35,10 +36,9 @@ namespace Desktop.UserControls
                 this.table = value;
             }
         }
-        public SidebarTable(TableUC table) // pasar width y height
+        public SidebarTable(TableUC table)
         {
             InitializeComponent();
-            //this.table = table;
             this.table = new TableUC(table.TableNumber, 2);
             this.table.Table = table.Table;
             this.table.BackColor = SystemColors.Control;
@@ -55,10 +55,6 @@ namespace Desktop.UserControls
         {
             this.Dock = DockStyle.Fill;
             this.mainPanel.Dock = DockStyle.Fill;
-            //this.mainPanel.Paint += paintPanel;
-            //this.pictureBox1.Size = new Size(200,229);
-            //this.pictureBox1.Location = new Point(50, 50);
-            //this.pictureBox1.Paint += paintPb;
 
             int ant = 300;
             for (int i = 0; i < 4; i++)
@@ -96,20 +92,6 @@ namespace Desktop.UserControls
                 ant += 60;
             }
 
-            MetroCheckBox chck = new MetroCheckBox();
-            chck.Location = new Point(15, ant);
-            chck.Text = "Ocupada";
-            chck.Checked = !table.Table.Empty;
-            chck.CheckedChanged += CheckBoxChange;
-            this.mainPanel.Controls.Add(chck);
-
-            //Label l = new Label();
-            //l.Text = "1";
-            //l.Parent = pictureBox1;
-            //l.Location = new Point(88, 185);
-            //l.AutoSize = true;
-            //l.Font = new Font("Arial Black", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            //pictureBox1.Controls.Add(l);
         }
 
         private void addOrderButton(object sender, EventArgs e)
@@ -125,7 +107,6 @@ namespace Desktop.UserControls
         private void closeOrderButton(object sender, EventArgs e)
         {
             OrderDTO activeOrder = WebserviceConnection.getActiveOrder(table.Table.Id);
-
             new CloseOrderController(activeOrder);
         }
              
@@ -133,18 +114,18 @@ namespace Desktop.UserControls
         {
             this.mainPanel.Controls.OfType<MetroButton>().ToList().ForEach(b => b.Visible = false);
 
-            MetroGrid metroGrid1 = new MetroGrid();
+            MetroGrid viewGrid = new MetroGrid();
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            metroGrid1.AllowUserToAddRows = false;
-            metroGrid1.AllowUserToDeleteRows = false;
-            metroGrid1.AllowUserToResizeColumns = false;
-            metroGrid1.AllowUserToResizeRows = false;
-            metroGrid1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            metroGrid1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            metroGrid1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            metroGrid1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            viewGrid.AllowUserToAddRows = false;
+            viewGrid.AllowUserToDeleteRows = false;
+            viewGrid.AllowUserToResizeColumns = false;
+            viewGrid.AllowUserToResizeRows = false;
+            viewGrid.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            viewGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            viewGrid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            viewGrid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(139)))), ((int)(((byte)(202)))));
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -152,8 +133,8 @@ namespace Desktop.UserControls
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            metroGrid1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            metroGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            viewGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            viewGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -161,13 +142,13 @@ namespace Desktop.UserControls
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            metroGrid1.DefaultCellStyle = dataGridViewCellStyle2;
-            metroGrid1.EnableHeadersVisualStyles = false;
-            metroGrid1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            metroGrid1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            metroGrid1.Location = new System.Drawing.Point(20, 300);
-            metroGrid1.Name = "metroGrid1";
-            metroGrid1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            viewGrid.DefaultCellStyle = dataGridViewCellStyle2;
+            viewGrid.EnableHeadersVisualStyles = false;
+            viewGrid.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            viewGrid.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            viewGrid.Location = new System.Drawing.Point(20, 300);
+            viewGrid.Name = "metroGrid1";
+            viewGrid.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -175,52 +156,68 @@ namespace Desktop.UserControls
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(198)))), ((int)(((byte)(247)))));
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            metroGrid1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            metroGrid1.RowHeadersVisible = false;
-            metroGrid1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            metroGrid1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            metroGrid1.Size = new System.Drawing.Size(this.mainPanel.Width - 45, 343);
-            metroGrid1.TabIndex = 1;
-            metroGrid1.ScrollBars = ScrollBars.Vertical;
-            metroGrid1.BorderStyle = BorderStyle.Fixed3D;
-            this.mainPanel.Controls.Add(metroGrid1);
+            viewGrid.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            viewGrid.RowHeadersVisible = false;
+            viewGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            viewGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            viewGrid.Size = new System.Drawing.Size(this.mainPanel.Width - 45, 343);
+            viewGrid.TabIndex = 1;
+            viewGrid.ScrollBars = ScrollBars.Vertical;
+            viewGrid.BorderStyle = BorderStyle.Fixed3D;
+            this.mainPanel.Controls.Add(viewGrid);
 
             List<Product> products = new List<Product>();
-            OrderDTO order = WebserviceConnection.getActiveOrder(table.Table.Id);
+
+            OrderDTO order = null;
+            try {
+                 order = WebserviceConnection.getActiveOrder(table.Table.Id);
+            }
+            catch (Exception ex)
+            {
+                FormPopUp fPop = new FormPopUp(false, "Error obteniendo el pedido");
+                fPop.ShowDialog();
+                return;
+            }
             if (order.Drinks != null) products.AddRange(order.Drinks);
             if (order.Foods != null) products.AddRange(order.Foods);
             if (order.Menus != null) products.AddRange(order.Menus);
 
             BindingList<Product> mealDataSource = new BindingList<Product>(products);
-            metroGrid1.DataSource = mealDataSource;
+            viewGrid.DataSource = mealDataSource;
 
 
-            metroGrid1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            metroGrid1.Columns[0].Width = metroGrid1.Width / 3;
+            viewGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            viewGrid.Columns[0].Width = viewGrid.Width / 3;
 
-            metroGrid1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            metroGrid1.Columns[1].Width = metroGrid1.Width / 3;
-            metroGrid1.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            viewGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            viewGrid.Columns[1].Width = viewGrid.Width / 3;
+            viewGrid.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            metroGrid1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            //metroGrid1.Columns[2].Width = metroGrid1.Width / 5 + (metroGrid1.Width /3 - (metroGrid1.Width / 6 + metroGrid1.Width / 3));
-            metroGrid1.Columns[2].Width = metroGrid1.Width / 3;
-            metroGrid1.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            viewGrid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            viewGrid.Columns[2].Width = viewGrid.Width / 3;
+            viewGrid.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             MetroButton btn = this.mainPanel.Controls.OfType<MetroButton>().Where(b => string.Equals(b.Name, "btn2")).FirstOrDefault();
             btn.Visible = true;
-            btn.Location = new Point(btn.Location.X, metroGrid1.Location.Y + metroGrid1.Height + 20);
+            btn.Location = new Point(btn.Location.X, viewGrid.Location.Y + viewGrid.Height + 20);
         }
 
-        private void CheckBoxChange(object sender, EventArgs e)
+        public void refreshButtons(bool empty)
         {
-            MetroCheckBox chck = (MetroCheckBox)sender;
-            TableDTO t = table.Table;
-            //t.Empty = !chck.Checked;
-            WebserviceConnection.modifyTableStatus(t.Id);
+
+            List<MetroButton> btns = this.mainPanel.Controls.OfType<MetroButton>().ToList();
+            foreach(MetroButton m in btns)
+            {
+                if (m.Name.Equals("btn0"))
+                {
+                    m.Enabled = empty;
+                }
+                else
+                {
+                    m.Enabled = !empty;
+                }
+            }
         }
-
-
 
     }
 }

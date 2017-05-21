@@ -8,7 +8,6 @@ using Desktop.UserControls;
 using System.Drawing;
 using System.ComponentModel;
 using System.Reflection;
-using MetroFramework.Controls;
 
 namespace Desktop.Controller
 {
@@ -67,24 +66,46 @@ namespace Desktop.Controller
         /// <param name="activeOrder">table's active order (if it's null means no active order)</param>
         private void initControllerItems(int tableNumber, OrderDTO activeOrder)
         {
+            //Initialize product list which holds all available products
             products = new List<Product>();
+
+            // Create view
             _addOrderView = new FormAddOrder();
             _addOrderView.FormClosed += (o, e) =>
             {
                 not.finish();
             };
+
+            // Initialize notifications
             initNotifications();
 
+            // Determine if it's an insert operation or a modify one
             if (activeOrder != null)
             {
                 fillMealsFromOrder(activeOrder);
-                _addOrderView.Text = "Modificar comanda";
+                _addOrderView.Text = "Modificar pedido";
             }
 
-            initAllTabs();
+            // Initialize tabs which holds products categorized
+            try
+            {
+                initAllTabs();
+            }
+            catch (Exception ex)
+            {
+                FormPopUp fPop = new FormPopUp(false, "Error obteniendo los produtos");
+                fPop.ShowDialog();
+                return;
+            }
+
+            // Show view
             _addOrderView.Show();
+
+            // Initialize fields
             _tableNumber = tableNumber;
             _activeOrder = activeOrder;
+
+            // Initialize event listeners
             initListeners();
         }
 
@@ -112,6 +133,7 @@ namespace Desktop.Controller
         {
             // Get all products from the database
             List<Product> meals = new List<Product>();
+
             meals.AddRange(WebserviceConnection.getMeal<FoodDTO>("foods"));
             meals.AddRange(WebserviceConnection.getMeal<DrinkDTO>("drinks"));
             meals.AddRange(WebserviceConnection.getMeal<MenuDTO>("menus"));
@@ -256,8 +278,17 @@ namespace Desktop.Controller
             this.putMealsInOrder<FoodDTO>("Food", ref order);
             this.putMealsInOrder<MenuDTO>("Menu", ref order);
 
+
             // Post the order via web service and get its response code
-            int serverResponse = WebserviceConnection.PostAndPutOrder(order);
+            int serverResponse;
+            try
+            {
+                serverResponse = WebserviceConnection.PostAndPutOrder(order);
+            }
+            catch (Exception ex)
+            {
+                serverResponse = 500;
+            }
 
             // Show post status to user with a pop-up
             if ((serverResponse >= 200) && (serverResponse <= 299))

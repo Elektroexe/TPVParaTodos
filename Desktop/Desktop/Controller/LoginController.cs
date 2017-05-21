@@ -70,11 +70,5 @@ namespace Desktop.Controller
             }
         }
 
-        public string GetResourceTextFile()
-        {
-            XElement resource = XElement.Parse(Properties.Resources.user1);
-            return (resource.FirstNode != null) ? resource.FirstNode.ToString() : "";
-        }
-
     }
 }
