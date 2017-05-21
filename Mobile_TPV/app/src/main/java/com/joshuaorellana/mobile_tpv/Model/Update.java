@@ -15,6 +15,7 @@ public class Update {
     List<FoodDTO> Foods;
     List<DrinkDTO> Drinks;
     List<MenuDTO> Menus;
+    int NewVersion;
 
     public Update() {
         Foods = new ArrayList<>();
@@ -44,5 +45,13 @@ public class Update {
 
     public void setMenus(List<MenuDTO> menus) {
         Menus = menus;
+    }
+
+    public int getNewVersion() {
+        return NewVersion;
+    }
+
+    public void setNewVersion(int newVersion) {
+        NewVersion = newVersion;
     }
 }

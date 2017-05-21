@@ -46,7 +46,7 @@ public class AddOrderActivity extends AppCompatActivity {
                 ProductsSQLiteHelper helper = new ProductsSQLiteHelper(getApplicationContext(), "product", null, 1);
                 ProductsConversor conversor = new ProductsConversor(helper);
                 Update newProducts = WebService.CheckDB(versionDB);
-                setVersionDB(versionDB + newProducts.getFoods().size() + newProducts.getMenus().size() + newProducts.getDrinks().size());
+                setVersionDB(newProducts.getNewVersion());
                 conversor.updateProducts(newProducts);
                 conversor.closeConnection();
             }

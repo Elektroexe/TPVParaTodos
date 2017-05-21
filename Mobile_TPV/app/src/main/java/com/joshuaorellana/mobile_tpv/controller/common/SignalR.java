@@ -32,8 +32,7 @@ import static com.joshuaorellana.mobile_tpv.controller.TablesActivity.listTables
 
 public class SignalR {
 
-    final String URL = "http://192.168.1.108/TPVParaTodos/signalr/";
-    //final String URL = "http://tpvpt.azurewebsites.net/signalr/";
+    final String URL = "http://tpvpt.azurewebsites.net/signalr/";
 
     private Context context;
     private Handler mHandler;

@@ -20,6 +20,7 @@ namespace WebService.Controllers.API
                 Foods = products.Where(a => a.GetType().Name.Contains("Food")).Select(b => new FoodDTO(b as Food)),
                 Drinks = products.Where(a => a.GetType().Name.Contains("Drink")).Select(b => new DrinkDTO(b as Drink)),
                 Menus = products.Where(a => a.GetType().Name.Contains("Menu")).Select(b => new MenuDTO(b as Menu)),
+                NewVersion = id + logs.Count
             };
         }
     }
