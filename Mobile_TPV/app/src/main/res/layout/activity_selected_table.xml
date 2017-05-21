@@ -47,13 +47,13 @@
         android:layout_centerHorizontal="true" />
 
     <ImageView
+        android:id="@+id/imgTable"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_gravity="center_horizontal"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:id="@+id/imgTable"
+        app:srcCompat="@drawable/table_icon"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp" />
 
     <Button
         android:id="@+id/btExit"

@@ -1,4 +1,4 @@
-package com.joshuaorellana.mobile_tpv.Model;
+package com.joshuaorellana.mobile_tpv.model;
 
 /**
  * Created by Joshua-OC on 16/05/2017.

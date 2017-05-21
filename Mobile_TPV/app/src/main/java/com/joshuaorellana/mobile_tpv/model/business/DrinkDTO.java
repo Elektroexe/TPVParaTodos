@@ -1,8 +1,7 @@
-package com.joshuaorellana.mobile_tpv.Model.Products;
+package com.joshuaorellana.mobile_tpv.model.business;
 
 import android.content.ContentValues;
-
-import com.joshuaorellana.mobile_tpv.Model.ProductDTO;
+import android.database.Cursor;
 
 /**
  * Created by Joshua-OC on 04/05/2017.
@@ -71,7 +70,7 @@ public class DrinkDTO extends ProductDTO {
 
     @Override
     public String toString() {
-        return super.toString() + "Drink{" +
+        return super.toString() + "DrinkFragment{" +
                 "Capacity=" + Capacity +
                 ", TypeBottle='" + TypeBottle + '\'' +
                 ", Soda=" + Soda +
@@ -91,5 +90,19 @@ public class DrinkDTO extends ProductDTO {
         cv.put("Price", getPrice());
         cv.put("Description", getDescription());
         return cv;
+    }
+
+    @Override
+    public ProductDTO fromCursor(Cursor cursor) {
+        DrinkDTO product = new DrinkDTO();
+        product.setId(cursor.getInt(0));
+        product.setCapacity(cursor.getInt(1));
+        product.setTypeBottle(cursor.getString(2));
+        product.setSoda(cursor.getInt(3) == 1);
+        product.setAlcohol(cursor.getInt(4) == 1);
+        product.setName(cursor.getString(5));
+        product.setPrice(cursor.getDouble(6));
+        product.setDescription(cursor.getString(7));
+        return product;
     }
 }

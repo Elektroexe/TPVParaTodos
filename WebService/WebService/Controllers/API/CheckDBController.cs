@@ -7,35 +7,20 @@ using WebService.Models;
 
 namespace WebService.Controllers.API
 {
-    [Authorize]
     public class CheckDBController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public List<ProductDTO> Get(int id)
+        public dynamic Get(int id)
         {
             List<LogProduct> logs = db.LogsProducts.Where(a => a.Id > id).ToList();
-            List<ProductDTO> products = new List<ProductDTO>();
-            foreach (LogProduct log in logs)
+            List<Product> products = logs.Select(a => a.Product).Distinct().ToList();
+            return new
             {
-                if (!products.Any(a => a.Id == log.Product_Id)) {
-                    products.Add(convertProduct(log.Product));
-                }
-            }
-            return products;
-        }
-
-        public ProductDTO convertProduct (Product product)
-        {
-            if (product.GetType().Name.Contains("Food"))
-            {
-                 return new FoodDTO(product as Food);
-            }
-            if (product.GetType().Name.Contains("Drink"))
-            {
-                return new DrinkDTO(product as Drink);
-            }
-            return new MenuDTO(product as Menu);
+                Foods = products.Where(a => a.GetType().Name.Contains("Food")).Select(b => new FoodDTO(b as Food)),
+                Drinks = products.Where(a => a.GetType().Name.Contains("Drink")).Select(b => new DrinkDTO(b as Drink)),
+                Menus = products.Where(a => a.GetType().Name.Contains("Menu")).Select(b => new MenuDTO(b as Menu)),
+            };
         }
     }
 }
