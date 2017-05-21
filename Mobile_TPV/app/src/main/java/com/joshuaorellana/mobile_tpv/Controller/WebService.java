@@ -35,9 +35,11 @@ public class WebService {
 
     public static String Login(String username, String password) {
         try {
+
             OkHttpClient client = new OkHttpClient();
             MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
             RequestBody body = RequestBody.create(mediaType, "grant_type=password&username=" + username + "&password=" + password);
+            Log.e("Body -->", body.toString());
             Request request = new Request.Builder()
                     .url(URL + "token")
                     .post(body)
@@ -54,6 +56,25 @@ public class WebService {
         }
         return null;
     }
+
+	/*public static void Logout() {
+        try {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url("http://tpvpt.azurewebsites.net/api/Account/Logout")
+                    .post(null)
+                    .addHeader("authorization", token)
+                    .addHeader("content-length", "0")
+                    .addHeader("content-type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW")
+                    .build();
+
+            Response response = client.newCall(request).execute();
+
+
+        } catch (IOException err) {
+            err.printStackTrace();
+        }
+    }*/
 
     public static <T> T[] Get(Class<T[]> classType) {
         try {

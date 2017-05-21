@@ -6,8 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
@@ -28,14 +31,15 @@ public class Tables extends AppCompatActivity {
 
     public static String _URL;
     private TableLayout tableLayout;
-    private TableDTO[] listTables;
+    private FloatingActionButton btLogout;
 
+    public static TableDTO[] listTables;
     public static List<ImageButton> listButtons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.testing);
+        setContentView(R.layout.activity_tables);
 
         initComponents();
     }
@@ -43,7 +47,8 @@ public class Tables extends AppCompatActivity {
     private void initComponents() {
         _URL = "http://192.168.1.108/TPVParaTodos/";
         //_URL = getString(R.string.URL);
-        tableLayout = (TableLayout) findViewById(R.id.menuTableLayoutTest);
+        tableLayout = (TableLayout) findViewById(R.id.menuTableLayout);
+        btLogout = (FloatingActionButton) findViewById(R.id.btLogout);
         listButtons = new ArrayList<>();
 
         Thread apiTables = new Thread(new Runnable() {
@@ -65,14 +70,60 @@ public class Tables extends AppCompatActivity {
 
                 createTableButtons();
 
-                SignalR sgnlR = new SignalR(listTables, getApplicationContext());
+                final SignalR sgnlR = new SignalR(listTables, getApplicationContext());
 
-                sgnlR.getNotifications();
-                sgnlR.getRefreshTable();
+                Thread connectingSignalR = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            sgnlR.getNotifications();
+                            sgnlR.getRefreshTable();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+
+                connectingSignalR.start();
+
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        btLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                registerForContextMenu(btLogout);
+                openContextMenu(btLogout);
+            }
+        });
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        menu.setHeaderTitle("Estás seguro que quieres desconectar?");
+        menu.add(0, v.getId(), 0, "Si");
+        menu.add(0, v.getId(), 0, "No");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getTitle().equals("Si")) {
+
+            //WebService.Logout();
+            WebService.token = "";
+            finish();
+            Intent mainIntent = new Intent(this, LoginActivity.class);
+            startActivity(mainIntent);
+
+        } else if (item.getTitle().equals("No")) {
+            return true;
+        } else {
+            return false;
+        }
+
+        return true;
 
     }
 
@@ -106,9 +157,9 @@ public class Tables extends AppCompatActivity {
                     Picasso.with(this).load(R.drawable.table_icon).resize(250, 250).into(btTable);
 
                     if (listTables[i].isEmpty()) {
-                        btTable.setBackgroundResource(R.drawable.buttonshape);
+                        btTable.setBackgroundResource(R.drawable.table_green);
                     } else {
-                        btTable.setBackgroundResource(R.drawable.buttonshapered);
+                        btTable.setBackgroundResource(R.drawable.table_red);
                     }
 
                     listButtons.add(btTable);

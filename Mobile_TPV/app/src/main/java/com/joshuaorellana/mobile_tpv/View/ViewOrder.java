@@ -67,35 +67,7 @@ public class ViewOrder extends AppCompatActivity {
 
     }
 
-//    private class loadContent extends AsyncTask<String, Long, String > {
-//
-//        protected String doInBackground(String... urls) {
-//
-//            try {
-//                return HttpRequest.get(urls[0]).accept("application/json").body();
-//            } catch (HttpRequest.HttpRequestException err) {
-//                Log.e("ERROR HttpRequest: ", err.toString());
-//            }
-//
-//            return null;
-//        }
-//
-//        protected void onPostExecute(String response) {
-//
-//            Order = getTables(response);
-//
-//            showOrder();
-//
-//        }
-//    }
-//
-//    private OrderDTO getTables(String json) {
-//
-//        Gson gson = new Gson();
-//        return gson.fromJson(json, OrderDTO.class);
-//
-//    }
-
+    
     private void showOrder() {
 
         List<DrinkDTO> drinks = Order.getListDrinks();

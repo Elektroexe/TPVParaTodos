@@ -97,7 +97,7 @@ public class AddOrder extends AppCompatActivity {
         viewPager.getCurrentItem();
 
         TimeZone tz = TimeZone.getTimeZone("UTC");
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ"); // Quoted "Z" to indicate UTC, no timezone offset
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
         df.setTimeZone(tz);
         String date = df.format(new Date());
 
@@ -122,49 +122,19 @@ public class AddOrder extends AppCompatActivity {
             }
 
         } else {
-
-            Log.e("AddOrder -->", "OK!");
-
             Order = new OrderDTO(auxTable.getId(), date);
         }
 
     }
-
-//    private class loadContent extends AsyncTask<String, Long, String > {
-//
-//        protected String doInBackground(String... urls) {
-//
-//            try {
-//                return HttpRequest.get(urls[0]).accept("application/json").body();
-//            } catch (HttpRequest.HttpRequestException err) {
-//                Log.e("ERROR HttpRequest: ", err.toString());
-//            }
-//
-//            return null;
-//
-//        }
-//
-//        protected void onPostExecute(String response) {
-//
-//            Order = getTables(response);
-//
-//        }
-//
-//    }
-
-//    private OrderDTO getTables(String json) {
-//        Gson gson = new Gson();
-//        return gson.fromJson(json, OrderDTO.class);
-//    }
-
 
     private void setupViewPager(ViewPager viewPager) {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         adapter.addFragment(new Drink(), "BEBIDAS");
-        adapter.addFragment(new Food("Meat"), "CARNE");
         adapter.addFragment(new Food("Starter"), "ENTRANTES");
+        adapter.addFragment(new Food("Main"), "PRINCIPAL");
+        adapter.addFragment(new Food("Dessert"), "POSTRES");
         adapter.addFragment(new Menu(), "MENÚS");
 
         viewPager.setAdapter(adapter);

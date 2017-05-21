@@ -31,6 +31,7 @@ import com.joshuaorellana.mobile_tpv.Model.persistence.ProductsSQLiteHelper;
 import com.joshuaorellana.mobile_tpv.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -78,7 +79,7 @@ public class Drink extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.drink_test, container, false);
+        rootView = inflater.inflate(R.layout.fragment_product, container, false);
 
         initComponents();
 
@@ -88,9 +89,9 @@ public class Drink extends Fragment {
 
     private void initComponents() {
 
-        tableLayout = (TableLayout) rootView.findViewById(R.id.menuTableLayout_Drink);
-        drawer = (DrawerLayout) rootView.findViewById(R.id.drawer_layout_Drink);
-        navigationView = (NavigationView) rootView.findViewById(R.id.nav_view_Drink);
+        tableLayout = (TableLayout) rootView.findViewById(R.id.menuTableLayout_Product);
+        drawer = (DrawerLayout) rootView.findViewById(R.id.drawerLayout_Product);
+        navigationView = (NavigationView) rootView.findViewById(R.id.nav_view_Product);
         View navHeader = navigationView.getHeaderView(0);
 
         tvProductName = (TextView) navHeader.findViewById(R.id.tvProductName);
@@ -126,45 +127,6 @@ public class Drink extends Fragment {
         }
 
     }
-
-//    private class loadDrinks extends AsyncTask<String, Long, String> {
-//
-//        protected String doInBackground(String... urls) {
-//
-//            try {
-//                return HttpRequest.get(urls[0]).accept("application/json").body();
-//            } catch (HttpRequest.HttpRequestException exception) {
-//                return null;
-//            }
-//        }
-//
-//        protected void onPostExecute(String response) {
-//
-//            listDrinks = getDrinks(response);
-//
-//            if (!listDrinks.isEmpty()) {
-//                createDrinkButtons();
-//
-//                for (DrinkDTO aux : Order.getListDrinks()) {
-//                    for (int i = 0; i < listDrinks.size(); i++) {
-//
-//                        DrinkDTO auxB = listDrinks.get(i);
-//                         if (aux.getName().equals(auxB.getName()))
-//                             auxB.setQuantity(aux.getQuantity());
-//
-//                    }
-//                }
-//
-//            }
-//        }
-//    }
-//
-//    private ArrayList<DrinkDTO> getDrinks(String json) {
-//        Gson gson = new Gson();
-//        Type tListType = new TypeToken<ArrayList<DrinkDTO>>() {}.getType();
-//        return gson.fromJson(json, tListType);
-//
-//    }
 
     private void createDrinkButtons() {
 
@@ -255,9 +217,7 @@ public class Drink extends Fragment {
 
                     case R.id.nav_sendorder:
 
-//                        String url = _URL + "api/Orders/Manager";
-//
-//                        new sendOrder().execute(url);
+                        String url = _URL + "api/Orders/Manager";
 
                         Thread getOrder = new Thread(new Runnable() {
                             @Override
@@ -281,10 +241,6 @@ public class Drink extends Fragment {
                 }
                 menuItem.setChecked(true);
 
-                for (int i = 0; i < Order.getListDrinks().size(); i++) {
-                    Log.e("Order listDrinks --> ", String.valueOf(Order.getListDrinks().size()));
-                }
-
                 return true;
             }
 
@@ -301,56 +257,6 @@ public class Drink extends Fragment {
 
     }
 
-//    private static String post(String url, OrderDTO order) {
-//
-//        InputStream inputStream = null;
-//        String result="";
-//
-//        Log.e("URL post --->", url);
-//
-//        try {
-//
-//            String json;
-//
-//            Gson gson = new Gson();
-//            json = gson.toJson(order);
-//
-//            OkHttpClient client = new OkHttpClient();
-//
-//            MediaType mediaType = MediaType.parse("application/json");
-//            RequestBody body = RequestBody.create(mediaType, json);
-//            Request request = new Request.Builder()
-//                     .url(url)
-//                    .post(body)
-//                    .addHeader("content-type", "application/json")
-//                    .build();
-//
-//            Response response = client.newCall(request).execute();
-//
-//        } catch (Exception err) {
-//
-//            Log.e("Error", err.toString());
-//
-//        }
-//
-//        return null;
-//
-//    }
-//
-//    private class sendOrder extends AsyncTask<String, Void, String> {
-//        @Override
-//        protected String doInBackground(String... urls) {
-//
-//
-//            return post(urls[0], Order);
-//        }
-//        // onPostExecute displays the results of the AsyncTask.
-//        @Override
-//        protected void onPostExecute(String result) {
-//            //Toast.makeText(getBaseContext(), "Data Sent!", Toast.LENGTH_LONG).show();
-//            Toast.makeText(getActivity(), "OK!", Toast.LENGTH_SHORT).show();
-//        }
-//    }
 
 
 }

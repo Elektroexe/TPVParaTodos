@@ -31,6 +31,7 @@ import com.joshuaorellana.mobile_tpv.Model.persistence.ProductsSQLiteHelper;
 import com.joshuaorellana.mobile_tpv.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static com.joshuaorellana.mobile_tpv.View.AddOrder.Order;
+import static com.joshuaorellana.mobile_tpv.View.SelectedTable.auxTable;
 import static com.joshuaorellana.mobile_tpv.View.Tables._URL;
 
 /**
@@ -79,7 +81,7 @@ public class Food extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.drink_test, container, false);
+        rootView = inflater.inflate(R.layout.fragment_product, container, false);
 
         initComponents();
 
@@ -89,9 +91,9 @@ public class Food extends Fragment {
 
     private void initComponents() {
 
-        tableLayout = (TableLayout) rootView.findViewById(R.id.menuTableLayout_Drink);
-        drawer = (DrawerLayout) rootView.findViewById(R.id.drawer_layout_Drink);
-        navigationView = (NavigationView) rootView.findViewById(R.id.nav_view_Drink);
+        tableLayout = (TableLayout) rootView.findViewById(R.id.menuTableLayout_Product);
+        drawer = (DrawerLayout) rootView.findViewById(R.id.drawerLayout_Product);
+        navigationView = (NavigationView) rootView.findViewById(R.id.nav_view_Product);
         View navHeader = navigationView.getHeaderView(0);
 
         tvProductName = (TextView) navHeader.findViewById(R.id.tvProductName);
@@ -102,10 +104,6 @@ public class Food extends Fragment {
 
 
         listFoods = new ArrayList<>();
-//
-//        String url = _URL + "api/Foods";
-//
-//        new loadFoods().execute(url);
 
 //        List<FoodDTO> auxList = getFood(response);
 
@@ -136,50 +134,11 @@ public class Food extends Fragment {
 
     }
 
-//    private class loadFoods extends AsyncTask<String, Long, String> {
-//
-//        protected String doInBackground(String... urls) {
-//
-//            try {
-//                return HttpRequest.get(urls[0]).accept("application/json").body();
-//            } catch (HttpRequest.HttpRequestException execption) {
-//                return null;
-//            }
-//
-//        }
-//
-//        protected void onPostExecute(String response) {
-//
-//            ArrayList<FoodDTO> auxList = getFood(response);
-//
-//            for (FoodDTO auxFood : auxList ) {
-//                if (auxFood.getFamilyDish().equals(_Title))
-//                    listFoods.add(auxFood);
-//            }
-//
-//            if(!listFoods.isEmpty()) {
-//                createFoodsButtons();
-//
-//                for (FoodDTO aux : Order.getListFoods()) {
-//                    for (int i = 0; i < listFoods.size(); i++) {
-//
-//                        FoodDTO auxB = listFoods.get(i);
-//                        if (aux.getName().equals(auxB.getName()))
-//                            auxB.setQuantity(aux.getQuantity());
-//
-//                    }
-//                }
-//
-//            }
-//        }
-//
-//    }
-//
-//    private ArrayList<FoodDTO> getFood(String json) {
-//        Gson gson = new Gson();
-//        Type tListType = new TypeToken<ArrayList<FoodDTO>>() {}.getType();
-//        return gson.fromJson(json, tListType);
-//    }
+    private ArrayList<FoodDTO> getFood(String json) {
+        Gson gson = new Gson();
+        Type tListType = new TypeToken<ArrayList<FoodDTO>>() {}.getType();
+        return gson.fromJson(json, tListType);
+    }
 
     private void createFoodsButtons() {
         int i = 0;
@@ -235,8 +194,6 @@ public class Food extends Fragment {
 
     private void setUpNavigationView(final FoodDTO product) {
 
-        Log.e("Product", product.toString());
-
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -271,10 +228,6 @@ public class Food extends Fragment {
 
                     case R.id.nav_sendorder:
 
-//                        String url = _URL + "api/Orders/Manager";
-//                        new sendOrder().execute(url);
-//
-//                        break;
 
                         Thread getOrder = new Thread(new Runnable() {
                             @Override
@@ -337,6 +290,7 @@ public class Food extends Fragment {
             Request request = new Request.Builder()
                     .url(url)
                     .post(body)
+                    .addHeader("Authorization", WebService.token)
                     .addHeader("content-type", "application/json")
                     .build();
 
@@ -367,6 +321,7 @@ public class Food extends Fragment {
         protected void onPostExecute(String result) {
             //Toast.makeText(getBaseContext(), "Data Sent!", Toast.LENGTH_LONG).show();
             Toast.makeText(getActivity(), "OK!", Toast.LENGTH_SHORT).show();
+            auxTable.setEmpty(!auxTable.isEmpty());
         }
     }
 
