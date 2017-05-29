@@ -30,6 +30,8 @@ public class AddOrderActivity extends AppCompatActivity {
     public static OrderDTO Order;
     private int versionDB;
 
+    boolean modify;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +83,7 @@ public class AddOrderActivity extends AppCompatActivity {
         df.setTimeZone(tz);
         String date = df.format(new Date());
         Bundle auxIntent = getIntent().getExtras();
-        boolean modify = auxIntent.getBoolean("modify");
+        modify = auxIntent.getBoolean("modify");
         if (modify) {
             Log.e("ModifyOrder --> ", "OK!");
             Thread getOrder = new Thread(new Runnable() {
@@ -103,11 +105,11 @@ public class AddOrderActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new DrinkFragment(), "BEBIDAS");
-        adapter.addFragment(new FoodFragment("Starter"), "ENTRANTES");
-        adapter.addFragment(new FoodFragment("Main"), "PRINCIPAL");
-        adapter.addFragment(new FoodFragment("Dessert"), "POSTRES");
-        adapter.addFragment(new MenuFragment(), "MENÚS");
+        adapter.addFragment(new DrinkFragment(modify), "BEBIDAS");
+        adapter.addFragment(new FoodFragment(modify, "Starter"), "ENTRANTES");
+        adapter.addFragment(new FoodFragment(modify, "Main"), "PRINCIPAL");
+        adapter.addFragment(new FoodFragment(modify, "Dessert"), "POSTRES");
+        adapter.addFragment(new MenuFragment(modify), "MENÚS");
         viewPager.setAdapter(adapter);
     }
 }

@@ -20,7 +20,7 @@ import okhttp3.Response;
 
 public class WebService {
 
-    static final String URL = "http://tpvpt.azurewebsites.net/";
+    static final String URL = "http://192.168.1.3/TPVParaTodos/";
     public static String token;
 
     public static String Login(String username, String password) {
@@ -127,6 +127,28 @@ public class WebService {
             Request request = new Request.Builder()
                     .url(URL + "api/Orders/Manager")
                     .post(body)
+                    .addHeader("content-type", "application/json")
+                    .addHeader("authorization", token)
+                    .build();
+            Response response = client.newCall(request).execute();
+            if (response.isSuccessful()){
+                return true;
+            }
+        } catch (Exception ex) {
+            return false;
+        }
+        return false;
+    }
+
+    public static boolean PutOrder(OrderDTO order){
+        try {
+            Gson gson = new Gson();
+            OkHttpClient client = new OkHttpClient();
+            MediaType mediaType = MediaType.parse("application/json");
+            RequestBody body = RequestBody.create(mediaType, gson.toJson(order));
+            Request request = new Request.Builder()
+                    .url(URL + "api/Orders/Manager")
+                    .put(body)
                     .addHeader("content-type", "application/json")
                     .addHeader("authorization", token)
                     .build();
